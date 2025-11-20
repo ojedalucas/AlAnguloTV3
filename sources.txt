@@ -1,0 +1,4 @@
+"c:\Users\ASUS\Documents\Facultad\Programacion\Taller 2\Entregable3\AlAnguloTV3\src\App.java"
+"c:\Users\ASUS\Documents\Facultad\Programacion\Taller 2\Entregable3\AlAnguloTV3\src\View\LoadingView.java"
+"c:\Users\ASUS\Documents\Facultad\Programacion\Taller 2\Entregable3\AlAnguloTV3\src\View\RegistrationView.java"
+"c:\Users\ASUS\Documents\Facultad\Programacion\Taller 2\Entregable3\AlAnguloTV3\src\View\WelcomeView.java"

@@ -120,8 +120,8 @@ public class LoadingView extends Frame {
         }
     }
 
-    public static void main(String[] args) {
-        LoadingView view = new LoadingView();
-        view.setVisible(true);
-    }
+    // public static void main(String[] args) {
+    //     LoadingView view = new LoadingView();
+    //     view.setVisible(true);
+    // }
 }
