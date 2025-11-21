@@ -1,90 +1,79 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-//import javax.swing.border.Border;
+public class RateView extends Frame{
 
-public class RateView extends Frame {
-
-    public RateView() {
-        // 1. Configuración básica de la ventana
+    public RateView(){
+        // Configuro ventana
         super("Plataforma de Streaming - Calificar Película");
-        setSize(1000, 600);
+        setSize(800, 500);
         setBackground(Color.WHITE);
-
-        // Centrar ventana en pantalla
         setLocationRelativeTo(null);
 
-        // Usamos BorderLayout
-        setLayout(new BorderLayout());
-
-        // --- PANEL---
-        // Creamos un panel interno para agrupar los campos
-        Panel formPanel = new Panel();
-        formPanel.setBackground(Color.WHITE);
-        formPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.WEST;        // alineado a la izquierda
-        gbc.insets = new Insets(20, 20, 20, 20);      // margen interior
-
-        // Fuente para las etiquetas
-        Font labelFont = new Font("Arial", Font.BOLD, 24);
-        // Fuente para los campos de texto
-        Font textFont = new Font("Arial", Font.PLAIN, 20);
-
-        // ================= TÍTULO =================
-        Label titleLbl = new Label("Título de la Película");
-        titleLbl.setFont(labelFont);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        formPanel.add(titleLbl,gbc);
-
-        // ================= CALIFICACIÓN =================
-        Label ratingLbl = new Label("Calificación:");
-        ratingLbl.setFont(textFont);
-
-        // Panel para las estrellas
-        Panel starsPanel = new Panel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-        Font starFont = new Font("Arial Unicode MS", Font.PLAIN, 20);
-
-        // Crear 10 estrellas (por ahora solo dibujadas)
-        for (int i = 0; i < 10; i++) {
-            Label star = new Label("\u2606");   // Estrella vacía
-            star.setFont(starFont);
-            starsPanel.add(star);
-        }
-
-        // Panel combinado: label + estrellas
-        Panel ratingRow = new Panel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-        ratingRow.setBackground(Color.WHITE);
-        ratingRow.add(ratingLbl);
-        ratingRow.add(starsPanel);
-
-        // Esto coloca todo junto en una sola celda
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        formPanel.add(ratingRow, gbc);
-
-
-        // === WRAPPER para alinear izquierda ===
-        Panel wrapper = new Panel(new BorderLayout());
-        wrapper.setBackground(Color.WHITE);
-        wrapper.add(formPanel, BorderLayout.WEST);
-
-        // Añadir panel principal
-        add(wrapper, BorderLayout.NORTH);
-
-        // --- Lógica para cerrar la ventana ---
+        // Lógica para cerrar la ventana
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
+        
+        // Layout de la ventana
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20,20,20,20);
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+
+        // Titulo
+        Label titleLabel = new Label("Titulo de la Pelicula");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        add(titleLabel, gbc);
+
+        // Calificar
+        Label calificarLabel = new Label("Calificacion: ");
+        calificarLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(calificarLabel, gbc);
+
+        // Estrellas
+        Panel estrellasPanel = new Panel(new FlowLayout());
+        Font starFont = new Font("Symbol", Font.PLAIN, 20);
+        for (int i=0; i<10; i++){
+            Button estrella = new Button("\u2606");
+            estrella.setFont(starFont);
+            estrella.setForeground(new Color(30, 144, 255));
+            estrellasPanel.add(estrella);
+        }
+        gbc.gridx = 1;
+        add(estrellasPanel, gbc);
+
+        // Comentario
+        Label comentarioLabel = new Label("Comentario: ");
+        comentarioLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        gbc.weighty = 1;
+        gbc.gridx= 0;
+        gbc.gridy = 2;
+        add(comentarioLabel, gbc);
+
+        // Caja de comentario
+        TextArea cajaComentario = new TextArea();
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        add(cajaComentario, gbc);
+
+        // Botón
+        Button guardar = new Button("Guardar");
+        guardar.setBackground(new Color(30, 144, 255));
+        guardar.setForeground(Color.WHITE);
+        Font guardarFont = new Font("Arial", Font.BOLD, 16);
+        guardar.setFont(guardarFont);
+        gbc.gridy = 3;
+        add(guardar, gbc);
     }
+
 
     public static void main(String[] args) {
         RateView view = new RateView();

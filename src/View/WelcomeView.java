@@ -91,6 +91,7 @@ public class WelcomeView extends Frame {
         Button btnRegister = new Button("Registrate");
         btnRegister.setBackground(new Color(30, 144, 255));
         btnRegister.setForeground(Color.WHITE);
+        btnRegister.setFont(new Font("Arial", Font.BOLD, 12));
         
         registerPanel.add(lblNoUser);
         registerPanel.add(btnRegister);
