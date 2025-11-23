@@ -1,8 +1,7 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class WelcomeView extends Frame {
     // Campos reutilizables para permitir acceso desde métodos
@@ -165,9 +164,65 @@ public class WelcomeView extends Frame {
     public Button getRegisterButton() {
         return btnRegister;
     }
+
+    // Muestra un diálogo modal informando credenciales incorrectas.
+    // Mientras el diálogo está visible, los campos y botones quedan deshabilitados.
+    public void showIncorrectCredentialsDialog() {
+        // Deshabilitar entrada en la vista principal
+        if (txtEmail != null) txtEmail.setEnabled(false);
+        if (txtPass != null) txtPass.setEnabled(false);
+        if (btnLogin != null) btnLogin.setEnabled(false);
+        if (btnRegister != null) btnRegister.setEnabled(false);
+
+        final Dialog dialog = new Dialog(this, "Error de autenticación", true);
+        dialog.setLayout(new GridBagLayout());
+        GridBagConstraints dgbc = new GridBagConstraints();
+        dgbc.insets = new Insets(10,10,10,10);
+        dgbc.gridx = 0; dgbc.gridy = 0;
+
+        Label msg = new Label("Usuario o contraseña incorrecta, por favor intente nuevamente");
+        msg.setFont(new Font("Arial", Font.PLAIN, 14));
+        dialog.add(msg, dgbc);
+
+        Button ok = new Button("Aceptar");
+        ok.setFont(new Font("Arial", Font.BOLD, 12));
+        dgbc.gridy = 1;
+        dialog.add(ok, dgbc);
+
+        // Re-habilitar componentes cuando se cierre el diálogo
+        Runnable restore = () -> {
+            if (txtEmail != null) txtEmail.setEnabled(true);
+            if (txtPass != null) txtPass.setEnabled(true);
+            if (btnLogin != null) btnLogin.setEnabled(true);
+            if (btnRegister != null) btnRegister.setEnabled(true);
+        };
+
+        ok.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.setVisible(false);
+                dialog.dispose();
+                restore.run();
+            }
+        });
+
+        dialog.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dialog.setVisible(false);
+                dialog.dispose();
+                restore.run();
+            }
+        });
+
+        dialog.pack();
+        dialog.setResizable(false);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true); // modal: bloqueará interacción hasta cerrarse
+    }
     // Método main para probar la vista
     public static void main(String[] args) {
         WelcomeView view = new WelcomeView();
         view.setVisible(true);
+            // Mostrar diálogo modal de credenciales incorrectas al inicio (modo prueba)
+            view.showIncorrectCredentialsDialog();
     }
 }
