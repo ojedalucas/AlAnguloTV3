@@ -113,15 +113,11 @@ public class LoadingView extends Frame {
             g.drawString(suggestion3, (width - fm.stringWidth(suggestion3)) / 2, textY + 2 * fm.getHeight());
             g.drawString(suggestion4, (width - fm.stringWidth(suggestion4)) / 2, textY + 3 * fm.getHeight());
 
-            // Rectángulo rojo pequeño
-            g.setColor(Color.RED);
-            int redRectSize = 20;
-            g.fillRect(yellowBoxX + (yellowBoxWidth / 2) - (redRectSize / 2), yellowBoxY + 5, redRectSize, redRectSize);
         }
     }
 
     public static void main(String[] args) {
-         LoadingView view = new LoadingView();
-         view.setVisible(true);
-     }
+        LoadingView view = new LoadingView();
+        view.setVisible(true);
+    }
 }

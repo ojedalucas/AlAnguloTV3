@@ -5,6 +5,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class WelcomeView extends Frame {
+    // Campos reutilizables para permitir acceso desde métodos
+    private TextField txtEmail;
+    private TextField txtPass;
+    private Button btnLogin;
+    private Button btnRegister;
 
     public WelcomeView() {
         // 1. Configuración básica de la ventana
@@ -53,7 +58,7 @@ public class WelcomeView extends Frame {
         formPanel.add(lblEmail, gbc);
 
         // Campo de texto E-mail
-        TextField txtEmail = new TextField(20);
+        txtEmail = new TextField(20);
         gbc.gridx = 1; gbc.gridy = 0; // Columna 1, Fila 0
         gbc.weightx = 0.7; // Ocupa más espacio
         formPanel.add(txtEmail, gbc);
@@ -66,14 +71,14 @@ public class WelcomeView extends Frame {
         formPanel.add(lblPass, gbc);
 
         // Campo de texto Password
-        TextField txtPass = new TextField(20);
+        txtPass = new TextField(20);
         txtPass.setEchoChar('*');
         gbc.gridx = 1; gbc.gridy = 1;
         gbc.weightx = 0.7;
         formPanel.add(txtPass, gbc);
 
-        // Botón Ingresar (Azul en la imagen)
-        Button btnLogin = new Button("Ingresar");
+        // Botón Ingresar
+        btnLogin = new Button("Ingresar");
         btnLogin.setBackground(new Color(30, 144, 255));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFont(new Font("Arial", Font.BOLD, 12));
@@ -88,7 +93,7 @@ public class WelcomeView extends Frame {
         // Panel inferior para "Registro"
         Panel registerPanel = new Panel(new FlowLayout(FlowLayout.CENTER));
         Label lblNoUser = new Label("¿Aún no sos usuario?");
-        Button btnRegister = new Button("Registrate");
+        btnRegister = new Button("Registrate");
         btnRegister.setBackground(new Color(30, 144, 255));
         btnRegister.setForeground(Color.WHITE);
         btnRegister.setFont(new Font("Arial", Font.BOLD, 12));
@@ -138,6 +143,28 @@ public class WelcomeView extends Frame {
         }
     }
 
+    // Métodos públicos para uso de botones
+
+    public String getEmail() {
+        return txtEmail.getText();
+    }
+
+    public String getPassword() {
+        return txtPass.getText();
+    }
+
+    public void clearFields() {
+        txtEmail.setText("");
+        txtPass.setText("");
+    }
+
+    public Button getLoginButton() {
+        return btnLogin;
+    }
+
+    public Button getRegisterButton() {
+        return btnRegister;
+    }
     // Método main para probar la vista
     public static void main(String[] args) {
         WelcomeView view = new WelcomeView();

@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class InfoView extends Frame{
+    // Botón continuar en la parte inferior
+    private Button btnContinuar;
+
     public InfoView() {
         // Configuro ventana
         super("Plataforma de Streaming  -   Información");
@@ -44,6 +47,27 @@ public class InfoView extends Frame{
         gbc.weighty = 1;
         add(resumenLabel, gbc);
 
+        // --- Botón "Continuar" centrado en la parte inferior ---
+        btnContinuar = new Button("Continuar");
+        btnContinuar.setBackground(new Color(30, 144, 255)); // gris claro
+        btnContinuar.setForeground(Color.WHITE);
+        btnContinuar.setFont(new Font("Arial", Font.BOLD, 16));
+        btnContinuar.setPreferredSize(new Dimension(160, 40));
+
+        gbc.gridy = 3;
+        gbc.weighty = 0; // no expandir
+        gbc.anchor = GridBagConstraints.PAGE_END;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridx = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        add(btnContinuar, gbc);
+
+
+    }
+
+    // Método público para obtener el botón "Continuar"
+    public Button getContinuarButton() {
+        return btnContinuar;
     }
 
     public static void main(String[] args) {

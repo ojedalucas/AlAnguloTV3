@@ -1,9 +1,15 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ExitoView extends Frame {
+    // Componentes reutilizables
+    private Label texto1;
+    private Label texto2;
+    private Button continuar;
+
     public ExitoView(){
         // Configuro ventana
         super("Información");
@@ -25,11 +31,11 @@ public class ExitoView extends Frame {
         gbc.insets = new Insets(0, 20, 0, 20);
 
         // Texto
-        Label texto1 = new Label("Se registró correctamente su calificación.");
+        texto1 = new Label("Se registró correctamente su calificación.");
         texto1.setFont(new Font("Arial", Font.PLAIN, 16));
         texto1.setAlignment(Label.CENTER);
         add(texto1, gbc);
-        Label texto2 = new Label("Muchas gracias.");
+        texto2 = new Label("Muchas gracias.");
         texto2.setFont(new Font("Arial", Font.PLAIN, 16));
         texto2.setAlignment(Label.CENTER);
         gbc.gridy = 1;
@@ -37,7 +43,7 @@ public class ExitoView extends Frame {
 
 
         // Botón
-        Button continuar = new Button("Continuar");
+        continuar = new Button("Continuar");
         continuar.setBackground(new Color(30, 144, 255));
         continuar.setForeground(Color.WHITE);
         Font continuarFont = new Font("Arial", Font.BOLD, 16);
@@ -45,6 +51,12 @@ public class ExitoView extends Frame {
         gbc.insets = new Insets(20,20,20,20);
         gbc.gridy = 2;
         add(continuar, gbc);
+    }
+
+    // Métodos públicos similares a otras vistas
+
+    public Button getContinuarButton() {
+        return continuar;
     }
 
     public static void main(String[] args) {

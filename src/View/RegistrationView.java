@@ -6,6 +6,14 @@ import java.awt.event.WindowEvent;
 
 public class RegistrationView extends Frame {
 
+    // Campos reutilizables
+    private TextField txtNombre;
+    private TextField txtApellido;
+    private TextField txtDNI;
+    private TextField txtEmail;
+    private TextField txtPass;
+    private Button btnRegistrar;
+
     public RegistrationView() {
         // 1. Configuración básica de la ventana
         super("Plataforma de Streaming - Registro");
@@ -41,7 +49,7 @@ public class RegistrationView extends Frame {
         formPanel.add(lblNombre, gbc);
 
         gbc.gridx = 1; gbc.gridy = 0; // Columna 1, Fila 0
-        TextField txtNombre = new TextField(25);
+        txtNombre = new TextField(25);
         txtNombre.setFont(textFont);
         formPanel.add(txtNombre, gbc);
 
@@ -52,7 +60,7 @@ public class RegistrationView extends Frame {
         formPanel.add(lblApellido, gbc);
 
         gbc.gridx = 1; gbc.gridy = 1;
-        TextField txtApellido = new TextField(25);
+        txtApellido = new TextField(25);
         txtApellido.setFont(textFont);
         formPanel.add(txtApellido, gbc);
 
@@ -63,7 +71,7 @@ public class RegistrationView extends Frame {
         formPanel.add(lblDNI, gbc);
 
         gbc.gridx = 1; gbc.gridy = 2;
-        TextField txtDNI = new TextField(25);
+        txtDNI = new TextField(25);
         txtDNI.setFont(textFont);
         formPanel.add(txtDNI, gbc);
 
@@ -74,7 +82,7 @@ public class RegistrationView extends Frame {
         formPanel.add(lblEmail, gbc);
 
         gbc.gridx = 1; gbc.gridy = 3;
-        TextField txtEmail = new TextField(25);
+        txtEmail = new TextField(25);
         txtEmail.setFont(textFont);
         formPanel.add(txtEmail, gbc);
 
@@ -85,7 +93,7 @@ public class RegistrationView extends Frame {
         formPanel.add(lblPass, gbc);
 
         gbc.gridx = 1; gbc.gridy = 4;
-        TextField txtPass = new TextField(25);
+        txtPass = new TextField(25);
         txtPass.setFont(textFont);
         txtPass.setEchoChar('*'); // Ocultar caracteres
         formPanel.add(txtPass, gbc);
@@ -97,7 +105,7 @@ public class RegistrationView extends Frame {
         gbc.anchor = GridBagConstraints.CENTER; // Centrar
         gbc.insets = new Insets(30, 0, 0, 0); // Margen extra arriba para separarlo
 
-        Button btnRegistrar = new Button("Registrar");
+        btnRegistrar = new Button("Registrar");
         btnRegistrar.setFont(new Font("Arial", Font.BOLD, 14));
         btnRegistrar.setBackground(new Color(0, 160, 230)); // Azul similar a la imagen
         btnRegistrar.setForeground(Color.WHITE);
@@ -114,6 +122,39 @@ public class RegistrationView extends Frame {
                 System.exit(0);
             }
         });
+    }
+
+    // Métodos públicos para acceder y manipular campos y botón
+    public String getNombre() {
+        return txtNombre.getText();
+    }
+
+    public String getApellido() {
+        return txtApellido.getText();
+    }
+
+    public String getDNI() {
+        return txtDNI.getText();
+    }
+
+    public String getEmail() {
+        return txtEmail.getText();
+    }
+
+    public String getPassword() {
+        return txtPass.getText();
+    }
+
+    public void clearFields() {
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtDNI.setText("");
+        txtEmail.setText("");
+        txtPass.setText("");
+    }
+
+    public Button getRegisterButton() {
+        return btnRegistrar;
     }
 
     public static void main(String[] args) {
