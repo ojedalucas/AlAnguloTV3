@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class MainMenuView extends Frame {
 
-    // Variables de componentes
+    // Componentes Generales
     private Label lblTituloPrincipal;
     private Label lblSubtitulo;
     private Label lblNombreUsuario;
@@ -16,26 +16,22 @@ public class MainMenuView extends Frame {
     private Button btnBuscar;
     private Button btnCerrarSesion;
 
-    // Estructura de la Tabla
+    // Componentes de la Tabla
     private Panel panelContenedorFilas;
     private ScrollPane scrollPaneTabla;
     private Panel panelCabeceraTabla;
 
-    // Lista de botones
+    // --- LISTA DE BOTONES PARA EL CONTROLADOR ---
+    // Esta lista almacenará las referencias a los botones creados dinámicamente
     private ArrayList<Button> listaBotonesCalificar;
 
-    // --- CONFIGURACIÓN DE ANCHOS FIJOS (en Píxeles) ---
-    // Hemos aumentado los anchos para llenar la pantalla de 1024px
-    // Poster(80) + Titulo(250) + Genero(150) + Resumen(400) + Boton(100) = 980px aprox
+    // Configuración de anchos fijos de columnas
     private final int[] COL_WIDTHS = {80, 250, 150, 400, 100};
 
     public MainMenuView() {
         super("Plataforma de Streaming - Bienvenida");
         
-        // Tamaño inicial
         setSize(1024, 768);
-        
-        // Importante: BorderLayout en el Frame principal estira los componentes
         setLayout(new BorderLayout());
         setBackground(Color.white);
         
@@ -43,6 +39,7 @@ public class MainMenuView extends Frame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
+        // Inicializamos la lista vacía
         listaBotonesCalificar = new ArrayList<>();
 
         inicializarComponentes();
@@ -119,125 +116,91 @@ public class MainMenuView extends Frame {
         panelSub.add(lblSubtitulo);
         panelCentral.add(panelSub, BorderLayout.NORTH);
 
-        // ==========================================
-        // 1. CABECERA FIJA
-        // ==========================================
-        // Usamos FlowLayout con gap 0 alineado a la izquierda para pegar columnas
+        // Cabecera Fija
         panelCabeceraTabla = new Panel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         panelCabeceraTabla.setBackground(new Color(220, 220, 220));
         
         String[] titulos = {"Poster", "Titulo", "Genero", "Resumen", "Accion"};
-        
         for(int i=0; i<titulos.length; i++) {
             Panel celda = new Panel(new BorderLayout());
             celda.setPreferredSize(new Dimension(COL_WIDTHS[i], 40));
-            
             Label l = new Label(titulos[i], Label.CENTER);
             l.setFont(new Font("Arial", Font.BOLD, 13));
-            
             celda.add(l, BorderLayout.CENTER);
             panelCabeceraTabla.add(celda);
         }
 
-        // ==========================================
-        // 2. CUERPO SCROLLEABLE (Ocupar todo el espacio)
-        // ==========================================
+        // Cuerpo Scrolleable
         scrollPaneTabla = new ScrollPane(ScrollPane.SCROLLBARS_AS_NEEDED);
-        
-        // Contenedor vertical de filas
         panelContenedorFilas = new Panel();
-        // GridBagLayout aquí permite apilar verticalmente sin comprimir el alto
         panelContenedorFilas.setLayout(new GridBagLayout());
         panelContenedorFilas.setBackground(Color.white);
         
         scrollPaneTabla.add(panelContenedorFilas);
 
-        // PANEL TABLA: Une cabecera (Norte) y Scroll (Centro)
         Panel panelTabla = new Panel(new BorderLayout());
         panelTabla.add(panelCabeceraTabla, BorderLayout.NORTH);
         panelTabla.add(scrollPaneTabla, BorderLayout.CENTER);
 
-        // AL AÑADIR AL CENTER DEL LAYOUT PRINCIPAL, SE ESTIRA AUTOMÁTICAMENTE
-        // Eliminamos paneles intermedios que restringían el tamaño.
         panelCentral.add(panelTabla, BorderLayout.CENTER);
-        
-        // Añadimos el panel central al Frame
         add(panelCentral, BorderLayout.CENTER);
     }
 
     // ===========================================================================
-    // SETTERS Y GETTERS
+    // MÉTODO PARA OBTENER LA LISTA DE BOTONES (CRUCIAL PARA EL CONTROLADOR)
     // ===========================================================================
-    public void setTituloPrincipal(String texto) { lblTituloPrincipal.setText(texto); }
-    public void setSubtitulo(String texto) { lblSubtitulo.setText(texto); }
-    public void setNombreUsuario(String nombre) { 
-        lblNombreUsuario.setText(nombre); 
-        validate();
-    }
     
-    public Button getBtnBuscar() { return btnBuscar; }
-    public Button getBtnCerrarSesion() { return btnCerrarSesion; }
-    public TextField getTxtBuscador() { return txtBuscador; }
-    public ArrayList<Button> getListaBotonesCalificar() { return listaBotonesCalificar; }
+    /**
+     * Retorna la lista de botones generados dinámicamente en la tabla.
+     * El Controlador usará esta lista para añadir ActionListener a cada botón.
+     */
+    public ArrayList<Button> getListaBotonesCalificar() {
+        return listaBotonesCalificar;
+    }
 
     // ===========================================================================
-    // ACTUALIZAR TABLA
+    // ACTUALIZACIÓN DE DATOS
     // ===========================================================================
+
     public void actualizarListaPeliculas(Object[][] datosPeliculas) {
         panelContenedorFilas.removeAll();
+        
+        // 1. Limpiamos la lista anterior para no guardar referencias a botones viejos
         listaBotonesCalificar.clear();
 
-        // Configuración para apilar filas verticalmente
         GridBagConstraints gbcRow = new GridBagConstraints();
-        gbcRow.gridx = 0;
-        gbcRow.weightx = 1.0;
-        gbcRow.fill = GridBagConstraints.HORIZONTAL; // Estirar horizontalmente
-        gbcRow.anchor = GridBagConstraints.NORTH;    // Anclar arriba
+        gbcRow.gridx = 0; gbcRow.weightx = 1.0;
+        gbcRow.fill = GridBagConstraints.HORIZONTAL; gbcRow.anchor = GridBagConstraints.NORTH;
         
         int filaIndex = 0;
 
         for (Object[] datos : datosPeliculas) {
-            // Cada fila es un panel con FlowLayout ajustado a los anchos fijos
             Panel rowPanel = new Panel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             rowPanel.setBackground(Color.white);
             
-            // --- 0. POSTER ---
-            Panel pnlPoster = new Panel(new FlowLayout(FlowLayout.CENTER));
-            pnlPoster.setPreferredSize(new Dimension(COL_WIDTHS[0], 60));
-            
-            Panel posterBox = new Panel();
-            posterBox.setBackground(Color.lightGray);
-            posterBox.setPreferredSize(new Dimension(40, 50));
-            pnlPoster.add(posterBox);
-            rowPanel.add(pnlPoster);
+            String titulo = (String) datos[0];
+            String genero = (String) datos[1];
+            String resumen = (String) datos[2];
+            boolean activo = (Boolean) datos[3];
 
-            // --- 1. TITULO ---
-            Label lblTitulo = new Label((String) datos[0], Label.LEFT);
-            lblTitulo.setPreferredSize(new Dimension(COL_WIDTHS[1], 60));
-            lblTitulo.setFont(new Font("Arial", Font.BOLD, 12));
-            rowPanel.add(lblTitulo);
+            // Poster, Título, Género, Resumen (Mismo código de layout anterior...)
+            agregarCelda(rowPanel, new Panel(), COL_WIDTHS[0], true); // Placeholder poster
+            agregarCelda(rowPanel, new Label(titulo), COL_WIDTHS[1], false);
+            agregarCelda(rowPanel, new Label(genero), COL_WIDTHS[2], false);
+            agregarCelda(rowPanel, new Label(resumen), COL_WIDTHS[3], false);
 
-            // --- 2. GENERO ---
-            Label lblGenero = new Label((String) datos[1], Label.LEFT);
-            lblGenero.setPreferredSize(new Dimension(COL_WIDTHS[2], 60));
-            rowPanel.add(lblGenero);
-
-            // --- 3. RESUMEN ---
-            Label lblResumen = new Label((String) datos[2], Label.LEFT);
-            lblResumen.setPreferredSize(new Dimension(COL_WIDTHS[3], 60));
-            rowPanel.add(lblResumen);
-
-            // --- 4. BOTON ---
+            // --- CREACIÓN DEL BOTÓN ---
             Panel pnlBoton = new Panel(new FlowLayout(FlowLayout.CENTER));
             pnlBoton.setPreferredSize(new Dimension(COL_WIDTHS[4], 60));
             
             Button btnAccion = new Button("Calificar");
             btnAccion.setPreferredSize(new Dimension(80, 30));
-            boolean activo = (Boolean) datos[3];
             
             if (activo) {
                 btnAccion.setBackground(new Color(33, 150, 243));
                 btnAccion.setForeground(Color.white);
+                // IMPORTANTE: Seteamos el comando con el Título o ID único de la película
+                btnAccion.setActionCommand(titulo); 
             } else {
                 btnAccion.setBackground(Color.gray);
                 btnAccion.setEnabled(false);
@@ -245,26 +208,47 @@ public class MainMenuView extends Frame {
             
             pnlBoton.add(btnAccion);
             rowPanel.add(pnlBoton);
+
+            // 2. AGREGAMOS EL BOTÓN A LA LISTA QUE DEVOLVEREMOS AL CONTROLADOR
             listaBotonesCalificar.add(btnAccion);
 
-            // Añadir fila al contenedor vertical
             gbcRow.gridy = filaIndex;
             panelContenedorFilas.add(rowPanel, gbcRow);
-            
             filaIndex++;
         }
-
-        // Espaciador final (Push) para que las filas se queden arriba si hay pocas
+        
         GridBagConstraints gbcFiller = new GridBagConstraints();
-        gbcFiller.gridx = 0; gbcFiller.gridy = filaIndex;
-        gbcFiller.weighty = 1.0; // Este peso absorbe el espacio vertical sobrante
+        gbcFiller.gridx = 0; gbcFiller.gridy = filaIndex; gbcFiller.weighty = 1.0; 
         panelContenedorFilas.add(new Panel(), gbcFiller);
 
-        // Validar cambios para repintar
         panelContenedorFilas.validate();
         scrollPaneTabla.validate();
     }
 
+    // Método auxiliar para limpiar código de añadir celdas (Labels o Paneles)
+    private void agregarCelda(Panel row, Component comp, int ancho, boolean esPoster) {
+        if(esPoster) {
+            Panel p = new Panel(new FlowLayout(FlowLayout.CENTER));
+            p.setPreferredSize(new Dimension(ancho, 60));
+            Panel box = new Panel(); box.setBackground(Color.lightGray); box.setPreferredSize(new Dimension(40, 50));
+            p.add(box);
+            row.add(p);
+        } else {
+            // Asumimos que es Label
+            if(comp instanceof Label) {
+                ((Label)comp).setAlignment(Label.LEFT);
+                comp.setFont(new Font("Arial", Font.BOLD, 12));
+            }
+            comp.setPreferredSize(new Dimension(ancho, 60));
+            row.add(comp);
+        }
+    }
+    
+    // Setters
+    public void setNombreUsuario(String nombre) { lblNombreUsuario.setText(nombre); validate(); }
+    public Button getBtnBuscar() { return btnBuscar; }
+    public Button getBtnCerrarSesion() { return btnCerrarSesion; }
+    public TextField getTxtBuscador() { return txtBuscador; }
 
     // MAIN DE PRUEBA
     public static void main(String[] args) {

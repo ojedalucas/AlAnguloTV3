@@ -3,8 +3,13 @@ package View;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.URL;
 
 public class LoadingView extends Frame {
+
+    // Variable privada con la ruta de la imagen
+    // Asegúrate de que este archivo exista en tu carpeta de recursos (src/imagenes)
+    private String imgFileName = "Image/LoadingViewPrincipalImage.jpg"; 
 
     public LoadingView() {
         // 1. Configuración básica de la ventana
@@ -34,15 +39,15 @@ public class LoadingView extends Frame {
         welcomeTitle.setFont(new Font("Arial", Font.BOLD, 22)); // Más grande y en negrita
         contentPanel.add(welcomeTitle, gbc);
 
-        // --- FILA 2: Espacio para la imagen de carga ---
+        // --- FILA 2: Espacio para la imagen de carga (AHORA CON IMAGEN REAL) ---
         gbc.gridx = 0; gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.CENTER; // Centrado
         gbc.fill = GridBagConstraints.BOTH; // Rellenar espacio disponible
         gbc.weightx = 1.0; gbc.weighty = 1.0; // Expandirse vertical y horizontalmente
 
-        // Usamos un Canvas personalizado para el placeholder de la imagen
+        // Usamos el Canvas personalizado modificado
         LoadingImagePlaceholder imagePlaceholder = new LoadingImagePlaceholder();
-        imagePlaceholder.setPreferredSize(new Dimension(300, 200)); // Tamaño sugerido
+        imagePlaceholder.setPreferredSize(new Dimension(300, 200)); // Tamaño sugerido inicial
         contentPanel.add(imagePlaceholder, gbc);
         
         // --- FILA 3: Mensaje "Un momento por favor....." ---
@@ -55,9 +60,11 @@ public class LoadingView extends Frame {
         contentPanel.add(loadingMessage, gbc);
 
         // Agregar el panel de contenido a la ventana principal
-        // Aquí usamos otro GridBagLayout para centrar el contentPanel en el Frame
         GridBagConstraints frameGbc = new GridBagConstraints();
         frameGbc.anchor = GridBagConstraints.CENTER;
+        frameGbc.fill = GridBagConstraints.BOTH; // Permitir que el panel interno crezca
+        frameGbc.weightx = 1.0;
+        frameGbc.weighty = 1.0;
         add(contentPanel, frameGbc);
 
         // --- Lógica para cerrar la ventana ---
@@ -68,51 +75,67 @@ public class LoadingView extends Frame {
         });
     }
 
-    // Clase interna para dibujar el placeholder de la imagen de carga
+    // Clase interna MODIFICADA para cargar y dibujar la imagen
     class LoadingImagePlaceholder extends Canvas {
+        private Image img;
+
+        public LoadingImagePlaceholder() {
+            // Cargar imagen usando la variable privada de la clase externa
+            URL imgURL = getClass().getClassLoader().getResource(imgFileName);
+
+            if (imgURL != null) {
+                img = Toolkit.getDefaultToolkit().getImage(imgURL);
+                
+                // Asegurar carga completa antes de pintar
+                MediaTracker tracker = new MediaTracker(this);
+                tracker.addImage(img, 0);
+                try {
+                    tracker.waitForAll();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.err.println("Error: No se encontró la imagen en: " + imgFileName);
+            }
+        }
+
+        @Override
         public void paint(Graphics g) {
-            super.paint(g); // Llama al método paint de la superclase
+            super.paint(g);
 
-            int width = getWidth();
-            int height = getHeight();
+            if (img == null) return;
 
-            // Dibujar el recuadro gris y el borde
-            g.setColor(Color.LIGHT_GRAY);
-            g.drawRect(0, 0, width - 1, height - 1);
+            int canvasWidth = getWidth();
+            int canvasHeight = getHeight();
+            int imgWidth = img.getWidth(this);
+            int imgHeight = img.getHeight(this);
 
-            // Texto "Loading image"
-            g.setColor(Color.DARK_GRAY);
-            g.setFont(new Font("Arial", Font.ITALIC, 14));
-            String loadingText = "\"Loading image\"";
-            FontMetrics fm = g.getFontMetrics();
-            int xLoading = (width - fm.stringWidth(loadingText)) / 2;
-            int yLoading = fm.getHeight() + 10; // Un poco abajo del top
-            g.drawString(loadingText, xLoading, yLoading);
+            if (imgWidth <= 0 || imgHeight <= 0) return;
 
-            // Recuadro amarillo para el texto de sugerencia
-            g.setColor(new Color(255, 255, 204)); // Amarillo claro
-            int yellowBoxWidth = (int)(width * 0.7);
-            int yellowBoxHeight = (int)(height * 0.4);
-            int yellowBoxX = (width - yellowBoxWidth) / 2;
-            int yellowBoxY = (height / 2) - (yellowBoxHeight / 2) + 20; // Centrado verticalmente
-            g.fillRect(yellowBoxX, yellowBoxY, yellowBoxWidth, yellowBoxHeight);
-            g.setColor(Color.GRAY);
-            g.drawRect(yellowBoxX, yellowBoxY, yellowBoxWidth, yellowBoxHeight);
+            // --- Lógica de Aspect Fill (Escalar y Recortar) ---
+            
+            // Calculamos la escala necesaria para cada dimensión
+            double scaleX = (double) canvasWidth / imgWidth;
+            double scaleY = (double) canvasHeight / imgHeight;
 
-            // Texto de sugerencia dentro del recuadro amarillo
-            g.setColor(Color.BLACK);
-            g.setFont(new Font("Arial", Font.PLAIN, 12));
-            String suggestion1 = "Elija alguna imagen para";
-            String suggestion2 = "mostrar mientras se";
-            String suggestion3 = "realiza el proceso en";
-            String suggestion4 = "segundo plano";
+            // Elegimos la escala MAYOR para asegurar que se cubra todo el canvas
+            // (esto causará que la otra dimensión se salga de los bordes = recorte)
+            double scale = Math.max(scaleX, scaleY);
 
-            int textY = yellowBoxY + fm.getHeight() + 5;
-            g.drawString(suggestion1, (width - fm.stringWidth(suggestion1)) / 2, textY);
-            g.drawString(suggestion2, (width - fm.stringWidth(suggestion2)) / 2, textY + fm.getHeight());
-            g.drawString(suggestion3, (width - fm.stringWidth(suggestion3)) / 2, textY + 2 * fm.getHeight());
-            g.drawString(suggestion4, (width - fm.stringWidth(suggestion4)) / 2, textY + 3 * fm.getHeight());
+            // Nuevas dimensiones
+            int scaledWidth = (int) Math.ceil(imgWidth * scale);
+            int scaledHeight = (int) Math.ceil(imgHeight * scale);
 
+            // Coordenadas para centrar la imagen (pueden ser negativas para recortar)
+            int x = (canvasWidth - scaledWidth) / 2;
+            int y = (canvasHeight - scaledHeight) / 2;
+
+            Graphics2D g2d = (Graphics2D) g;
+            // Suavizado de imagen para mejor calidad
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            
+            // Dibujar imagen
+            g2d.drawImage(img, x, y, scaledWidth, scaledHeight, this);
         }
     }
 
