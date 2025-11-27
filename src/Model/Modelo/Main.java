@@ -1,4 +1,4 @@
-package Modelo;
+package Model.Modelo;
 
 import java.sql.*;
 import java.util.Scanner;

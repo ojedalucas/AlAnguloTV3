@@ -1,10 +1,11 @@
-package Database;
+package Model.Database;
 
-import Modelo.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import Model.Modelo.*;
 
 public class ReseniaDAOjdbl implements ReseniaDAO {
 	private Connection connection;

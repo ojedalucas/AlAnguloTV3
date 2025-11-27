@@ -1,9 +1,9 @@
-package Database;
+package Model.Database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Modelo.DatosPersonales;
+import Model.Modelo.DatosPersonales;
 
 public interface DatosPersonalesDAO {
 	//retorno true si existe

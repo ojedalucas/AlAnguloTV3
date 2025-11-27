@@ -1,9 +1,9 @@
-package Database;
+package Model.Database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Modelo.Resenia;
+import Model.Modelo.Resenia;
 
 public interface ReseniaDAO {
 

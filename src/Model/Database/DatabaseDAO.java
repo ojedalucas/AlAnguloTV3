@@ -1,4 +1,4 @@
-package Database;
+package Model.Database;
 
 import java.sql.*;
 
@@ -10,5 +10,5 @@ public interface DatabaseDAO {
 	public void apagar() throws SQLException;
 	
 	public Connection getConnection();
-//adad
+
 }

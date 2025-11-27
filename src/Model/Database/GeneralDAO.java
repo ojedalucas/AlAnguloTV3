@@ -1,12 +1,12 @@
-package Database;
+package Model.Database;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import Comparator.*;
 
-import Modelo.*;
+import Model.Comparator.*;
+import Model.Modelo.*;
 
 public class GeneralDAO {
 	private DatabaseDAO database;

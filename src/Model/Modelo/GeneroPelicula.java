@@ -1,4 +1,4 @@
-package Modelo;
+package Model.Modelo;
 
 //asjcsjkabv
 

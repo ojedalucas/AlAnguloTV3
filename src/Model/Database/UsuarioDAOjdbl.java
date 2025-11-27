@@ -1,9 +1,9 @@
-package Database;
+package Model.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Modelo.*;
+import Model.Modelo.*;
 
 public class UsuarioDAOjdbl implements UsuarioDAO{
 	private Connection connection;
@@ -128,6 +128,10 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
         }
         return usuario;
     }
+
+	public Usuario iniciarSesion(String email, String contrasenia){
+		return null;
+	}
 	
 }
 

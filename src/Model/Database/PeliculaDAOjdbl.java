@@ -1,10 +1,10 @@
-package Database;
+package Model.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Modelo.Pelicula;
-import Modelo.GeneroPelicula;
+import Model.Modelo.GeneroPelicula;
+import Model.Modelo.Pelicula;
 
 public class PeliculaDAOjdbl implements PeliculaDAO {
 	private Connection connection;

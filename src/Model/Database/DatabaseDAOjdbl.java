@@ -1,4 +1,4 @@
-package Database;
+package Model.Database;
 
 import java.io.File;
 import java.sql.*;

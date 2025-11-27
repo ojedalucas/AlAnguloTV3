@@ -1,15 +1,15 @@
-package Database;
+package Model.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Modelo.*;
+import Model.Modelo.*;
 
 public interface UsuarioDAO {
 	public void cargarUsuario(Usuario u) throws SQLException;
 	public Usuario buscarPorNombreUsuario(String u) throws SQLException;
 	//public ArrayList<Usuario> listarUsuarios();
-	
+	public Usuario iniciarSesion(String email, String contrasenia);
 
 	public boolean verificarNomUsuario(String u) throws SQLException;
 	public boolean verificarMail(String m)throws SQLException;

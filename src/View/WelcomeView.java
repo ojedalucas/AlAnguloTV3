@@ -40,7 +40,7 @@ public class WelcomeView extends Frame {
         Font titleFont = new Font("Arial", Font.BOLD, 32);
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font inputFont = new Font("Arial", Font.PLAIN, 16);
-        Font btnFont = new Font("Arial", Font.BOLD, 14);
+        //Font btnFont = new Font("Arial", Font.BOLD, 14);
 
         // 1. Título Principal
         Label titleLabel = new Label("Iniciar Sesión");
@@ -203,8 +203,8 @@ public class WelcomeView extends Frame {
         txtPass.setText("");
         lblError.setText(""); 
     }
-    public Button getLoginButton() { return btnLogin; }
-    public Button getRegisterButton() { return btnRegister; }
+    public void addLoginListener(ActionListener listener){btnLogin.addActionListener(listener);}
+    public void addRegisterListener(ActionListener listener){btnRegister.addActionListener(listener);}
 
     public void showLoginError() {
         lblError.setText("Usuario o contraseña incorrecta");
