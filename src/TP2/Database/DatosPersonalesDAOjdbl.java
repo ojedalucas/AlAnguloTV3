@@ -1,9 +1,9 @@
-package Model.Database;
+package TP2.Database;
 
 import java.sql.*;
 import java.util.*;
 
-import Model.Modelo.DatosPersonales;
+import TP2.Modelo.DatosPersonales;
 
 public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 	private Connection connection;

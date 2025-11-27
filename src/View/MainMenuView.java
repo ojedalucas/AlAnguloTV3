@@ -307,4 +307,25 @@ public class MainMenuView extends Frame {
         
         v.actualizarListaPeliculas(data);
     }
+
+    // En tu clase Controller:
+
+    // // 1. Mandas los datos a la vista
+    // view.actualizarListaPeliculas(datosDelModelo);
+
+    // // 2. Pides la lista de botones que se acaban de crear
+    // ArrayList<Button> botones = view.getListaBotonesCalificar();
+
+    // // 3. Iteras y les das funcionalidad
+    // for (Button btn : botones) {
+    //     btn.addActionListener(new ActionListener() {
+    //         @Override
+    //         public void actionPerformed(ActionEvent e) {
+    //             // Gracias al setActionCommand en la vista, sabemos qué película es
+    //             String tituloPelicula = e.getActionCommand();
+    //             System.out.println("Abriendo review para: " + tituloPelicula);
+                
+    //             // Aqui tu logica para abrir la nueva ventana...
+    //         }
+    //     });
 }

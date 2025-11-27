@@ -1,8 +1,8 @@
-package Model.Comparator;
+package TP2.Comparator;
 
 import java.util.Comparator;
 
-import Model.Modelo.*;
+import TP2.Modelo.*;
 
 public class ComparatorTitulo implements Comparator<Pelicula> {
 		

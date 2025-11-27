@@ -1,5 +1,5 @@
 import Controller.WelcomeController;
-import Model.Database.UsuarioDAOjdbl;
+import TP2.Database.UsuarioDAOjdbl;
 import View.WelcomeView;
 
 public class Main {

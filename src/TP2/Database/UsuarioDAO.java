@@ -1,9 +1,9 @@
-package Model.Database;
+package TP2.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Model.Modelo.*;
+import TP2.Modelo.*;
 
 public interface UsuarioDAO {
 	public void cargarUsuario(Usuario u) throws SQLException;

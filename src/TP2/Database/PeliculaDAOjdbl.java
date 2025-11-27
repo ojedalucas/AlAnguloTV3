@@ -1,10 +1,10 @@
-package Model.Database;
+package TP2.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import Model.Modelo.GeneroPelicula;
-import Model.Modelo.Pelicula;
+import TP2.Modelo.GeneroPelicula;
+import TP2.Modelo.Pelicula;
 
 public class PeliculaDAOjdbl implements PeliculaDAO {
 	private Connection connection;

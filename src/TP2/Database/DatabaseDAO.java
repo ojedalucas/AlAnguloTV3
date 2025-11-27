@@ -1,4 +1,4 @@
-package Model.Database;
+package TP2.Database;
 
 import java.sql.*;
 

@@ -1,4 +1,4 @@
-package Model.Modelo;
+package TP2.Modelo;
 import java.time.LocalDateTime;
 
 public class Resenia {

@@ -1,11 +1,11 @@
-package Model.Database;
+package TP2.Database;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import Model.Modelo.*;
+import TP2.Modelo.*;
 
 public class ReseniaDAOjdbl implements ReseniaDAO {
 	private Connection connection;

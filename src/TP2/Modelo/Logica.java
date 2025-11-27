@@ -1,10 +1,10 @@
-package Model.Modelo;
+package TP2.Modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Model.Database.*;
+import TP2.Database.*;
 
 public class Logica {
 	private GeneralDAO fabrica;

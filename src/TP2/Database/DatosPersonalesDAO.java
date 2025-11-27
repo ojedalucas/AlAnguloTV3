@@ -1,9 +1,9 @@
-package Model.Database;
+package TP2.Database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Model.Modelo.DatosPersonales;
+import TP2.Modelo.DatosPersonales;
 
 public interface DatosPersonalesDAO {
 	//retorno true si existe

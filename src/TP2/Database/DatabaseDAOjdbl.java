@@ -1,4 +1,4 @@
-package Model.Database;
+package TP2.Database;
 
 import java.io.File;
 import java.sql.*;
@@ -11,13 +11,13 @@ public class DatabaseDAOjdbl implements DatabaseDAO{
 	public void iniciar() throws SQLException {
 		try {
             // Carpeta dentro del proyecto
-            File folder = new File("BaseDatos");
+            File folder = new File("Database");
             if (!folder.exists()) {
                 folder.mkdirs(); // crea la carpeta si no existe
             }
 
             // Ruta relativa al archivo
-            connection= DriverManager.getConnection("jdbc:sqlite:BaseDatos\\plataforma.db");
+            connection= DriverManager.getConnection("jdbc:sqlite:Database\\plataforma.db");
             stmt = connection.createStatement();
 
         } catch (SQLException e) {

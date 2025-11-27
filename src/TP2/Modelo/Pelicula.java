@@ -1,4 +1,4 @@
-package Model.Modelo;
+package TP2.Modelo;
 
 public class Pelicula {
 

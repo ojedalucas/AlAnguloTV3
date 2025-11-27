@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Database.UsuarioDAOjdbl;
+import TP2.Database.UsuarioDAOjdbl;
 import View.RegistrationView;
 
 public class RegistrationController {

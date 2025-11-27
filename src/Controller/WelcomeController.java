@@ -3,8 +3,8 @@ package Controller;
 import View.LoadingView;
 import View.RegistrationView;
 import View.WelcomeView;
-import Model.Database.UsuarioDAOjdbl;
-import Model.Modelo.Usuario;
+import TP2.Database.UsuarioDAOjdbl;
+import TP2.Modelo.Usuario;
 
 public class WelcomeController {
     private WelcomeView ventana;
