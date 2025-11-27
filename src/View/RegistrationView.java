@@ -17,104 +17,141 @@ public class RegistrationView extends Frame {
     public RegistrationView() {
         // 1. Configuración básica de la ventana
         super("Plataforma de Streaming - Registro");
-        setSize(600, 500);
+        setSize(600, 650); // Un poco más alta para acomodar el título
         setBackground(Color.WHITE);
-        
-        // Usamos GridBagLayout para centrar todo el formulario en la ventana
-        setLayout(new GridBagLayout());
-        
-        // Centrar ventana en pantalla
         setLocationRelativeTo(null);
 
-        // --- PANEL DEL FORMULARIO ---
-        // Creamos un panel interno para agrupar los campos
-        Panel formPanel = new Panel();
-        formPanel.setLayout(new GridBagLayout());
-        formPanel.setBackground(Color.WHITE);
-
-        // Configuración de restricciones (GridBagConstraints)
+        // Usamos GridBagLayout
+        setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Márgenes: Arriba, Izq, Abajo, Der
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Que los campos se estiren
         
-        // Fuente para las etiquetas
-        Font labelFont = new Font("Arial", Font.BOLD, 14);
-        // Fuente para los campos de texto
-        Font textFont = new Font("Arial", Font.PLAIN, 14);
+        // Fuentes Estandarizadas
+        Font titleFont = new Font("Arial", Font.BOLD, 32);
+        Font labelFont = new Font("Arial", Font.BOLD, 16);
+        Font inputFont = new Font("Arial", Font.PLAIN, 16);
+
+        // --- 0. TÍTULO PRINCIPAL ---
+        Label mainTitle = new Label("Registro de Usuario");
+        mainTitle.setFont(titleFont);
+        mainTitle.setAlignment(Label.CENTER);
+        
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
+        gbc.gridwidth = 2; // Ocupa todo el ancho
+        gbc.insets = new Insets(20, 20, 30, 20); // Margen inferior amplio
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(mainTitle, gbc);
+
+        // --- CONFIGURACIÓN COMÚN PARA EL FORMULARIO ---
+        gbc.gridwidth = 1; // Reseteamos a 1 columna
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        // Insets para los campos: (Arriba, Izq, Abajo, Der)
+        // Separamos un poco más verticalmente
+        Insets labelInsets = new Insets(10, 40, 10, 10); 
+        Insets inputInsets = new Insets(10, 0, 10, 40);
 
         // --- FILA 1: Nombres ---
-        gbc.gridx = 0; gbc.gridy = 0; // Columna 0, Fila 0
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.weightx = 0.0; // La etiqueta no crece
+        gbc.insets = labelInsets;
         Label lblNombre = new Label("Nombres:");
         lblNombre.setFont(labelFont);
-        formPanel.add(lblNombre, gbc);
+        add(lblNombre, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 0; // Columna 1, Fila 0
-        txtNombre = new TextField(25);
-        txtNombre.setFont(textFont);
-        formPanel.add(txtNombre, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0; // El input absorbe el espacio extra
+        gbc.insets = inputInsets;
+        txtNombre = new TextField(20);
+        txtNombre.setFont(inputFont);
+        txtNombre.setPreferredSize(new Dimension(200, 30)); // Altura más cómoda
+        add(txtNombre, gbc);
 
         // --- FILA 2: Apellidos ---
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.weightx = 0.0;
+        gbc.insets = labelInsets;
         Label lblApellido = new Label("Apellidos:");
         lblApellido.setFont(labelFont);
-        formPanel.add(lblApellido, gbc);
+        add(lblApellido, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 1;
-        txtApellido = new TextField(25);
-        txtApellido.setFont(textFont);
-        formPanel.add(txtApellido, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.insets = inputInsets;
+        txtApellido = new TextField(20);
+        txtApellido.setFont(inputFont);
+        txtApellido.setPreferredSize(new Dimension(200, 30));
+        add(txtApellido, gbc);
 
         // --- FILA 3: DNI ---
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        gbc.weightx = 0.0;
+        gbc.insets = labelInsets;
         Label lblDNI = new Label("DNI:");
         lblDNI.setFont(labelFont);
-        formPanel.add(lblDNI, gbc);
+        add(lblDNI, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 2;
-        txtDNI = new TextField(25);
-        txtDNI.setFont(textFont);
-        formPanel.add(txtDNI, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.insets = inputInsets;
+        txtDNI = new TextField(20);
+        txtDNI.setFont(inputFont);
+        txtDNI.setPreferredSize(new Dimension(200, 30));
+        add(txtDNI, gbc);
 
         // --- FILA 4: E-mail ---
-        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        gbc.weightx = 0.0;
+        gbc.insets = labelInsets;
         Label lblEmail = new Label("E-mail:");
         lblEmail.setFont(labelFont);
-        formPanel.add(lblEmail, gbc);
+        add(lblEmail, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 3;
-        txtEmail = new TextField(25);
-        txtEmail.setFont(textFont);
-        formPanel.add(txtEmail, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.insets = inputInsets;
+        txtEmail = new TextField(20);
+        txtEmail.setFont(inputFont);
+        txtEmail.setPreferredSize(new Dimension(200, 30));
+        add(txtEmail, gbc);
 
         // --- FILA 5: Password ---
-        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.weightx = 0.0;
+        gbc.insets = labelInsets;
         Label lblPass = new Label("Password:");
         lblPass.setFont(labelFont);
-        formPanel.add(lblPass, gbc);
+        add(lblPass, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 4;
-        txtPass = new TextField(25);
-        txtPass.setFont(textFont);
-        txtPass.setEchoChar('*'); // Ocultar caracteres
-        formPanel.add(txtPass, gbc);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        gbc.insets = inputInsets;
+        txtPass = new TextField(20);
+        txtPass.setFont(inputFont);
+        txtPass.setEchoChar('*'); 
+        txtPass.setPreferredSize(new Dimension(200, 30));
+        add(txtPass, gbc);
 
         // --- FILA 6: Botón Registrar ---
-        gbc.gridx = 0; gbc.gridy = 5;
-        gbc.gridwidth = 2; // Que ocupe 2 columnas (ancho completo)
-        gbc.fill = GridBagConstraints.NONE; // No estirar, mantener tamaño natural
-        gbc.anchor = GridBagConstraints.CENTER; // Centrar
-        gbc.insets = new Insets(30, 0, 0, 0); // Margen extra arriba para separarlo
-
         btnRegistrar = new Button("Registrar");
-        btnRegistrar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnRegistrar.setBackground(new Color(0, 160, 230)); // Azul similar a la imagen
+        btnRegistrar.setFont(new Font("Arial", Font.BOLD, 16));
+        btnRegistrar.setBackground(new Color(30, 144, 255)); // Azul estandarizado
         btnRegistrar.setForeground(Color.WHITE);
-        btnRegistrar.setPreferredSize(new Dimension(150, 40)); // Tamaño fijo más grande
+        btnRegistrar.setPreferredSize(new Dimension(160, 40)); // Tamaño estandarizado
 
-        formPanel.add(btnRegistrar, gbc);
-
-        // Agregar el panel del formulario a la ventana principal
-        add(formPanel);
+        gbc.gridy = 6;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2; // Ocupa todo el ancho
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(40, 0, 20, 0); // Margen superior grande
+        
+        add(btnRegistrar, gbc);
 
         // 3. Lógica para cerrar la ventana
         addWindowListener(new WindowAdapter() {
@@ -125,25 +162,11 @@ public class RegistrationView extends Frame {
     }
 
     // Métodos públicos para acceder y manipular campos y botón
-    public String getNombre() {
-        return txtNombre.getText();
-    }
-
-    public String getApellido() {
-        return txtApellido.getText();
-    }
-
-    public String getDNI() {
-        return txtDNI.getText();
-    }
-
-    public String getEmail() {
-        return txtEmail.getText();
-    }
-
-    public String getPassword() {
-        return txtPass.getText();
-    }
+    public String getNombre() { return txtNombre.getText(); }
+    public String getApellido() { return txtApellido.getText(); }
+    public String getDNI() { return txtDNI.getText(); }
+    public String getEmail() { return txtEmail.getText(); }
+    public String getPassword() { return txtPass.getText(); }
 
     public void clearFields() {
         txtNombre.setText("");
