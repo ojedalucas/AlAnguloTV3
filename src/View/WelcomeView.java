@@ -5,115 +5,138 @@ import java.awt.event.*;
 import java.net.URL;
 
 public class WelcomeView extends Frame {
+    
     // Campos reutilizables
     private TextField txtEmail;
     private TextField txtPass;
     private Button btnLogin;
     private Button btnRegister;
     private Label lblError;
-    private String imgFileName = "Image/WelcomeViewIPrincipalImage.jpg"; 
+    
+    // Ajuste de ruta para paquete View (con barra al inicio)
+    private String imgFileName = "/Image/WelcomeViewIPrincipalImage.jpg"; 
 
     public WelcomeView() {
         super("Plataforma de Streaming");
-        setSize(800, 500); 
-        setLayout(new BorderLayout());
+        setSize(900, 550); // Un poco más ancha para que la imagen luzca mejor
+        setLayout(new GridLayout(1, 2)); // Dividir pantalla en 2 columnas
         setBackground(Color.WHITE); 
         setLocationRelativeTo(null);
 
-        // --- HEADER ---
-        Panel headerPanel = new Panel(new FlowLayout(FlowLayout.LEFT));
-        headerPanel.setBackground(Color.WHITE);
-        Label titleLabel = new Label("Bienvenido a la Plataforma de Streaming");
-        titleLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        titleLabel.setForeground(Color.GRAY);
-        headerPanel.add(titleLabel);
-        
-        add(headerPanel, BorderLayout.NORTH);
-
-        // --- PANEL CENTRAL ---
-        Panel mainPanel = new Panel(new GridLayout(1, 2)); 
-        
-        // 1. IZQUIERDA: Imagen
+        // --- COLUMNA 1: IMAGEN (IZQUIERDA) ---
         ImagePlaceholder imagePanel = new ImagePlaceholder();
-        mainPanel.add(imagePanel);
+        add(imagePanel);
 
-        // 2. DERECHA: Formulario
+        // --- COLUMNA 2: FORMULARIO (DERECHA) ---
         Panel formPanel = new Panel();
         formPanel.setLayout(new GridBagLayout()); 
         formPanel.setBackground(Color.WHITE);
         
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); 
+        gbc.insets = new Insets(10, 30, 10, 30); // Márgenes laterales cómodos
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // -- Componentes --
-        Label lblEmail = new Label("E-mail");
-        lblEmail.setFont(new Font("Arial", Font.BOLD, 14));
-        gbc.gridx = 0; gbc.gridy = 0; 
-        gbc.weightx = 0.3; 
+        // Fuentes Estandarizadas
+        Font titleFont = new Font("Arial", Font.BOLD, 32);
+        Font labelFont = new Font("Arial", Font.BOLD, 16);
+        Font inputFont = new Font("Arial", Font.PLAIN, 16);
+        Font btnFont = new Font("Arial", Font.BOLD, 14);
+
+        // 1. Título Principal
+        Label titleLabel = new Label("Iniciar Sesión");
+        titleLabel.setFont(titleFont);
+        titleLabel.setAlignment(Label.CENTER);
+        
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridwidth = 2; // Ocupa todo el ancho
+        gbc.insets = new Insets(0, 20, 30, 20); // Margen inferior grande
+        formPanel.add(titleLabel, gbc);
+
+        // 2. Email
+        gbc.gridwidth = 1; // Volver a 1 columna
+        gbc.insets = new Insets(5, 30, 5, 30); // Reset margins
+        
+        Label lblEmail = new Label("E-mail:");
+        lblEmail.setFont(labelFont);
+        gbc.gridy = 1; gbc.gridx = 0;
+        gbc.gridwidth = 2; // Label ocupa todo el ancho para estar arriba del input
         formPanel.add(lblEmail, gbc);
 
-        txtEmail = new TextField(20);
-        gbc.gridx = 1; gbc.gridy = 0; 
-        gbc.weightx = 0.7; 
+        txtEmail = new TextField(25);
+        txtEmail.setFont(inputFont);
+        txtEmail.setPreferredSize(new Dimension(300, 30)); // Altura moderna
+        gbc.gridy = 2; gbc.gridx = 0;
         formPanel.add(txtEmail, gbc);
 
-        Label lblPass = new Label("Password:");
-        lblPass.setFont(new Font("Arial", Font.BOLD, 14));
-        gbc.gridx = 0; gbc.gridy = 1;
-        gbc.weightx = 0.3;
+        // 3. Password
+        Label lblPass = new Label("Contraseña:");
+        lblPass.setFont(labelFont);
+        gbc.gridy = 3; gbc.gridx = 0;
+        gbc.insets = new Insets(15, 30, 5, 30); // Un poco más de aire arriba
         formPanel.add(lblPass, gbc);
 
-        txtPass = new TextField(20);
+        txtPass = new TextField(25);
         txtPass.setEchoChar('*');
-        gbc.gridx = 1; gbc.gridy = 1;
-        gbc.weightx = 0.7;
+        txtPass.setFont(inputFont);
+        txtPass.setPreferredSize(new Dimension(300, 30));
+        gbc.gridy = 4; gbc.gridx = 0;
+        gbc.insets = new Insets(5, 30, 5, 30);
         formPanel.add(txtPass, gbc);
 
-        // Label de Error
+        // 4. Label de Error
         lblError = new Label(""); 
         lblError.setForeground(Color.RED);
         lblError.setFont(new Font("Arial", Font.BOLD, 12));
         lblError.setAlignment(Label.CENTER); 
         
-        gbc.gridx = 0; gbc.gridy = 2;
-        gbc.gridwidth = 2; 
-        gbc.weightx = 1.0;
-        gbc.insets = new Insets(5, 0, 5, 0); 
+        gbc.gridy = 5; gbc.gridx = 0;
+        gbc.insets = new Insets(10, 30, 10, 30);
         formPanel.add(lblError, gbc);
 
-        // Botón Ingresar
+        // 5. Botón Ingresar
         btnLogin = new Button("Ingresar");
-        btnLogin.setBackground(new Color(30, 144, 255));
+        btnLogin.setBackground(new Color(30, 144, 255)); // Azul Brand
         btnLogin.setForeground(Color.WHITE);
-        btnLogin.setFont(new Font("Arial", Font.BOLD, 12));
+        btnLogin.setFont(new Font("Arial", Font.BOLD, 16));
+        btnLogin.setPreferredSize(new Dimension(160, 40)); // Tamaño Estandarizado
         
-        gbc.gridx = 0; gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridy = 6; gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.NONE; // No estirar botón
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 0, 30, 0); 
         formPanel.add(btnLogin, gbc);
 
-        // Panel Registro
-        Panel registerPanel = new Panel(new FlowLayout(FlowLayout.CENTER));
-        Label lblNoUser = new Label("¿Aún no sos usuario?");
-        btnRegister = new Button("Registrate");
-        btnRegister.setBackground(new Color(30, 144, 255));
-        btnRegister.setForeground(Color.WHITE);
-        btnRegister.setFont(new Font("Arial", Font.BOLD, 12));
+        // 6. Sección Registro (Separador + Botón)
+        // Usamos un panel interno para agrupar texto y botón
+        Panel registerPanel = new Panel(new GridBagLayout());
+        registerPanel.setBackground(Color.WHITE);
         
-        registerPanel.add(lblNoUser);
-        registerPanel.add(btnRegister);
+        Label lblNoUser = new Label("¿Aún no tienes cuenta?");
+        lblNoUser.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblNoUser.setForeground(Color.DARK_GRAY);
+        
+        btnRegister = new Button("Crear Cuenta");
+        btnRegister.setBackground(new Color(240, 240, 240)); // Gris claro para botón secundario
+        btnRegister.setForeground(Color.BLACK);
+        btnRegister.setFont(new Font("Arial", Font.BOLD, 14));
+        btnRegister.setPreferredSize(new Dimension(140, 35)); // Un poco más chico que el principal
 
-        gbc.gridx = 0; gbc.gridy = 4;
-        gbc.gridwidth = 2;
+        GridBagConstraints gbcReg = new GridBagConstraints();
+        gbcReg.gridx = 0; gbcReg.gridy = 0;
+        registerPanel.add(lblNoUser, gbcReg);
+        
+        gbcReg.gridy = 1;
+        gbcReg.insets = new Insets(5, 0, 0, 0);
+        registerPanel.add(btnRegister, gbcReg);
+
+        gbc.gridy = 7; gbc.gridx = 0;
         gbc.insets = new Insets(10, 0, 0, 0);
         formPanel.add(registerPanel, gbc);
 
-        mainPanel.add(formPanel);
-        add(mainPanel, BorderLayout.CENTER);
+        // Agregar panel derecho a la ventana
+        add(formPanel);
 
+        // Listener cerrar
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -126,9 +149,8 @@ public class WelcomeView extends Frame {
         private Image img;
 
         public ImagePlaceholder() {
-            // USAMOS LA VARIABLE PRIVADA DEFINIDA ARRIBA
-            // getClassLoader().getResource() busca desde la raíz del classpath
-            URL imgURL = getClass().getClassLoader().getResource(imgFileName);
+            // Usamos getClass().getResource con la ruta corregida
+            URL imgURL = getClass().getResource(imgFileName);
 
             if (imgURL != null) {
                 img = Toolkit.getDefaultToolkit().getImage(imgURL);
@@ -156,7 +178,7 @@ public class WelcomeView extends Frame {
 
             if (imgWidth <= 0 || imgHeight <= 0) return;
 
-            // Lógica de escalado tipo "Aspect Fill" (recortar sobrantes)
+            // Aspect Fill
             double scaleX = (double) canvasWidth / imgWidth;
             double scaleY = (double) canvasHeight / imgHeight;
             double scale = Math.max(scaleX, scaleY);
@@ -192,12 +214,5 @@ public class WelcomeView extends Frame {
     public static void main(String[] args) {
         WelcomeView view = new WelcomeView();
         view.setVisible(true);
-        
-        try {
-            Thread.sleep(2000);
-            view.showLoginError();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

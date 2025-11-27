@@ -7,86 +7,76 @@ import java.net.URL;
 
 public class LoadingView extends Frame {
 
-    // Variable privada con la ruta de la imagen
-    // Asegúrate de que este archivo exista en tu carpeta de recursos (src/imagenes)
+    // Ruta de la imagen
     private String imgFileName = "Image/LoadingViewPrincipalImage.jpg"; 
 
     public LoadingView() {
-        // 1. Configuración básica de la ventana
+        // 1. Configuración básica
         super("Plataforma de Streaming - Bienvenida");
-        setSize(800, 600); // Un tamaño considerable
+        setSize(800, 600);
         setBackground(Color.WHITE);
-        
-        // Usamos GridBagLayout para centrar los componentes vertical y horizontalmente
-        setLayout(new GridBagLayout());
-        
-        // Centrar ventana en pantalla
         setLocationRelativeTo(null);
-
-        // --- PANEL PRINCIPAL DE CONTENIDO ---
-        Panel contentPanel = new Panel();
-        contentPanel.setLayout(new GridBagLayout());
-        contentPanel.setBackground(Color.WHITE);
         
+        // Layout principal
+        setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15); // Márgenes para los componentes
 
-        // --- FILA 1: Título "Bienvenido a la Plataforma de Streaming" ---
-        gbc.gridx = 0; gbc.gridy = 0;
-        gbc.gridwidth = 1; // Ocupa una columna
-        gbc.anchor = GridBagConstraints.WEST; // Alineado a la izquierda
-        Label welcomeTitle = new Label("Bienvenido a la Plataforma de Streaming");
-        welcomeTitle.setFont(new Font("Arial", Font.BOLD, 22)); // Más grande y en negrita
-        contentPanel.add(welcomeTitle, gbc);
-
-        // --- FILA 2: Espacio para la imagen de carga (AHORA CON IMAGEN REAL) ---
-        gbc.gridx = 0; gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.CENTER; // Centrado
-        gbc.fill = GridBagConstraints.BOTH; // Rellenar espacio disponible
-        gbc.weightx = 1.0; gbc.weighty = 1.0; // Expandirse vertical y horizontalmente
-
-        // Usamos el Canvas personalizado modificado
-        LoadingImagePlaceholder imagePlaceholder = new LoadingImagePlaceholder();
-        imagePlaceholder.setPreferredSize(new Dimension(300, 200)); // Tamaño sugerido inicial
-        contentPanel.add(imagePlaceholder, gbc);
-        
-        // --- FILA 3: Mensaje "Un momento por favor....." ---
-        gbc.gridx = 0; gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.CENTER; // Centrado
-        gbc.fill = GridBagConstraints.NONE; // No estirar
-        gbc.weightx = 0; gbc.weighty = 0; // No expandirse
-        Label loadingMessage = new Label("Un momento por favor.....");
-        loadingMessage.setFont(new Font("Arial", Font.PLAIN, 18));
-        contentPanel.add(loadingMessage, gbc);
-
-        // Agregar el panel de contenido a la ventana principal
-        GridBagConstraints frameGbc = new GridBagConstraints();
-        frameGbc.anchor = GridBagConstraints.CENTER;
-        frameGbc.fill = GridBagConstraints.BOTH; // Permitir que el panel interno crezca
-        frameGbc.weightx = 1.0;
-        frameGbc.weighty = 1.0;
-        add(contentPanel, frameGbc);
-
-        // --- Lógica para cerrar la ventana ---
+        // --- Lógica para cerrar ---
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
+
+        // --- 1. Título ---
+        Label welcomeTitle = new Label("Bienvenido a la Plataforma");
+        welcomeTitle.setFont(new Font("Arial", Font.BOLD, 32)); // Fuente grande estilo InfoView
+        welcomeTitle.setAlignment(Label.CENTER);
+        
+        gbc.gridx = 0; 
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.0; // No estirar verticalmente
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(40, 20, 20, 20); // Margen superior amplio
+        add(welcomeTitle, gbc);
+
+        // --- 2. Imagen Central (Canvas Personalizado) ---
+        LoadingImagePlaceholder imagePlaceholder = new LoadingImagePlaceholder();
+        // Le damos un tamaño preferido para que GridBagLayout sepa qué hacer al inicio
+        imagePlaceholder.setPreferredSize(new Dimension(500, 350)); 
+        
+        gbc.gridy = 1;
+        gbc.weighty = 1.0; // Este componente ocupa todo el espacio vertical sobrante
+        gbc.fill = GridBagConstraints.BOTH; // Se estira en ambas direcciones
+        gbc.insets = new Insets(0, 40, 0, 40); // Márgenes laterales para encuadrar la imagen
+        add(imagePlaceholder, gbc);
+        
+        // --- 3. Mensaje de Carga ---
+        Label loadingMessage = new Label("Un momento por favor...");
+        // Estilo sutil: Gris oscuro y cursiva para indicar proceso
+        loadingMessage.setFont(new Font("Arial", Font.ITALIC, 18)); 
+        loadingMessage.setForeground(Color.DARK_GRAY);
+        loadingMessage.setAlignment(Label.CENTER);
+
+        gbc.gridy = 2;
+        gbc.weighty = 0.0; // No estirar
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(20, 20, 40, 20); // Margen inferior amplio
+        add(loadingMessage, gbc);
     }
 
-    // Clase interna MODIFICADA para cargar y dibujar la imagen
+    // --- Clase interna para manejo de Imagen (Mantenemos tu lógica de Aspect Fill) ---
     class LoadingImagePlaceholder extends Canvas {
         private Image img;
 
         public LoadingImagePlaceholder() {
-            // Cargar imagen usando la variable privada de la clase externa
             URL imgURL = getClass().getClassLoader().getResource(imgFileName);
 
             if (imgURL != null) {
                 img = Toolkit.getDefaultToolkit().getImage(imgURL);
-                
-                // Asegurar carga completa antes de pintar
                 MediaTracker tracker = new MediaTracker(this);
                 tracker.addImage(img, 0);
                 try {
@@ -95,14 +85,13 @@ public class LoadingView extends Frame {
                     e.printStackTrace();
                 }
             } else {
-                System.err.println("Error: No se encontró la imagen en: " + imgFileName);
+                System.err.println("No se encontró la imagen: " + imgFileName);
             }
         }
 
         @Override
         public void paint(Graphics g) {
             super.paint(g);
-
             if (img == null) return;
 
             int canvasWidth = getWidth();
@@ -112,29 +101,26 @@ public class LoadingView extends Frame {
 
             if (imgWidth <= 0 || imgHeight <= 0) return;
 
-            // --- Lógica de Aspect Fill (Escalar y Recortar) ---
-            
-            // Calculamos la escala necesaria para cada dimensión
+            // Lógica "Aspect Fill" (Recorta para llenar)
             double scaleX = (double) canvasWidth / imgWidth;
             double scaleY = (double) canvasHeight / imgHeight;
+            
+            // Usamos Math.min para "Fit" (ver toda la imagen) o Math.max para "Fill" (llenar el cuadro)
+            // Dado que es una pantalla de carga, "Fit" (Math.min) suele ser más seguro para que no se recorte el logo/arte,
+            // pero si prefieres que llene todo el cuadro sin bordes blancos, usa Math.max.
+            // Voy a usar Math.min para que la imagen se vea completa y centrada estéticamente.
+            double scale = Math.min(scaleX, scaleY); 
 
-            // Elegimos la escala MAYOR para asegurar que se cubra todo el canvas
-            // (esto causará que la otra dimensión se salga de los bordes = recorte)
-            double scale = Math.max(scaleX, scaleY);
+            int scaledWidth = (int) (imgWidth * scale);
+            int scaledHeight = (int) (imgHeight * scale);
 
-            // Nuevas dimensiones
-            int scaledWidth = (int) Math.ceil(imgWidth * scale);
-            int scaledHeight = (int) Math.ceil(imgHeight * scale);
-
-            // Coordenadas para centrar la imagen (pueden ser negativas para recortar)
             int x = (canvasWidth - scaledWidth) / 2;
             int y = (canvasHeight - scaledHeight) / 2;
 
             Graphics2D g2d = (Graphics2D) g;
-            // Suavizado de imagen para mejor calidad
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             
-            // Dibujar imagen
             g2d.drawImage(img, x, y, scaledWidth, scaledHeight, this);
         }
     }

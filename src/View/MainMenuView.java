@@ -22,18 +22,31 @@ public class MainMenuView extends Frame {
     private Panel panelCabeceraTabla;
 
     // --- LISTA DE BOTONES PARA EL CONTROLADOR ---
-    // Esta lista almacenará las referencias a los botones creados dinámicamente
     private ArrayList<Button> listaBotonesCalificar;
 
-    // Configuración de anchos fijos de columnas
-    private final int[] COL_WIDTHS = {80, 250, 150, 400, 100};
+    // =========================================================================
+    // AJUSTE DE ANCHOS PARA EVITAR SCROLL HORIZONTAL
+    // Total Tabla: 70 + 220 + 130 + 350 + 100 = 870px
+    // + Márgenes laterales (60px) = 930px
+    // Ancho Ventana: 1024px (Sobra espacio para la barra vertical)
+    // =========================================================================
+    private final int[] COL_WIDTHS = {60, 200, 120, 380, 90};
+
+    // Colores y Fuentes Estandarizadas
+    private final Color brandBlue = new Color(30, 144, 255);
+    private final Color bgHeader = new Color(240, 240, 240);
+    private final Font fontTitle = new Font("Arial", Font.BOLD, 28);
+    private final Font fontSubtitle = new Font("Arial", Font.PLAIN, 16);
+    private final Font fontHeaderTable = new Font("Arial", Font.BOLD, 14);
+    private final Font fontRowText = new Font("Arial", Font.PLAIN, 14);
+    private final Font fontBtn = new Font("Arial", Font.BOLD, 14);
 
     public MainMenuView() {
         super("Plataforma de Streaming - Bienvenida");
         
         setSize(1024, 768);
         setLayout(new BorderLayout());
-        setBackground(Color.white);
+        setBackground(Color.WHITE);
         
         // Centrar ventana
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -56,29 +69,41 @@ public class MainMenuView extends Frame {
 
     private void inicializarComponentes() {
         lblTituloPrincipal = new Label("Bienvenido a la Plataforma de Streaming");
-        lblTituloPrincipal.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTituloPrincipal.setFont(fontTitle);
 
-        lblSubtitulo = new Label("Seguro viste alguna de estas peliculas, haznos saber que te parecio dejando una resena");
-        lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblSubtitulo = new Label("Seguro viste alguna de estas películas, haznos saber qué te pareció dejando una reseña.");
+        lblSubtitulo.setFont(fontSubtitle);
+        lblSubtitulo.setForeground(Color.DARK_GRAY);
 
         lblNombreUsuario = new Label("Usuario Invitado");
-        lblNombreUsuario.setFont(new Font("Arial", Font.BOLD, 14));
+        lblNombreUsuario.setFont(new Font("Arial", Font.BOLD, 16));
         lblNombreUsuario.setAlignment(Label.RIGHT);
 
+        // Buscador Estilizado
         txtBuscador = new TextField(20);
-        btnBuscar = new Button("Buscar");
-        btnBuscar.setBackground(new Color(173, 216, 230));
+        txtBuscador.setFont(new Font("Arial", Font.PLAIN, 14));
+        txtBuscador.setPreferredSize(new Dimension(200, 30));
 
-        btnCerrarSesion = new Button("Cerrar sesion");
-        btnCerrarSesion.setBackground(new Color(33, 150, 243));
-        btnCerrarSesion.setForeground(Color.white);
+        // Botón Buscar
+        btnBuscar = new Button("Buscar");
+        btnBuscar.setBackground(brandBlue);
+        btnBuscar.setForeground(Color.WHITE);
+        btnBuscar.setFont(fontBtn);
+        btnBuscar.setPreferredSize(new Dimension(80, 30));
+
+        // Botón Cerrar Sesión
+        btnCerrarSesion = new Button("Cerrar Sesión");
+        btnCerrarSesion.setBackground(Color.DARK_GRAY); 
+        btnCerrarSesion.setForeground(Color.WHITE);
+        btnCerrarSesion.setFont(fontBtn);
+        btnCerrarSesion.setPreferredSize(new Dimension(120, 30));
     }
 
     private void construirLayoutSuperior() {
         Panel panelSuperior = new Panel(new GridBagLayout());
-        panelSuperior.setBackground(Color.white);
+        panelSuperior.setBackground(Color.WHITE);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 20, 0, 20); 
+        gbc.insets = new Insets(20, 30, 10, 30); 
 
         // Título
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridheight = 2;
@@ -88,7 +113,7 @@ public class MainMenuView extends Frame {
         panelSuperior.add(lblTituloPrincipal, gbc);
 
         // Buscador
-        Panel panelBuscador = new Panel(new FlowLayout(FlowLayout.RIGHT));
+        Panel panelBuscador = new Panel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelBuscador.add(txtBuscador);
         panelBuscador.add(btnBuscar);
 
@@ -97,7 +122,7 @@ public class MainMenuView extends Frame {
         panelSuperior.add(panelBuscador, gbc);
 
         // Usuario
-        Panel panelUsuario = new Panel(new GridLayout(2, 1));
+        Panel panelUsuario = new Panel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         panelUsuario.add(lblNombreUsuario);
         panelUsuario.add(btnCerrarSesion);
 
@@ -109,32 +134,33 @@ public class MainMenuView extends Frame {
 
     private void construirLayoutCentral() {
         Panel panelCentral = new Panel(new BorderLayout());
-        panelCentral.setBackground(Color.white);
+        panelCentral.setBackground(Color.WHITE);
 
         // Subtítulo
-        Panel panelSub = new Panel(new FlowLayout(FlowLayout.LEFT));
+        Panel panelSub = new Panel(new FlowLayout(FlowLayout.LEFT, 30, 10));
         panelSub.add(lblSubtitulo);
         panelCentral.add(panelSub, BorderLayout.NORTH);
 
         // Cabecera Fija
         panelCabeceraTabla = new Panel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        panelCabeceraTabla.setBackground(new Color(220, 220, 220));
+        panelCabeceraTabla.setBackground(bgHeader);
         
-        String[] titulos = {"Poster", "Titulo", "Genero", "Resumen", "Accion"};
+        String[] titulos = {"Póster", "Título", "Género", "Resumen", "Acción"};
         for(int i=0; i<titulos.length; i++) {
             Panel celda = new Panel(new BorderLayout());
-            celda.setPreferredSize(new Dimension(COL_WIDTHS[i], 40));
+            celda.setPreferredSize(new Dimension(COL_WIDTHS[i], 45));
             Label l = new Label(titulos[i], Label.CENTER);
-            l.setFont(new Font("Arial", Font.BOLD, 13));
+            l.setFont(fontHeaderTable);
             celda.add(l, BorderLayout.CENTER);
             panelCabeceraTabla.add(celda);
         }
 
         // Cuerpo Scrolleable
+        // Solo scroll vertical (el horizontal se desactiva si el contenido entra)
         scrollPaneTabla = new ScrollPane(ScrollPane.SCROLLBARS_AS_NEEDED);
         panelContenedorFilas = new Panel();
         panelContenedorFilas.setLayout(new GridBagLayout());
-        panelContenedorFilas.setBackground(Color.white);
+        panelContenedorFilas.setBackground(Color.WHITE);
         
         scrollPaneTabla.add(panelContenedorFilas);
 
@@ -142,102 +168,118 @@ public class MainMenuView extends Frame {
         panelTabla.add(panelCabeceraTabla, BorderLayout.NORTH);
         panelTabla.add(scrollPaneTabla, BorderLayout.CENTER);
 
-        panelCentral.add(panelTabla, BorderLayout.CENTER);
+        // Margen lateral para la tabla
+        Panel wrapperTabla = new Panel(new BorderLayout());
+        wrapperTabla.add(panelTabla, BorderLayout.CENTER);
+        
+        // Espaciadores laterales
+        Panel margenIzq = new Panel(); margenIzq.setPreferredSize(new Dimension(30, 0));
+        Panel margenDer = new Panel(); margenDer.setPreferredSize(new Dimension(30, 0));
+        
+        panelCentral.add(margenIzq, BorderLayout.WEST);
+        panelCentral.add(margenDer, BorderLayout.EAST);
+        panelCentral.add(wrapperTabla, BorderLayout.CENTER);
+        
         add(panelCentral, BorderLayout.CENTER);
     }
 
-    // ===========================================================================
-    // MÉTODO PARA OBTENER LA LISTA DE BOTONES (CRUCIAL PARA EL CONTROLADOR)
-    // ===========================================================================
-    
-    /**
-     * Retorna la lista de botones generados dinámicamente en la tabla.
-     * El Controlador usará esta lista para añadir ActionListener a cada botón.
-     */
     public ArrayList<Button> getListaBotonesCalificar() {
         return listaBotonesCalificar;
     }
 
-    // ===========================================================================
-    // ACTUALIZACIÓN DE DATOS
-    // ===========================================================================
-
     public void actualizarListaPeliculas(Object[][] datosPeliculas) {
         panelContenedorFilas.removeAll();
-        
-        // 1. Limpiamos la lista anterior para no guardar referencias a botones viejos
         listaBotonesCalificar.clear();
 
+        // 1. Calculamos el ancho total de la tabla dinámicamente
+        int totalTableWidth = 0;
+        for (int w : COL_WIDTHS) totalTableWidth += w;
+
         GridBagConstraints gbcRow = new GridBagConstraints();
-        gbcRow.gridx = 0; gbcRow.weightx = 1.0;
-        gbcRow.fill = GridBagConstraints.HORIZONTAL; gbcRow.anchor = GridBagConstraints.NORTH;
+        gbcRow.gridx = 0; 
+        gbcRow.weightx = 0.0; // Importante: No forzar expansión extra
+        gbcRow.fill = GridBagConstraints.NONE; // Que respete el tamaño del panel
+        gbcRow.anchor = GridBagConstraints.NORTHWEST; // Pegado a la izquierda
         
         int filaIndex = 0;
 
         for (Object[] datos : datosPeliculas) {
             Panel rowPanel = new Panel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            rowPanel.setBackground(Color.white);
+            rowPanel.setBackground(Color.WHITE);
+            // Forzamos el tamaño exacto del panel de la fila
+            rowPanel.setPreferredSize(new Dimension(totalTableWidth, 60));
             
             String titulo = (String) datos[0];
             String genero = (String) datos[1];
             String resumen = (String) datos[2];
             boolean activo = (Boolean) datos[3];
 
-            // Poster, Título, Género, Resumen (Mismo código de layout anterior...)
-            agregarCelda(rowPanel, new Panel(), COL_WIDTHS[0], true); // Placeholder poster
+            // Celdas de datos
+            agregarCelda(rowPanel, new Panel(), COL_WIDTHS[0], true); 
             agregarCelda(rowPanel, new Label(titulo), COL_WIDTHS[1], false);
             agregarCelda(rowPanel, new Label(genero), COL_WIDTHS[2], false);
             agregarCelda(rowPanel, new Label(resumen), COL_WIDTHS[3], false);
 
-            // --- CREACIÓN DEL BOTÓN ---
+            // Botón
             Panel pnlBoton = new Panel(new FlowLayout(FlowLayout.CENTER));
-            pnlBoton.setPreferredSize(new Dimension(COL_WIDTHS[4], 60));
+            pnlBoton.setPreferredSize(new Dimension(COL_WIDTHS[4], 60)); 
             
             Button btnAccion = new Button("Calificar");
             btnAccion.setPreferredSize(new Dimension(80, 30));
+            btnAccion.setFont(new Font("Arial", Font.BOLD, 12));
             
             if (activo) {
-                btnAccion.setBackground(new Color(33, 150, 243));
-                btnAccion.setForeground(Color.white);
-                // IMPORTANTE: Seteamos el comando con el Título o ID único de la película
+                btnAccion.setBackground(new Color(30, 144, 255)); // Brand Blue
+                btnAccion.setForeground(Color.WHITE);
                 btnAccion.setActionCommand(titulo); 
+                btnAccion.setCursor(new Cursor(Cursor.HAND_CURSOR));
             } else {
-                btnAccion.setBackground(Color.gray);
+                btnAccion.setBackground(Color.LIGHT_GRAY);
+                btnAccion.setForeground(Color.DARK_GRAY);
                 btnAccion.setEnabled(false);
             }
             
             pnlBoton.add(btnAccion);
             rowPanel.add(pnlBoton);
 
-            // 2. AGREGAMOS EL BOTÓN A LA LISTA QUE DEVOLVEREMOS AL CONTROLADOR
             listaBotonesCalificar.add(btnAccion);
 
-            gbcRow.gridy = filaIndex;
+            // CORRECCIÓN PRINCIPAL:
+            // El separador ahora mide EXACTAMENTE lo mismo que la tabla
+            Panel separador = new Panel();
+            separador.setBackground(new Color(230,230,230));
+            separador.setPreferredSize(new Dimension(totalTableWidth, 1));
+            
+            gbcRow.gridy = filaIndex * 2; 
             panelContenedorFilas.add(rowPanel, gbcRow);
+            
+            gbcRow.gridy = (filaIndex * 2) + 1;
+            panelContenedorFilas.add(separador, gbcRow);
+            
             filaIndex++;
         }
         
         GridBagConstraints gbcFiller = new GridBagConstraints();
-        gbcFiller.gridx = 0; gbcFiller.gridy = filaIndex; gbcFiller.weighty = 1.0; 
+        gbcFiller.gridx = 0; gbcFiller.gridy = filaIndex * 2; gbcFiller.weighty = 1.0; 
         panelContenedorFilas.add(new Panel(), gbcFiller);
 
         panelContenedorFilas.validate();
         scrollPaneTabla.validate();
     }
 
-    // Método auxiliar para limpiar código de añadir celdas (Labels o Paneles)
     private void agregarCelda(Panel row, Component comp, int ancho, boolean esPoster) {
         if(esPoster) {
             Panel p = new Panel(new FlowLayout(FlowLayout.CENTER));
             p.setPreferredSize(new Dimension(ancho, 60));
-            Panel box = new Panel(); box.setBackground(Color.lightGray); box.setPreferredSize(new Dimension(40, 50));
+            Panel box = new Panel(); 
+            box.setBackground(new Color(220, 220, 220)); 
+            box.setPreferredSize(new Dimension(40, 50));
             p.add(box);
             row.add(p);
         } else {
-            // Asumimos que es Label
             if(comp instanceof Label) {
                 ((Label)comp).setAlignment(Label.LEFT);
-                comp.setFont(new Font("Arial", Font.BOLD, 12));
+                comp.setFont(fontRowText);
             }
             comp.setPreferredSize(new Dimension(ancho, 60));
             row.add(comp);
@@ -250,11 +292,10 @@ public class MainMenuView extends Frame {
     public Button getBtnCerrarSesion() { return btnCerrarSesion; }
     public TextField getTxtBuscador() { return txtBuscador; }
 
-    // MAIN DE PRUEBA
     public static void main(String[] args) {
         MainMenuView v = new MainMenuView();
         v.setVisible(true);
-        v.setNombreUsuario("Juan Perez");
+        v.setNombreUsuario("Juan Pérez");
         
         Object[][] data = {
             {"Titanic", "Drama", "Un barco gigante se hunde...", true},
@@ -262,19 +303,6 @@ public class MainMenuView extends Frame {
             {"Shrek 2", "Comedia", "Viaje a muy muy lejano...", true},
             {"Docu X", "Docu", "No disponible", false},
             {"Matrix", "Accion", "Hacker descubre la verdad...", true},
-            {"Inception", "Sci-Fi", "Suenos compartidos...", true},
-            {"El Padrino", "Crimen", "La familia Corleone...", true},
-            {"Toy Story", "Animacion", "Juguetes vivos...", true},
-            {"Joker", "Drama", "Origen del villano...", true},
-            {"Coco", "Animacion", "Mundo de los muertos...", true},
-            {"Avengers", "Accion", "Heroes unidos...", true},
-            {"Parasite", "Suspenso", "Lucha de clases...", true},
-            {"Gladiador", "Accion", "Roma antigua...", true},
-            {"Cars", "Infantil", "Autos parlantes...", true},
-            {"Up", "Animacion", "Casa con globos...", true},
-            {"Interstellar", "Sci-Fi", "Viaje por agujero negro...", true},
-            {"Batman", "Accion", "El caballero de la noche...", true},
-            {"Frozen", "Animacion", "El reino de hielo...", true}
         };
         
         v.actualizarListaPeliculas(data);
