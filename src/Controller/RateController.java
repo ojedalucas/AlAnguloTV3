@@ -1,9 +1,9 @@
 package Controller;
 
 import View.RateView;
+import Model.Window.ExitoModel;
+import Model.Window.RateModel;
 import View.ExitoView;
-import Model.RateModel;
-import Model.ExitoModel;
 
 @SuppressWarnings("unused")
 public class RateController {

@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.LoadingModel;
+import Model.Window.LoadingModel;
 import View.LoadingView;
 
 @SuppressWarnings("unused")

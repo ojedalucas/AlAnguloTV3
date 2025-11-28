@@ -1,12 +1,12 @@
 package Controller;
 
 
+import Model.Window.LoadingModel;
+import Model.Window.RegistrationModel;
+import Model.Window.WelcomeModel;
 import View.LoadingView;
 import View.RegistrationView;
 import View.WelcomeView;
-import Model.WelcomeModel;
-import Model.RegistrationModel;
-import Model.LoadingModel;
 
 @SuppressWarnings("unused")
 public class WelcomeController {

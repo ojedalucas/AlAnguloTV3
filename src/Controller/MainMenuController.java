@@ -1,7 +1,7 @@
 package Controller;
 
+import Model.Window.MainMenuModel;
 import View.MainMenuView;
-import Model.MainMenuModel;
 
 @SuppressWarnings("unused")
 public class MainMenuController {

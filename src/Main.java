@@ -1,6 +1,6 @@
 import Controller.WelcomeController;
+import Model.Window.WelcomeModel;
 import View.WelcomeView;
-import Model.WelcomeModel;
 
 public class Main {
     public static void main(String[] args){

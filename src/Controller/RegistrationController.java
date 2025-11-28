@@ -1,9 +1,9 @@
 package Controller;
 
+import Model.Window.RegistrationModel;
+import Model.Window.WelcomeModel;
 import View.RegistrationView;
 import View.WelcomeView;
-import Model.RegistrationModel;
-import Model.WelcomeModel;
 
 @SuppressWarnings("unused")
 public class RegistrationController {
