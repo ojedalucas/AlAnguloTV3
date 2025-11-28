@@ -2,19 +2,20 @@ package Controller;
 
 import View.RegistrationView;
 import View.WelcomeView;
+import Model.RegistrationModel;
+import Model.WelcomeModel;
 
+@SuppressWarnings("unused")
 public class RegistrationController {
     private RegistrationView ventana;
-    // private RegistrationModel modelo;
+    private RegistrationModel modelo;
 
-    public RegistrationController(RegistrationView ventana /*, RegistrationModel modelo */ ){
+    public RegistrationController(RegistrationView ventana, RegistrationModel modelo){
         this.ventana = ventana;
-        //this.modelo = modelo;
+        this.modelo = modelo;
         this.ventana.addRegisterListener(e -> logicaRegistro());
     }
-
-    @SuppressWarnings("unused")
-    public void logicaRegistro(){
+    private void logicaRegistro(){
         String nombre = ventana.getNombre();
         String apellido = ventana.getApellido();
         String DNI = ventana.getDNI();
@@ -42,8 +43,8 @@ public class RegistrationController {
         if (exito){
             /* Usuario user = modelo.registrarUsuario(nombre, apellido, DNI, email, contrasenia) */
             WelcomeView welV = new WelcomeView();
-            // WelcomeModel welM = new WelcomeModel();
-            new WelcomeController(welV /*, welM*/);
+            WelcomeModel welM = new WelcomeModel();
+            new WelcomeController(welV, welM);
             welV.setVisible(true);
             this.ventana.dispose();
         }

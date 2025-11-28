@@ -3,6 +3,7 @@ package View;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
 
 public class ExitoView extends Frame {
     // Componentes reutilizables
@@ -69,6 +70,9 @@ public class ExitoView extends Frame {
     // Métodos públicos
     public Button getContinuarButton() {
         return continuar;
+    }
+    public void addContinuarListener(ActionListener listener){
+        continuar.addActionListener(listener);
     }
 
     public static void main(String[] args) {

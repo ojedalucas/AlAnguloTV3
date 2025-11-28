@@ -1,24 +1,26 @@
 package Controller;
 
+
 import View.LoadingView;
 import View.RegistrationView;
 import View.WelcomeView;
-import TP2.Database.UsuarioDAOjdbl;
-import TP2.Modelo.Usuario;
+import Model.WelcomeModel;
+import Model.RegistrationModel;
+import Model.LoadingModel;
 
 @SuppressWarnings("unused")
 public class WelcomeController {
     private WelcomeView ventana;
-    // private WelcomeModel modelo;
+    private WelcomeModel modelo;
 
-    public WelcomeController(WelcomeView ventana /*, WelcomeModel modelo */){
+    public WelcomeController(WelcomeView ventana, WelcomeModel modelo){
         this.ventana = ventana;
-        // this.modelo = modelo;
+        this.modelo = modelo;
         this.ventana.addLoginListener(e -> logicaIngreso());
         this.ventana.addRegisterListener(e -> logicaRegistro());
     }
 
-    public void logicaIngreso(){   
+    private void logicaIngreso(){   
         String email = this.ventana.getEmail();
         String contrasenia = this.ventana.getPassword();
         boolean exito = true;
@@ -47,8 +49,8 @@ public class WelcomeController {
 
     private void logicaRegistro(){
         RegistrationView regV = new RegistrationView();
-        // RegistrationModel regM = new RegistrationModel();
-        new RegistrationController(regV /*, modelo*/);
+        RegistrationModel regM = new RegistrationModel();
+        new RegistrationController(regV, regM);
         regV.setVisible(true);
         this.ventana.dispose();
     }

@@ -112,6 +112,9 @@ public class RateView extends Frame {
 
     public int getRating() { return rating; }
     public Button getGuardarButton() { return guardar; }
+    public void addGuardarListener(ActionListener listener){
+        guardar.addActionListener(listener);
+    }
     public String getComentario() { return cajaComentario.getText(); }
 
     public static void main(String[] args) {

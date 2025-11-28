@@ -87,6 +87,9 @@ public class InfoView extends Frame{
     public Button getContinuarButton() {
         return btnContinuar;
     }
+    public void addContinuarListener(ActionListener listener){
+        btnContinuar.addActionListener(listener);
+    }
 
     // Métodos para actualizar contenido
     public void setTitleText(String title) {
