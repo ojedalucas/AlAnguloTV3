@@ -14,11 +14,15 @@ public class RegistrationView extends Frame {
     private TextField txtEmail;
     private TextField txtPass;
     private Button btnRegistrar;
+    
+    // NUEVO: Etiqueta de error
+    private Label lblError;
 
     public RegistrationView() {
         // 1. Configuración básica de la ventana
         super("Plataforma de Streaming - Registro");
-        setSize(600, 650); // Un poco más alta para acomodar el título
+        setResizable(false); // Opcional: para evitar deformaciones
+        setSize(600, 700); // Aumenté ligeramente la altura para que entre el error
         setBackground(Color.WHITE);
         setLocationRelativeTo(null);
 
@@ -48,25 +52,24 @@ public class RegistrationView extends Frame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Insets para los campos: (Arriba, Izq, Abajo, Der)
-        // Separamos un poco más verticalmente
         Insets labelInsets = new Insets(10, 40, 10, 10); 
         Insets inputInsets = new Insets(10, 0, 10, 40);
 
         // --- FILA 1: Nombres ---
         gbc.gridy = 1;
         gbc.gridx = 0;
-        gbc.weightx = 0.0; // La etiqueta no crece
+        gbc.weightx = 0.0;
         gbc.insets = labelInsets;
         Label lblNombre = new Label("Nombres:");
         lblNombre.setFont(labelFont);
         add(lblNombre, gbc);
 
         gbc.gridx = 1;
-        gbc.weightx = 1.0; // El input absorbe el espacio extra
+        gbc.weightx = 1.0;
         gbc.insets = inputInsets;
         txtNombre = new TextField(20);
         txtNombre.setFont(inputFont);
-        txtNombre.setPreferredSize(new Dimension(200, 30)); // Altura más cómoda
+        txtNombre.setPreferredSize(new Dimension(200, 30));
         add(txtNombre, gbc);
 
         // --- FILA 2: Apellidos ---
@@ -138,19 +141,34 @@ public class RegistrationView extends Frame {
         txtPass.setPreferredSize(new Dimension(200, 30));
         add(txtPass, gbc);
 
-        // --- FILA 6: Botón Registrar ---
-        btnRegistrar = new Button("Registrar");
-        btnRegistrar.setFont(new Font("Arial", Font.BOLD, 16));
-        btnRegistrar.setBackground(new Color(30, 144, 255)); // Azul estandarizado
-        btnRegistrar.setForeground(Color.WHITE);
-        btnRegistrar.setPreferredSize(new Dimension(160, 40)); // Tamaño estandarizado
-
-        gbc.gridy = 6;
+        // --- NUEVO: FILA 6: Label de Error ---
+        // Se inserta entre el password y el botón
+        lblError = new Label(""); 
+        lblError.setForeground(Color.RED);
+        lblError.setFont(new Font("Arial", Font.BOLD, 12));
+        lblError.setAlignment(Label.CENTER);
+        lblError.setVisible(false); // Oculto por defecto
+        
+        gbc.gridy = 6; 
         gbc.gridx = 0;
         gbc.gridwidth = 2; // Ocupa todo el ancho
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 30, 5, 30); // Márgenes ajustados
+        add(lblError, gbc);
+
+        // --- FILA 7: Botón Registrar (Movido de fila 6 a 7) ---
+        btnRegistrar = new Button("Registrar");
+        btnRegistrar.setFont(new Font("Arial", Font.BOLD, 16));
+        btnRegistrar.setBackground(new Color(30, 144, 255)); 
+        btnRegistrar.setForeground(Color.WHITE);
+        btnRegistrar.setPreferredSize(new Dimension(160, 40)); 
+
+        gbc.gridy = 7; // CAMBIO: Ahora está en la fila 7
+        gbc.gridx = 0;
+        gbc.gridwidth = 2; 
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(40, 0, 20, 0); // Margen superior grande
+        gbc.insets = new Insets(20, 0, 20, 0); // Ajuste el margen superior
         
         add(btnRegistrar, gbc);
 
@@ -175,6 +193,17 @@ public class RegistrationView extends Frame {
         txtDNI.setText("");
         txtEmail.setText("");
         txtPass.setText("");
+        // También limpiamos el error al limpiar campos
+        lblError.setText("");
+        lblError.setVisible(false);
+    }
+
+    // NUEVO MÉTODO: Para mostrar el mensaje de error
+    public void setErrorMessage(String message) {
+        lblError.setText(message);
+        lblError.setVisible(true);
+        // Revalidar para asegurar que el layout se ajuste si es necesario
+        this.validate();
     }
 
     public void addRegisterListener(ActionListener listener){
@@ -184,5 +213,7 @@ public class RegistrationView extends Frame {
     public static void main(String[] args) {
         RegistrationView view = new RegistrationView();
         view.setVisible(true);
+        //Prueba visual del error (descomentar para probar)
+        view.setErrorMessage("Error: Complete todos los campos.");
     }
 }

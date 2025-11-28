@@ -6,15 +6,18 @@ import java.awt.event.*;
 public class RateView extends Frame {
 
     // Componentes
-    private StarPanel[] estrellas; // Usamos StarPanel en vez de StarCanvas
+    private StarPanel[] estrellas; 
     private int rating = 0; 
     private TextArea cajaComentario;
     private Button guardar;
     private Label titleLabel;
+    
+    // NUEVO: Etiqueta de error
+    private Label lblError;
 
     public RateView(){
         super("Plataforma de Streaming - Calificar Película");
-        setSize(700, 550);
+        setSize(700, 600); // Aumenté un poco la altura para que entre el error
         setBackground(Color.WHITE);
         setLocationRelativeTo(null);
 
@@ -75,27 +78,42 @@ public class RateView extends Frame {
         gbc.gridy = 4;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(0, 30, 20, 30);
+        gbc.insets = new Insets(0, 30, 10, 30); // Reduje el margen inferior
         add(cajaComentario, gbc);
 
-        // --- 4. Botón Guardar ---
+        // --- NUEVO: 4. Label de Error ---
+        lblError = new Label(""); 
+        lblError.setForeground(Color.RED);
+        lblError.setFont(new Font("Arial", Font.BOLD, 12));
+        lblError.setAlignment(Label.CENTER);
+        lblError.setVisible(false); // Oculto por defecto
+        
+        gbc.gridy = 5; // Posición entre el comentario y el botón
+        gbc.weighty = 0.0; // Resetear peso vertical
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 30, 5, 30); 
+        add(lblError, gbc);
+
+        // --- 5. Botón Guardar (Movido a fila 6) ---
         guardar = new Button("Guardar");
         guardar.setBackground(new Color(30, 144, 255));
         guardar.setForeground(Color.WHITE);
         guardar.setFont(new Font("Arial", Font.BOLD, 16));
         guardar.setPreferredSize(new Dimension(160, 40));
 
-        gbc.gridy = 5;
+        gbc.gridy = 6; // CAMBIO: Fila 6
         gbc.weighty = 0.0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(0, 30, 30, 30);
+        gbc.insets = new Insets(10, 30, 30, 30);
         add(guardar, gbc);
     }
 
     private void setRating(int value) {
-        rating = value; // Actualizamos el valor
-        updateStars();  // Repintamos
+        rating = value; 
+        updateStars(); 
+        // Opcional: Ocultar error si el usuario selecciona estrellas
+        // lblError.setVisible(false); 
     }
 
     private void updateStars() {
@@ -110,6 +128,13 @@ public class RateView extends Frame {
         if (titleLabel != null) titleLabel.setText(title);
     }
 
+    // NUEVO MÉTODO: Para mostrar el mensaje de error
+    public void setErrorMessage(String message) {
+        lblError.setText(message);
+        lblError.setVisible(true);
+        this.validate();
+    }
+
     public int getRating() { return rating; }
     public Button getGuardarButton() { return guardar; }
     public void addGuardarListener(ActionListener listener){
@@ -120,23 +145,22 @@ public class RateView extends Frame {
     public static void main(String[] args) {
         RateView view = new RateView();
         view.setVisible(true);
+        view.setErrorMessage("Debes seleccionar al menos una estrella.");
     }
 
-    // --- CLASE INTERNA PARA DIBUJAR LA ESTRELLA (Usando Panel) ---
+    // --- CLASE INTERNA PARA DIBUJAR LA ESTRELLA ---
     class StarPanel extends Panel {
         private boolean filled;
         private int id;
-        // Coordenadas para dibujar (estrella de 50x50)
         private final int[] xPoints = {25, 31, 47, 36, 40, 25, 10, 14, 3, 19};
         private final int[] yPoints = {5, 18, 18, 29, 45, 35, 45, 29, 18, 18};
 
         public StarPanel(int id) {
             this.id = id;
-            this.setLayout(null); // Sin layout interno
+            this.setLayout(null); 
             this.setBackground(Color.WHITE);
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             
-            // FORZAR TAMAÑO: Crítico para que no se vea "vacío"
             this.setPreferredSize(new Dimension(50, 50));
             this.setSize(50, 50);
 
@@ -149,27 +173,25 @@ public class RateView extends Frame {
 
         public void setFilled(boolean filled) {
             this.filled = filled;
-            repaint(); // Fuerza la actualización visual
+            repaint(); 
         }
 
         @Override
         public void paint(Graphics g) {
-            super.paint(g); // Limpia el fondo primero
+            super.paint(g); 
             
-            // Convertir a Graphics2D para bordes suaves
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             if (filled) {
-                g2.setColor(new Color(255, 200, 0)); // Dorado
+                g2.setColor(new Color(255, 200, 0)); 
                 g2.fillPolygon(xPoints, yPoints, 10);
                 
-                // Borde fino dorado oscuro para definición
                 g2.setColor(new Color(200, 150, 0));
                 g2.drawPolygon(xPoints, yPoints, 10);
             } else {
-                g2.setColor(Color.LIGHT_GRAY); // Gris
-                g2.setStroke(new BasicStroke(2)); // Borde más grueso
+                g2.setColor(Color.LIGHT_GRAY); 
+                g2.setStroke(new BasicStroke(2)); 
                 g2.drawPolygon(xPoints, yPoints, 10);
             }
         }

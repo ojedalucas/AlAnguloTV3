@@ -24,12 +24,6 @@ public class MainMenuView extends Frame {
     // --- LISTA DE BOTONES PARA EL CONTROLADOR ---
     private ArrayList<Button> listaBotonesCalificar;
 
-    // =========================================================================
-    // AJUSTE DE ANCHOS PARA EVITAR SCROLL HORIZONTAL
-    // Total Tabla: 70 + 220 + 130 + 350 + 100 = 870px
-    // + Márgenes laterales (60px) = 930px
-    // Ancho Ventana: 1024px (Sobra espacio para la barra vertical)
-    // =========================================================================
     private final int[] COL_WIDTHS = {60, 200, 120, 380, 90};
 
     // Colores y Fuentes Estandarizadas
