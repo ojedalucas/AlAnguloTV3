@@ -117,7 +117,7 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
               String contrasenia = rs.getString("CONTRASENIA");
               String email = rs.getString("EMAIL");
               int id_datos = rs.getInt("ID_DATOS_PERSONALES");
-             String nombre=rs.getString("NOMBRES");
+              String nombre=rs.getString("NOMBRES");
               String apellido = rs.getString("APELLIDO");
               int dni = rs.getInt("DNI");
 
@@ -129,10 +129,36 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
         return usuario;
     }
 
-	public Usuario iniciarSesion(String email, String contrasenia){
-		return null;
-	}
-	
+	public Usuario iniciarSesion(String email, String contrasenia) throws SQLException {
+		String sql= "SELECT * FROM USUARIO INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES=DATOS_PERSONALES.ID WHERE EMAIL=? AND CONTRASENIA=?";
+		
+		PreparedStatement pstmt;
+    	pstmt = connection.prepareStatement(sql); 
+  		pstmt.setString(1,email);
+		pstmt.setString(2,contrasenia);
+        ResultSet rs=pstmt.executeQuery();
+		Usuario usuario = null;
+
+        while (rs.next()) {
+			String contra = rs.getString("CONTRASENIA");
+            String mail= rs.getString("EMAIL");
+            if(email.equals(mail) && contrasenia.equals(contra)) {
+			  int id=rs.getInt("ID");
+              String nombreUsuario= rs.getString("NOMBRE_USUARIO");
+              int id_datos = rs.getInt("ID_DATOS_PERSONALES");
+              String nombre=rs.getString("NOMBRES");
+              String apellido = rs.getString("APELLIDO");
+              int dni = rs.getInt("DNI");
+
+              DatosPersonales persona=new DatosPersonales(id_datos,nombre, apellido, dni);
+              usuario = new Usuario(nombreUsuario,contrasenia, email, id, persona);
+              
+            }
+        }
+		rs.close();
+		pstmt.close();	
+        return usuario;
+    }	
 }
 
 

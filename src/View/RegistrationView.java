@@ -3,6 +3,7 @@ package View;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
 
 public class RegistrationView extends Frame {
 
@@ -176,8 +177,8 @@ public class RegistrationView extends Frame {
         txtPass.setText("");
     }
 
-    public Button getRegisterButton() {
-        return btnRegistrar;
+    public void addRegisterListener(ActionListener listener){
+        btnRegistrar.addActionListener(listener);
     }
 
     public static void main(String[] args) {

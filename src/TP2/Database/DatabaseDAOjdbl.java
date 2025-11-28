@@ -42,11 +42,14 @@ public class DatabaseDAOjdbl implements DatabaseDAO{
         String sqlPelicula =
             " CREATE TABLE IF NOT EXISTS PELICULA (" +
             "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-            "GENERO TEXT(1) NOT NULL," +
-            "TITULO TEXT(100) NOT NULL," +
-            "RESUMEN TEXT(500)," +
-            "DIRECTOR TEXT(100) NOT NULL," +
-            "DURACION REAL NOT NULL" +
+            "GENERO TEXT(1) NOT NULL, " +
+            "TITULO TEXT(100) NOT NULL, " +
+            "RESUMEN TEXT(500), " +
+            "DIRECTOR TEXT(100) NOT NULL, " +
+            "DURACION REAL NOT NULL, " +
+            "RATINGPROMEDIO FLOAT, " +
+            "ANIO INT NOT NULL, " +
+            "POSTER TEXT(100)" +
             " );";
         stmt.executeUpdate(sqlPelicula);
 

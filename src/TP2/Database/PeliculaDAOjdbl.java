@@ -14,12 +14,15 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 	}
 	public void cargarPelicula(Pelicula p) throws SQLException {
 		Statement stmt = connection.createStatement();
-        String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION)" +
+        String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION, RATINGPROMEDIO, ANIO, POSTER)" +
                      "VALUES ('" + p.getGenero().toString() + "', " +
                              "'" + p.getTitulo() + "', " + 
                              "'" + p.getResumen() + "', " + 
-                             "'" + p.getDirector() + "', " + 
-                                   p.getDuracion() +
+                             "'" + p.getDirector() + "', " +
+							 "'" + p.getDuracion() + "', " +
+							 "'" + p.getRatingPromedio() + "', " + 
+							 "'" + p.getAnio() + "', " +
+                                   p.getPoster() +
                              ");";
         
         stmt.executeUpdate(sql);
@@ -41,10 +44,13 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		    String titulo = rs.getString("TITULO");
 		    String resumen = rs.getString("RESUMEN");
 		    String director = rs.getString("DIRECTOR");
-		    double duracion = rs.getInt("DURACION");
+		    double duracion = rs.getDouble("DURACION");
+            float ratingPromedio = rs.getFloat("RATINGPROMEDIO");
+			int anio = rs.getInt("ANIO");
+			String poster = rs.getString("POSTER");
 		    
 		    GeneroPelicula genero = GeneroPelicula.valueOf(g);
-		    Pelicula datos = new Pelicula(id, genero, titulo, resumen, director, duracion);
+		    Pelicula datos = new Pelicula(id, genero, titulo, resumen, director, duracion, ratingPromedio, anio, poster);
 		    
 		    listaPeliculas.add(datos);
 		}
@@ -79,9 +85,13 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
               String titulo = rs.getString("TITULO");
               String resumen = rs.getString("RESUMEN");
               String director = rs.getString("DIRECTOR");
-              double duracion = rs.getInt("DURACION");
-              GeneroPelicula genero = GeneroPelicula.valueOf(g);
-              pelicula = new Pelicula(id, genero, titulo, resumen, director, duracion);
+              double duracion = rs.getDouble("DURACION");
+			  float ratingPromedio = rs.getFloat("RATINGPROMEDIO");
+			  int anio = rs.getInt("ANIO");
+			  String poster = rs.getString("POSTER");
+		    
+		      GeneroPelicula genero = GeneroPelicula.valueOf(g);
+		      pelicula = new Pelicula(id, genero, titulo, resumen, director, duracion, ratingPromedio, anio, poster);
             }
         }
         return pelicula;

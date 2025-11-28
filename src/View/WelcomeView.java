@@ -203,11 +203,15 @@ public class WelcomeView extends Frame {
         txtPass.setText("");
         lblError.setText(""); 
     }
-    public void addLoginListener(ActionListener listener){btnLogin.addActionListener(listener);}
-    public void addRegisterListener(ActionListener listener){btnRegister.addActionListener(listener);}
+    public void addLoginListener(ActionListener listener){
+        btnLogin.addActionListener(listener);
+    }
+    public void addRegisterListener(ActionListener listener){
+        btnRegister.addActionListener(listener);
+    }
 
-    public void showLoginError() {
-        lblError.setText("Usuario o contraseña incorrecta");
+    public void showLoginError(String mensaje) {
+        lblError.setText(mensaje);
         lblError.revalidate(); 
     }
 

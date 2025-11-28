@@ -8,6 +8,9 @@ public class Pelicula {
     private String resumen;
     private String director;
     private double duracion;
+    private float ratingPromedio;
+    private int anio;
+    private String poster; // URL o ruta del poster
 
     public Pelicula() {
         this.id = 0;
@@ -16,18 +19,24 @@ public class Pelicula {
         this.resumen = "Sin resumen";
         this.director = "Desconocido";
         this.duracion = 0.0;
+        this.ratingPromedio = (float)0.0;
+        this.anio=0;
+        this.poster="Sin poster";
     }
 
-    public Pelicula(int id, GeneroPelicula genero, String titulo, String resumen, String director, double duracion) {
+    public Pelicula(int id, GeneroPelicula genero, String titulo, String resumen, String director, double duracion, float ratingPromedio, int anio, String poster) {
         this.id = id;
         this.genero = genero;
         this.titulo = titulo;
         this.resumen = resumen;
         this.director = director;
         this.duracion = duracion;
+        this.ratingPromedio = ratingPromedio;
+        this.anio = anio;
+        this.poster = poster;
     }
 
-    // 5. Métodos Getters y Setters para todas las variables
+    // 8. Métodos Getters y Setters para todas las variables
     
     // Getters
     public int getId() {
@@ -54,6 +63,19 @@ public class Pelicula {
         return duracion;
     }
 
+    public float getRatingPromedio() {
+        return ratingPromedio;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+
     // Setters
     public void setId(int id) {
         this.id = id;
@@ -78,6 +100,19 @@ public class Pelicula {
     public void setDuracion(double duracion) {
         this.duracion = duracion;
     }
+
+    public void setRatingPromedio (float ratingPromedio) {
+        this.ratingPromedio = ratingPromedio;
+    }
+
+public void setAnio (int anio) {
+        this.anio = anio;
+    }
+
+    public void setPoster (String poster) {
+        this.poster = poster;
+    }
+
 
     //Método toString para facilitar la impresión del objeto
     @Override

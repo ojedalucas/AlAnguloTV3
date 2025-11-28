@@ -1,12 +1,11 @@
 import Controller.WelcomeController;
-import TP2.Database.UsuarioDAOjdbl;
 import View.WelcomeView;
 
 public class Main {
     public static void main(String[] args){
         WelcomeView ventana = new WelcomeView();
-        UsuarioDAOjdbl verificador = new UsuarioDAOjdbl(null);
-        new WelcomeController(ventana, verificador);
+        // WelcomeModel modelo = new WelcomeModel();
+        new WelcomeController(ventana /*, modelo */);
         ventana.setVisible(true);
     }
 }
