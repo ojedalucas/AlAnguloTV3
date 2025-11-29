@@ -12,7 +12,6 @@ import Model.Resenia;
 import Model.Usuario;
 
 public class GeneralDAO {
-	private DatabaseDAO database;
 	private DatosPersonalesDAO dp;
 	private UsuarioDAO user;
 	private PeliculaDAO pelicula;
@@ -20,20 +19,18 @@ public class GeneralDAO {
 	//private ReseniaDAO resenia;
 	
 	public GeneralDAO() {
-		database=new DatabaseDAOjdbl();
 	}
 	
 	public void conectar() throws SQLException {
-		database.iniciar();
-		Connection conn=database.getConnection();
-		dp=new DatosPersonalesDAOjdbl(conn);
-		user=new UsuarioDAOjdbl(conn);
-		pelicula=new PeliculaDAOjdbl(conn);
-		resenia=new ReseniaDAOjdbl(conn);
+		ConnectionManager.iniciar();
+		dp=new DatosPersonalesDAOjdbl();
+		user=new UsuarioDAOjdbl();
+		pelicula=new PeliculaDAOjdbl();
+		resenia=new ReseniaDAOjdbl();
 	}
 	
 	public void desconectar() throws SQLException {
-		database.apagar();
+		ConnectionManager.apagar();
 	}
 	
 	

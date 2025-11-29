@@ -3,12 +3,9 @@ package Database;
 import java.io.File;
 import java.sql.*;
 
-public class DatabaseDAOjdbl implements DatabaseDAO{
+public class ConnectionManager {
 	private static Connection connection;
-	private static Statement stmt;
-	
-	@Override
-	public void iniciar() throws SQLException {
+	public static void iniciar() throws SQLException {
 		try {
             // Carpeta dentro del proyecto
             File folder = new File("Database");
@@ -18,7 +15,6 @@ public class DatabaseDAOjdbl implements DatabaseDAO{
 
             // Ruta relativa al archivo
             connection= DriverManager.getConnection("jdbc:sqlite:Database\\plataforma.db");
-            stmt = connection.createStatement();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,8 +24,9 @@ public class DatabaseDAOjdbl implements DatabaseDAO{
 		crearTablas();
 	}
 	
-	private void crearTablas() throws SQLException
+	private static void crearTablas() throws SQLException
 	{
+        Statement stmt = connection.createStatement();
         String sqlDatosPersonales =
             " CREATE TABLE IF NOT EXISTS DATOS_PERSONALES (" +
             "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -81,11 +78,11 @@ public class DatabaseDAOjdbl implements DatabaseDAO{
         stmt.close();
 	}
 	
-	public void apagar() throws SQLException {
+	public static void apagar() throws SQLException {
 		connection.close();
 	}
 	
-	public Connection getConnection() {
+	public static Connection getConnection() {
 		return connection;
 	}
 }

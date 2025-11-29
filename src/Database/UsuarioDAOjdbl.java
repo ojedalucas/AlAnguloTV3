@@ -9,8 +9,8 @@ import Model.Usuario;
 public class UsuarioDAOjdbl implements UsuarioDAO{
 	private Connection connection;
 
-	public UsuarioDAOjdbl(Connection conn) {
-		connection=conn;
+	public UsuarioDAOjdbl() {
+		connection= ConnectionManager.getConnection();
 	}
 	
 	@Override

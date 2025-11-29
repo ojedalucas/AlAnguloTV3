@@ -10,8 +10,8 @@ import Model.Resenia;
 public class ReseniaDAOjdbl implements ReseniaDAO {
 	private Connection connection;
 	
-	public ReseniaDAOjdbl(Connection conn) {
-		connection=conn;
+	public ReseniaDAOjdbl() {
+		connection= ConnectionManager.getConnection();
 	}
 	
 	@Override

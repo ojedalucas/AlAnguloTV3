@@ -8,8 +8,8 @@ import Model.DatosPersonales;
 public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 	private Connection connection;
 
-	public DatosPersonalesDAOjdbl(Connection conn) {
-		connection=conn;
+	public DatosPersonalesDAOjdbl() {
+		connection= ConnectionManager.getConnection();
 	}
 
 	@Override

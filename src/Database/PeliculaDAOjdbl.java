@@ -9,8 +9,8 @@ import Model.Pelicula;
 public class PeliculaDAOjdbl implements PeliculaDAO {
 	private Connection connection;
 
-	public PeliculaDAOjdbl(Connection conn) {
-		connection=conn;
+	public PeliculaDAOjdbl() {
+		connection= ConnectionManager.getConnection();
 	}
 	public void cargarPelicula(Pelicula p) throws SQLException {
 		Statement stmt = connection.createStatement();
