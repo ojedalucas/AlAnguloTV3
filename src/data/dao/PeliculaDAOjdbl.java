@@ -14,20 +14,21 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		connection= ConnectionManager.getConnection();
 	}
 	public void cargarPelicula(Pelicula p) throws SQLException {
-		Statement stmt = connection.createStatement();
-        String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION, RATINGPROMEDIO, ANIO, POSTER)" +
-                     "VALUES ('" + p.getGenero().toString() + "', " +
-                             "'" + p.getTitulo() + "', " + 
-                             "'" + p.getResumen() + "', " + 
-                             "'" + p.getDirector() + "', " +
-							 "'" + p.getDuracion() + "', " +
-							 "'" + p.getRatingPromedio() + "', " + 
-							 "'" + p.getAnio() + "', " +
-                                   p.getPoster() +
-                             ");";
-        
-        stmt.executeUpdate(sql);
-        stmt.close();		
+		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION, RATINGPROMEDIO, ANIO, POSTER) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, p.getGenero().toString());
+		pstmt.setString(2, p.getTitulo());
+		pstmt.setString(3, p.getResumen());
+		pstmt.setString(4, p.getDirector());
+		pstmt.setDouble(5, p.getDuracion());
+		pstmt.setFloat(6, p.getRatingPromedio());
+		pstmt.setInt(7, p.getAnio());
+		pstmt.setString(8, p.getPoster());
+
+		pstmt.executeUpdate();
+		pstmt.close();
 	}
 	
 	//todos los listar deben devolver la tabla completa(ordenada) con id, nombre, etc. 
