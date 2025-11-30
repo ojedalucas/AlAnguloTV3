@@ -1,0 +1,168 @@
+package data.dao;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import data.ConnectionManager;
+import model.domain.DatosPersonales;
+import model.domain.Pelicula;
+import model.domain.Resenia;
+import model.domain.Usuario;
+import util.comparator.*;
+
+public class GeneralDAO {
+	private DatosPersonalesDAO dp;
+	private UsuarioDAO user;
+	private PeliculaDAO pelicula;
+	private ReseniaDAO resenia;
+	//private ReseniaDAO resenia;
+	
+	public GeneralDAO() {
+	}
+	
+	public void conectar() throws SQLException {
+		ConnectionManager.iniciar();
+		dp=new DatosPersonalesDAOjdbl();
+		user=new UsuarioDAOjdbl();
+		pelicula=new PeliculaDAOjdbl();
+		resenia=new ReseniaDAOjdbl();
+	}
+	
+	public void desconectar() throws SQLException {
+		ConnectionManager.apagar();
+	}
+	
+	
+	//true si existe
+	public boolean existeNombreUsuario(String u) throws SQLException {
+		if(user.verificarNomUsuario(u)) return true;
+		return false;
+	}
+	
+	//true si existe
+	public boolean existeMail(String m) throws SQLException {
+		if(user.verificarMail(m)) return true;
+		return false;
+	}
+	
+	public void guardarUsuario(Usuario u) throws SQLException {
+		user.cargarUsuario(u);
+	}
+	
+	public void guardarPelicula(Pelicula p) throws SQLException {
+		pelicula.cargarPelicula(p);
+	}
+	
+	public ArrayList<Pelicula> listarPeliculas(int opcion) throws SQLException {
+		ArrayList<Pelicula> listaPeliculas = pelicula.listarPeliculas(); 
+
+        switch (opcion) {
+            case 1: 
+                Collections.sort(listaPeliculas, new ComparatorTitulo());
+                break;
+            case 2:
+            	Collections.sort(listaPeliculas, new ComparatorGenero());
+                break;
+            case 3:
+            	Collections.sort(listaPeliculas, new ComparatorDuracion());
+                break;
+            case 4:
+            	// Imprime por el orden que se descargó de base de datos (ID)
+                break;
+            default:
+                System.out.println("Opción de ordenación no válida.");
+        }
+        
+        return listaPeliculas;
+    }
+
+	public boolean validarDNI(int dni) throws SQLException {
+		if (dp.existeDNI(dni)) return true;
+		return false;
+	}
+
+	public void guardarDatosPersonales(DatosPersonales nuevosDatos) throws SQLException {
+		dp.cargarDatos(nuevosDatos);		
+	}
+	
+	
+	public ArrayList<DatosPersonales> listarDatosPersonales() throws SQLException {
+		ArrayList<DatosPersonales> lista=dp.listar();
+		return lista;
+	}
+	
+	//retorna true si existe
+	public boolean existePersona(int idPersona) throws SQLException {
+		if (dp.validarPersona(idPersona))
+			return true;
+		else return false;
+	}
+	
+	public DatosPersonales buscarDpPorId(int idPersona) throws SQLException {
+		return dp.buscarPorID(idPersona);
+	}
+
+	public Usuario buscarUsuarioPorNombre(String nombreUsuario) throws SQLException {
+		Usuario u=user.buscarPorNombreUsuario(nombreUsuario);
+		return u;
+	}
+	
+	//devuleva si una pelicula existe, pasandole un ID como parametro
+	public boolean existePelicula(int ID) throws SQLException {
+		return (pelicula.validarPelicula(ID));
+	}
+
+	public void guardarResenia(Resenia r) throws SQLException {
+		r.setFechaHora(LocalDateTime.now());
+		resenia.cargarResenia(r);
+		
+	}
+	
+	public ArrayList<Resenia> listarReseniasNoAprobadas() throws SQLException {
+		ArrayList<Resenia> lista=resenia.listarNoAprobadas();
+		return lista;
+	}
+	
+	public boolean existeResenia(int ID) throws SQLException {
+		return (resenia.validarResenia(ID));
+	}
+	
+	public Resenia descargarResenia(int ID) throws SQLException {
+		return (resenia.descargarResenia(ID));
+	}
+	
+	public void actualizarReseniaAprobada(int ID) throws SQLException {
+		resenia.aprobarResenia(ID);
+	}
+
+	
+	public void borrarResenia(Resenia r) throws SQLException {
+		resenia.eliminarResenia(r);
+	}
+	
+	public ArrayList<Usuario> listarUsuarios(int opcion) throws SQLException {
+		ArrayList<Usuario> listaUsuarios = user.listarUsuarios();
+		switch (opcion) {
+			case 1:
+				Collections.sort(listaUsuarios, new ComparatorUserName());
+				break;
+			case 2:
+				Collections.sort(listaUsuarios, new ComparatorMail());
+				break;
+			default:
+				System.out.println("Opción de ordenación no válida.");
+		}
+		return listaUsuarios;
+	}
+
+	public Usuario buscarUserPorId(int Id) throws SQLException {
+		return user.buscarPorID(Id);
+	}
+
+	public Pelicula buscarPeliculaPorId(int Id) throws SQLException {
+		return pelicula.buscarPorID(Id);
+	}
+}
+	

@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,7 +14,7 @@ public class WelcomeView extends Frame {
     private Label lblError;
     
     // Ajuste de ruta para paquete View (con barra al inicio)
-    private String imgFileName = "/Image/WelcomeViewIPrincipalImage.jpg"; 
+    private String imgFileName = "/util/image/WelcomeViewIPrincipalImage.jpg"; 
 
     public WelcomeView() {
         super("Plataforma de Streaming");
@@ -210,7 +210,7 @@ public class WelcomeView extends Frame {
         btnRegister.addActionListener(listener);
     }
 
-    public void showLoginError(String mensaje) {
+    public void showErrorMessage(String mensaje) {
         lblError.setText(mensaje);
         lblError.revalidate(); 
     }

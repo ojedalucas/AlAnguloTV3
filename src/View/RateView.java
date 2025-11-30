@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -129,10 +129,9 @@ public class RateView extends Frame {
     }
 
     // NUEVO MÉTODO: Para mostrar el mensaje de error
-    public void setErrorMessage(String message) {
-        lblError.setText(message);
-        lblError.setVisible(true);
-        this.validate();
+    public void showErrorMessage(String mensaje) {
+        lblError.setText(mensaje);
+        lblError.revalidate(); 
     }
 
     public int getRating() { return rating; }
@@ -145,7 +144,7 @@ public class RateView extends Frame {
     public static void main(String[] args) {
         RateView view = new RateView();
         view.setVisible(true);
-        view.setErrorMessage("Debes seleccionar al menos una estrella.");
+        view.showErrorMessage("Debes seleccionar al menos una estrella.");
     }
 
     // --- CLASE INTERNA PARA DIBUJAR LA ESTRELLA ---

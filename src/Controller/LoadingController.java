@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.Window.LoadingModel;
-import View.LoadingView;
+import model.logic.LoadingModel;
+import view.LoadingView;
 
 @SuppressWarnings("unused")
 public class LoadingController {

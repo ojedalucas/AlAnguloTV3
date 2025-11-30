@@ -1,14 +1,17 @@
-package Controller;
+package controller;
 
 
-import Model.Window.LoadingModel;
-import Model.Window.RegistrationModel;
-import Model.Window.WelcomeModel;
-import View.LoadingView;
-import View.RegistrationView;
-import View.WelcomeView;
+import java.sql.SQLException;
 
-@SuppressWarnings("unused")
+import model.logic.LoadingModel;
+import model.logic.RegistrationModel;
+import model.logic.WelcomeModel;
+import util.UserSession;
+import util.exceptions.*;
+import view.LoadingView;
+import view.RegistrationView;
+import view.WelcomeView;
+
 public class WelcomeController {
     private WelcomeView ventana;
     private WelcomeModel modelo;
@@ -23,28 +26,21 @@ public class WelcomeController {
     private void logicaIngreso(){   
         String email = this.ventana.getEmail();
         String contrasenia = this.ventana.getPassword();
-        boolean exito = true;
-        if (email.isBlank() || contrasenia.isBlank()){
-            exito = false;
-            ventana.showLoginError("Debe completar todas las casillas.");
+
+        try {
+            UserSession.iniciarSesion(modelo.iniciarSesion(email, contrasenia));
+            LoadingView loadV = new LoadingView();
+            LoadingModel loadM = new LoadingModel();
+            new LoadingController(loadV, loadM);
+            loadV.setVisible(true);
+            this.ventana.dispose();
+        } catch (CamposVaciosException | FormatoEmailException | LoginIncorrectoException e) {
+            ventana.showErrorMessage(e.getMessage());
+        } catch (SQLException ex) {
+            // Error inesperado de base de datos
+            ex.printStackTrace();
+            ventana.showErrorMessage("Error interno. Intente nuevamente.");
         }
-        /* if (modelo.formatoEmail(email) == false){
-            exito = false;
-            ventana.showLoginError("Email debe cumplir con el formato: xxx@yyy");
-        }
-        if (exito){
-            Usuario user = modelo.iniciarSesion(email, contrasenia);
-            if (user != null){
-                LoadingView loadV = new LoadingView();
-                LoadingModel loadM = new LoadingModel();
-                new LoadingController(loadV, loadM);
-                loadV.setVisible(true);
-                this.ventana.dispose();
-            } else {
-                ventana.showLoginError("Email o contraseña incorrectos.");
-            }
-        }
-        */
     }
 
     private void logicaRegistro(){

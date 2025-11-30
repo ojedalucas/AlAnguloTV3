@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -8,7 +8,7 @@ import java.net.URL;
 public class LoadingView extends Frame {
 
     // Ruta de la imagen
-    private String imgFileName = "Image/LoadingViewPrincipalImage.jpg"; 
+    private String imgFileName = "util/image/LoadingViewPrincipalImage.jpg"; 
 
     public LoadingView() {
         // 1. Configuración básica

@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.Window.MainMenuModel;
-import View.MainMenuView;
+import model.logic.MainMenuModel;
+import view.MainMenuView;
 
 @SuppressWarnings("unused")
 public class MainMenuController {

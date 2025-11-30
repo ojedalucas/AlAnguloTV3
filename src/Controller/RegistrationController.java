@@ -1,11 +1,13 @@
-package Controller;
+package controller;
 
-import Model.Window.RegistrationModel;
-import Model.Window.WelcomeModel;
-import View.RegistrationView;
-import View.WelcomeView;
+import java.sql.SQLException;
 
-@SuppressWarnings("unused")
+import model.logic.RegistrationModel;
+import model.logic.WelcomeModel;
+import util.exceptions.*;
+import view.RegistrationView;
+import view.WelcomeView;
+
 public class RegistrationController {
     private RegistrationView ventana;
     private RegistrationModel modelo;
@@ -16,37 +18,27 @@ public class RegistrationController {
         this.ventana.addRegisterListener(e -> logicaRegistro());
     }
     private void logicaRegistro(){
+        String username = ventana.getUsername();
         String nombre = ventana.getNombre();
         String apellido = ventana.getApellido();
         String DNI = ventana.getDNI();
         String email = ventana.getEmail();
         String contrasenia = ventana.getPassword();
-        boolean exito = true;
-        /* 
-        if (nombre.isBlank() || apellido.isBlank() || DNI.isBlank() || email.isBlank() || contrasenia.isBlank()){
-            exito = false;
-            ventana.showLoginError("Debe completar todas las casillas.");
-        }
-        if (modelo.existeDNI(dni)){
-            exito = false;
-            ventana.showLoginError("El DNI ingresado ya está asociado a una cuenta.");
-        }
-        if (modelo.formatoEmail(email) == false){
-            exito = false;
-            ventana.showLoginError("Email debe cumplir con el formato: xxx@yyy");
-        }
-        if (modelo.existeEmail(email)){
-            exito = false;
-            ventana.showLoginError("El email ingresado ya está asociado a una cuenta."); 
-        }
-        */
-        if (exito){
-            /* Usuario user = modelo.registrarUsuario(nombre, apellido, DNI, email, contrasenia) */
+
+        try{
+            modelo.registrarUsuario(username, nombre, apellido, DNI, email, contrasenia);
             WelcomeView welV = new WelcomeView();
             WelcomeModel welM = new WelcomeModel();
             new WelcomeController(welV, welM);
             welV.setVisible(true);
             this.ventana.dispose();
+        } catch (CamposVaciosException | FormatoEmailException | FormatoDniException | DniYaExisteException | EmailYaExisteException e) {
+            ventana.showErrorMessage(e.getMessage());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ventana.showErrorMessage("Error interno. Intente nuevamente.");
+        } catch (NumberFormatException exN) {
+            ventana.showErrorMessage("El DNI debe contener solo números.");
         }
     }
 }

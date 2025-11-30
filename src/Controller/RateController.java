@@ -1,9 +1,12 @@
-package Controller;
+package controller;
 
-import View.RateView;
-import Model.Window.ExitoModel;
-import Model.Window.RateModel;
-import View.ExitoView;
+import model.logic.ExitoModel;
+import model.logic.RateModel;
+import util.exceptions.CamposVaciosException;
+import view.ExitoView;
+import view.RateView;
+
+import java.sql.SQLException;
 
 @SuppressWarnings("unused")
 public class RateController {
@@ -20,18 +23,19 @@ public class RateController {
         int rating = ventana.getRating();
         String comentario = ventana.getComentario();
         boolean exito = true;
-        if (rating == 0 || comentario.isBlank()){
-            exito = false;
-            // ventana.showLoginError("Debe completar ambos campos.");
-        }
-        if (exito){
-            // modelo.agregarReseña(rating, comentario);
+        try {
+            modelo.agregarResenia(rating, comentario);
             ExitoView exitoV = new ExitoView();
             ExitoModel exitoM = new ExitoModel();
             new ExitoController(exitoV, exitoM);
             exitoV.setVisible(true);
             this.ventana.dispose();
+        } catch (CamposVaciosException e){
+            ventana.showErrorMessage(e.getMessage());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+
     }
     
 }

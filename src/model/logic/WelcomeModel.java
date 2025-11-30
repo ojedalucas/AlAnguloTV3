@@ -1,0 +1,37 @@
+package model.logic;
+
+import java.sql.SQLException;
+
+import data.dao.UsuarioDAO;
+import data.dao.UsuarioDAOjdbl;
+import model.domain.Usuario;
+import util.exceptions.CamposVaciosException;
+import util.exceptions.FormatoEmailException;
+import util.exceptions.LoginIncorrectoException;
+
+public class WelcomeModel {
+  private UsuarioDAO verificador;
+
+    public WelcomeModel (){
+        verificador= new UsuarioDAOjdbl();
+    }
+
+    public Usuario iniciarSesion (String email, String contrasenia) throws SQLException, CamposVaciosException, FormatoEmailException, LoginIncorrectoException {
+        if (email.isBlank() || contrasenia.isBlank())
+            throw new CamposVaciosException();
+        if (!formatoEmail(email))
+            throw new FormatoEmailException();
+        Usuario user = verificador.iniciarSesion(email, contrasenia);
+        if (user == null)
+            throw new LoginIncorrectoException();
+        return user;
+    }
+
+    public boolean formatoEmail(String email){
+        boolean formatoValido = false;
+        if (email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            formatoValido = true;
+        }
+        return formatoValido; 
+    }
+}

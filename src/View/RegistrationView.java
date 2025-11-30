@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -180,7 +180,8 @@ public class RegistrationView extends Frame {
         });
     }
 
-    // Métodos públicos para acceder y manipular campos y botón
+    // Métodos públicos para acceder y manipular campos y botón}
+    public String getUsername() { return "";} //txtUsername.getText();} Cuando agregues el campo devolveme el username, gracias!!!
     public String getNombre() { return txtNombre.getText(); }
     public String getApellido() { return txtApellido.getText(); }
     public String getDNI() { return txtDNI.getText(); }
@@ -199,11 +200,9 @@ public class RegistrationView extends Frame {
     }
 
     // NUEVO MÉTODO: Para mostrar el mensaje de error
-    public void setErrorMessage(String message) {
-        lblError.setText(message);
-        lblError.setVisible(true);
-        // Revalidar para asegurar que el layout se ajuste si es necesario
-        this.validate();
+    public void showErrorMessage(String mensaje) {
+        lblError.setText(mensaje);
+        lblError.revalidate(); 
     }
 
     public void addRegisterListener(ActionListener listener){
@@ -214,6 +213,6 @@ public class RegistrationView extends Frame {
         RegistrationView view = new RegistrationView();
         view.setVisible(true);
         //Prueba visual del error (descomentar para probar)
-        view.setErrorMessage("Error: Complete todos los campos.");
+        view.showErrorMessage("Error: Complete todos los campos.");
     }
 }

@@ -1,9 +1,9 @@
-package Controller;
+package controller;
 
-import Model.Window.InfoModel;
-import Model.Window.MainMenuModel;
-import View.InfoView;
-import View.MainMenuView;
+import model.logic.InfoModel;
+import model.logic.MainMenuModel;
+import view.InfoView;
+import view.MainMenuView;
 
 @SuppressWarnings("unused")
 public class InfoController {
