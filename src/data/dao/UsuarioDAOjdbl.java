@@ -16,19 +16,18 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
 	
 	@Override
 	public void cargarUsuario(Usuario u) throws SQLException {
-			Statement stmt = connection.createStatement();
+		String sql = "INSERT INTO USUARIO (NOMBRE_USUARIO, EMAIL, CONTRASENIA, ID_DATOS_PERSONALES) " +
+					"VALUES (?, ?, ?, ?)";
 
-	        String sql = "INSERT INTO USUARIO (NOMBRE_USUARIO, EMAIL, CONTRASENIA, ID_DATOS_PERSONALES)" +
-	                     "VALUES ('" + u.getNombreUsuario() + "', " +
-	                             "'" + u.getEmail() + "', " + 
-	                             "'" + u.getContrasenia() + "', " + 
-	                             u.getDatosPersonales().getId() +  
-	                             ");";
-	        
-	        stmt.executeUpdate(sql);
-	        stmt.close();	
-			
-	}
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, u.getNombreUsuario());
+		pstmt.setString(2, u.getEmail());
+		pstmt.setString(3, u.getContrasenia());
+		pstmt.setInt(4, u.getDatosPersonales().getId());
+
+		pstmt.executeUpdate();
+		pstmt.close();
+    }
 	
 	//retorno los datos completos del usuario, si el nombre de usuario no existe retorna null;
 	public Usuario buscarPorNombreUsuario(String user) throws SQLException {

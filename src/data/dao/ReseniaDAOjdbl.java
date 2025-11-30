@@ -17,21 +17,22 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 	
 	@Override
 	public void cargarResenia(Resenia r) throws SQLException {
-		Statement stmt = connection.createStatement();
-		
 		String fechaHora = r.getFechaHora().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		String sql = "INSERT INTO RESENIA (CALIFICACION, COMENTARIO, APROBADO, FECHA_HORA, ID_USUARIO, ID_PELICULA)" +
-                     "VALUES ('" + r.getCalificacion() + "', " +
-                             "'" + r.getComentario() + "', " + 
-                             "'" + r.isAprobado() + "', " + 
-                             "'" + fechaHora + "', " + 
-                             "'" + r.getIdUsuario() + "', " + 
-                                   r.getIdPelicula() +
-                             ");";
-        
-        stmt.executeUpdate(sql);
-        stmt.close();			
-	}
+		String sql = "INSERT INTO RESENIA (CALIFICACION, COMENTARIO, APROBADO, FECHA_HORA, ID_USUARIO, ID_PELICULA) " +
+					"VALUES (?, ?, ?, ?, ?, ?)";
+
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, r.getCalificacion());
+		pstmt.setString(2, r.getComentario());
+		pstmt.setBoolean(3, r.isAprobado());
+		pstmt.setString(4, fechaHora);
+		pstmt.setInt(5, r.getIdUsuario());
+		pstmt.setInt(6, r.getIdPelicula());
+
+		pstmt.executeUpdate();
+		pstmt.close();
+    }
+
 	
 	public Resenia descargarResenia(int ID) throws SQLException {
 		Statement stmt = connection.createStatement();

@@ -29,24 +29,18 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 	}
 
 	@Override
-	public void cargarDatos(DatosPersonales nuevosDatos) throws SQLException {
-		Statement stmt = connection.createStatement();
-        /* String sql = "INSERT INTO DATOS_PERSONALES (NOMBRES, APELLIDO, DNI)" +
-                     "VALUES ('" + nuevosDatos.getNombre()+ "', " +
-                             "'" + nuevosDatos.getApellido() + "', " + 
-                             "'" + nuevosDatos.getDni() + 
-                             ");";
-                        */
-        String sql = "INSERT INTO DATOS_PERSONALES (NOMBRES, APELLIDO, DNI) VALUES (" +
-                "'" + nuevosDatos.getNombre() + "', " +
-                "'" + nuevosDatos.getApellido() + "', " +
-                "'" + nuevosDatos.getDni() + "'" +
-                ");";
+	public void cargarDatos (DatosPersonales nuevosDatos) throws SQLException {
+	  String sql = "INSERT INTO DATOS_PERSONALES (NOMBRES, APELLIDO, DNI) " +
+                 "VALUES (?, ?, ?)";
 
-        
-        stmt.executeUpdate(sql);
-        stmt.close();		
-	}
+      PreparedStatement pstmt = connection.prepareStatement(sql);
+      pstmt.setString(1, nuevosDatos.getNombre());
+      pstmt.setString(2, nuevosDatos.getApellido());
+      pstmt.setInt(3, nuevosDatos.getDni());
+
+      pstmt.executeUpdate();
+      pstmt.close();
+    }
 
 	@Override
 	public ArrayList<DatosPersonales> listar() throws SQLException {
