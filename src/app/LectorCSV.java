@@ -4,60 +4,80 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+// Imports necesarios
+import Data.ConnectionManager;
+import Data.Dao.PeliculaDAOjdbl;
 import Model.Domain.Pelicula;
 import Model.Domain.GeneroPelicula;
 
 public class LectorCSV {
 
-    // Ruta fija al archivo
     private static final String RUTA_ARCHIVO = "src/CSV/movies_database.csv";
 
-    // --- MËTODO PRINCIPAL DE PRUEBA ---
+    // --- MAIN DE PRUEBA E INSERCIÓN ---
     public static void main(String[] args) {
-        System.out.println("--- Probando LectorCSV ---");
-        
-        // 1. Llamamos al método
+        System.out.println("--- Inicio del proceso ---");
+
+        // 1. Conectar a la BD
+        try {
+            ConnectionManager.iniciar();
+            System.out.println("✅ Conexión establecida.");
+        } catch (Exception e) {
+            System.out.println("❌ Error de conexión: " + e.getMessage());
+            return;
+        }
+
+        // 2. Leer CSV
         ArrayList<Pelicula> misPeliculas = leerPeliculas();
 
-        // 2. Verificamos si trajo algo
         if (misPeliculas.isEmpty()) {
-            System.out.println("❌ La lista está vacía. Verifica la ruta o el contenido del archivo.");
+            System.out.println("❌ La lista está vacía.");
         } else {
-            System.out.println("✅ Se leyeron un total de: " + misPeliculas.size() + " películas.\n");
+            // 3. Obtener la primera película
+            Pelicula p = misPeliculas.get(0);
+            
+            // --- NUEVO: IMPRIMIR TODOS LOS DATOS ANTES DE GUARDAR ---
+            System.out.println("\n------------------------------------------------");
+            System.out.println("       DATOS A CARGAR EN BASE DE DATOS          ");
+            System.out.println("------------------------------------------------");
+            System.out.println("Título:    " + p.getTitulo());
+            System.out.println("Año:       " + p.getAnio());
+            System.out.println("Género:    " + p.getGenero());
+            System.out.println("Director:  " + p.getDirector());
+            System.out.println("Duración:  " + p.getDuracion());
+            System.out.println("Rating:    " + p.getRatingPromedio());
+            System.out.println("Resumen:   " + p.getResumen());
+            System.out.println("Poster URL:" + p.getPoster());
+            System.out.println("------------------------------------------------\n");
 
-            System.out.println("--- Mostrando las primeras 3 ---");
-            
-            // 3. Imprimimos las primeras 3 (o menos si el archivo es muy chico)
-            int limite = Math.min(3, misPeliculas.size());
-            
-            for (int i = 0; i < limite; i++) {
-                Pelicula p = misPeliculas.get(i);
-                System.out.println("Pelicula #" + (i + 1));
-                System.out.println("Titulo: " + p.getTitulo());
-                System.out.println("Año: " + p.getAnio());
-                System.out.println("Género: " + p.getGenero());
-                System.out.println("---------------------------");
+            // 4. Guardar en BD
+            try {
+                System.out.println("Guardando en SQL...");
+                PeliculaDAOjdbl dao = new PeliculaDAOjdbl();
+                dao.cargarPelicula(p);
+                
+                System.out.println("✅ ¡ÉXITO! Película guardada correctamente.");
+
+            } catch (Exception e) {
+                System.out.println("❌ Error al guardar en SQL: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
-    // ----------------------------------
 
-
+    // --- MÉTODO DE LECTURA (Sin cambios) ---
     public static ArrayList<Pelicula> leerPeliculas() {
         ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
         String linea = "";
         String separador = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"; 
 
-        // System.out.println("Leyendo archivo desde: " + RUTA_ARCHIVO);
-
         try (BufferedReader br = new BufferedReader(new FileReader(RUTA_ARCHIVO))) {
-            
-            br.readLine(); // Saltar encabezado
+            br.readLine(); 
 
             while ((linea = br.readLine()) != null) {
                 try {
                     String[] datos = linea.split(separador, -1); 
-
                     if (datos.length < 9) continue; 
 
                     String fechaStr = datos[0].replace("\"", ""); 
@@ -83,8 +103,8 @@ public class LectorCSV {
                     GeneroPelicula genero = GeneroPelicula.desdeCsv(generoRaw);
 
                     String poster = datos[8].replace("\"", "").trim();
+                    if (poster.isEmpty()) poster = "Sin poster";
 
-                    // Valores por defecto
                     String director = "Desconocido";
                     double duracion = 0.0; 
 
@@ -105,9 +125,8 @@ public class LectorCSV {
                 }
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al leer el archivo: " + e.getMessage());
+            System.out.println("❌ Error de lectura: " + e.getMessage());
         }
-
         return listaPeliculas;
     }
 }
