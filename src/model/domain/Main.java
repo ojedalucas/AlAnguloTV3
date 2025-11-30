@@ -1,4 +1,4 @@
-package model.domain;
+package Model.Domain;
 
 import java.sql.*;
 import java.util.Scanner;

@@ -1,12 +1,12 @@
 package Controller;
 
-import model.logic.ExitoModel;
-import model.logic.RateModel;
 import View.ExitoView;
 import View.RateView;
 
 import java.sql.SQLException;
 
+import Model.Logic.ExitoModel;
+import Model.Logic.RateModel;
 import Util.Exceptions.CamposVaciosException;
 
 @SuppressWarnings("unused")

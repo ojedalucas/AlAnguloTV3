@@ -1,9 +1,9 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.domain.Resenia;
+import Model.Domain.Resenia;
 
 public interface ReseniaDAO {
 

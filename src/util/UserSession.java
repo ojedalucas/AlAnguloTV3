@@ -1,6 +1,6 @@
 package Util;
 
-import model.domain.Usuario;
+import Model.Domain.Usuario;
 
 public class UserSession {
     private static Usuario usuarioActual;

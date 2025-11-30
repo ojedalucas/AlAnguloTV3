@@ -1,7 +1,7 @@
 package Controller;
 
-import model.logic.ExitoModel;
-import model.logic.MainMenuModel;
+import Model.Logic.ExitoModel;
+import Model.Logic.MainMenuModel;
 import View.ExitoView;
 import View.MainMenuView;
 

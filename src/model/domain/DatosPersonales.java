@@ -1,4 +1,4 @@
-package model.domain;
+package Model.Domain;
 
 public class DatosPersonales {
 

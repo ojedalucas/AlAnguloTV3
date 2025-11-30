@@ -1,12 +1,12 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import data.ConnectionManager;
-import model.domain.Resenia;
+import Data.ConnectionManager;
+import Model.Domain.Resenia;
 
 public class ReseniaDAOjdbl implements ReseniaDAO {
 	private Connection connection;

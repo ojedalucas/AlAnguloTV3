@@ -1,10 +1,10 @@
-package model.domain;
+package Model.Domain;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import data.dao.GeneralDAO;
+import Data.Dao.GeneralDAO;
 
 public class Logica {
 	private GeneralDAO fabrica;

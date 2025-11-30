@@ -1,9 +1,9 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import model.domain.Usuario;
+import Model.Domain.Usuario;
 
 public interface UsuarioDAO {
 	public void cargarUsuario(Usuario u) throws SQLException;

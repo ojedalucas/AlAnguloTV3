@@ -3,11 +3,11 @@ package Controller;
 
 import java.sql.SQLException;
 
+import Model.Logic.LoadingModel;
+import Model.Logic.RegistrationModel;
+import Model.Logic.WelcomeModel;
 import Util.UserSession;
 import Util.Exceptions.*;
-import model.logic.LoadingModel;
-import model.logic.RegistrationModel;
-import model.logic.WelcomeModel;
 import View.LoadingView;
 import View.RegistrationView;
 import View.WelcomeView;

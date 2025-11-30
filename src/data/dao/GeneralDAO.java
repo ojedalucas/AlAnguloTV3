@@ -1,16 +1,13 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Data.ConnectionManager;
+import Model.Domain.*;
 import Util.Comparator.*;
-import data.ConnectionManager;
-import model.domain.DatosPersonales;
-import model.domain.Pelicula;
-import model.domain.Resenia;
-import model.domain.Usuario;
 
 public class GeneralDAO {
 	private DatosPersonalesDAO dp;

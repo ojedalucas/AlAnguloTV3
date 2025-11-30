@@ -1,11 +1,11 @@
-package model.logic;
+package Model.Logic;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+import Data.Dao.*;
+import Model.Domain.*;
 import Util.Exceptions.CamposVaciosException;
-import data.dao.*;
-import model.domain.*;
 
 @SuppressWarnings("unused")
 public class RateModel {

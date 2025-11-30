@@ -1,7 +1,7 @@
 package Controller;
 
-import model.logic.InfoModel;
-import model.logic.MainMenuModel;
+import Model.Logic.InfoModel;
+import Model.Logic.MainMenuModel;
 import View.InfoView;
 import View.MainMenuView;
 

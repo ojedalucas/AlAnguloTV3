@@ -1,11 +1,11 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import data.ConnectionManager;
-import model.domain.GeneroPelicula;
-import model.domain.Pelicula;
+import Data.ConnectionManager;
+import Model.Domain.GeneroPelicula;
+import Model.Domain.Pelicula;
 
 public class PeliculaDAOjdbl implements PeliculaDAO {
 	private Connection connection;

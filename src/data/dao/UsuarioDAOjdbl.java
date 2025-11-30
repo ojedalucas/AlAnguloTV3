@@ -1,11 +1,11 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import data.ConnectionManager;
-import model.domain.DatosPersonales;
-import model.domain.Usuario;
+import Data.ConnectionManager;
+import Model.Domain.DatosPersonales;
+import Model.Domain.Usuario;
 
 public class UsuarioDAOjdbl implements UsuarioDAO{
 	private Connection connection;

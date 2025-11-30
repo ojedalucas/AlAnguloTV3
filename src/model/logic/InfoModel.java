@@ -1,4 +1,4 @@
-package model.logic;
+package Model.Logic;
 
 public class InfoModel {
 

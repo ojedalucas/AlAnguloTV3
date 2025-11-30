@@ -1,9 +1,9 @@
-package app;
+package App;
 import java.sql.SQLException;
 
 import Controller.WelcomeController;
-import data.ConnectionManager;
-import model.logic.WelcomeModel;
+import Data.ConnectionManager;
+import Model.Logic.WelcomeModel;
 import View.WelcomeView;
 
 public class Main {

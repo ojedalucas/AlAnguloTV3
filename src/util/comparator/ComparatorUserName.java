@@ -2,7 +2,7 @@ package Util.Comparator;
 
 import java.util.Comparator;
 
-import model.domain.Usuario;
+import Model.Domain.Usuario;
 
 public class ComparatorUserName implements Comparator<Usuario> {
 		

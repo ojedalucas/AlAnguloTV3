@@ -1,10 +1,10 @@
-package data.dao;
+package Data.Dao;
 
 import java.sql.*;
 import java.util.*;
 
-import data.ConnectionManager;
-import model.domain.DatosPersonales;
+import Data.ConnectionManager;
+import Model.Domain.DatosPersonales;
 
 public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 	private Connection connection;

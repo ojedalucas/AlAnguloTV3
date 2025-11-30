@@ -1,6 +1,6 @@
 package Controller;
 
-import model.logic.MainMenuModel;
+import Model.Logic.MainMenuModel;
 import View.MainMenuView;
 
 @SuppressWarnings("unused")

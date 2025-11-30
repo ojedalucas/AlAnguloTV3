@@ -2,9 +2,9 @@ package Controller;
 
 import java.sql.SQLException;
 
+import Model.Logic.RegistrationModel;
+import Model.Logic.WelcomeModel;
 import Util.Exceptions.*;
-import model.logic.RegistrationModel;
-import model.logic.WelcomeModel;
 import View.RegistrationView;
 import View.WelcomeView;
 

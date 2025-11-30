@@ -1,13 +1,13 @@
-package model.logic;
+package Model.Logic;
 
 import java.sql.SQLException;
 
+import Data.Dao.UsuarioDAO;
+import Data.Dao.UsuarioDAOjdbl;
+import Model.Domain.Usuario;
 import Util.Exceptions.CamposVaciosException;
 import Util.Exceptions.FormatoEmailException;
 import Util.Exceptions.LoginIncorrectoException;
-import data.dao.UsuarioDAO;
-import data.dao.UsuarioDAOjdbl;
-import model.domain.Usuario;
 
 public class WelcomeModel {
   private UsuarioDAO verificador;
