@@ -1,4 +1,4 @@
-package util.exceptions;
+package Util.Exceptions;
 
 public class DniYaExisteException extends Exception {
     public DniYaExisteException(){

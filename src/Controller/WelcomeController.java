@@ -1,16 +1,16 @@
-package controller;
+package Controller;
 
 
 import java.sql.SQLException;
 
+import Util.UserSession;
+import Util.Exceptions.*;
 import model.logic.LoadingModel;
 import model.logic.RegistrationModel;
 import model.logic.WelcomeModel;
-import util.UserSession;
-import util.exceptions.*;
-import view.LoadingView;
-import view.RegistrationView;
-import view.WelcomeView;
+import View.LoadingView;
+import View.RegistrationView;
+import View.WelcomeView;
 
 public class WelcomeController {
     private WelcomeView ventana;

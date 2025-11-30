@@ -1,9 +1,10 @@
 package model.logic;
 
 import java.sql.SQLException;
+
+import Util.Exceptions.*;
 import data.dao.*;
 import model.domain.*;
-import util.exceptions.*;
 
 public class RegistrationModel {
     private DatosPersonalesDAO verificadorDatos;

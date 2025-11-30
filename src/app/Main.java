@@ -1,10 +1,10 @@
 package app;
 import java.sql.SQLException;
 
-import controller.WelcomeController;
+import Controller.WelcomeController;
 import data.ConnectionManager;
 import model.logic.WelcomeModel;
-import view.WelcomeView;
+import View.WelcomeView;
 
 public class Main {
     public static void main(String[] args){

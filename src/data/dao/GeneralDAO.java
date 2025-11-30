@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Util.Comparator.*;
 import data.ConnectionManager;
 import model.domain.DatosPersonales;
 import model.domain.Pelicula;
 import model.domain.Resenia;
 import model.domain.Usuario;
-import util.comparator.*;
 
 public class GeneralDAO {
 	private DatosPersonalesDAO dp;

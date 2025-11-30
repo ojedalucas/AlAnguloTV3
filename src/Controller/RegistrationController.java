@@ -1,12 +1,12 @@
-package controller;
+package Controller;
 
 import java.sql.SQLException;
 
+import Util.Exceptions.*;
 import model.logic.RegistrationModel;
 import model.logic.WelcomeModel;
-import util.exceptions.*;
-import view.RegistrationView;
-import view.WelcomeView;
+import View.RegistrationView;
+import View.WelcomeView;
 
 public class RegistrationController {
     private RegistrationView ventana;

@@ -1,4 +1,4 @@
-package util.exceptions;
+package Util.Exceptions;
 
 public class FormatoEmailException extends Exception{
     public FormatoEmailException(){

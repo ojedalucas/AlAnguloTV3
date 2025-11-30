@@ -1,12 +1,13 @@
-package controller;
+package Controller;
 
 import model.logic.ExitoModel;
 import model.logic.RateModel;
-import util.exceptions.CamposVaciosException;
-import view.ExitoView;
-import view.RateView;
+import View.ExitoView;
+import View.RateView;
 
 import java.sql.SQLException;
+
+import Util.Exceptions.CamposVaciosException;
 
 @SuppressWarnings("unused")
 public class RateController {

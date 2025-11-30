@@ -1,9 +1,9 @@
-package controller;
+package Controller;
 
 import model.logic.ExitoModel;
 import model.logic.MainMenuModel;
-import view.ExitoView;
-import view.MainMenuView;
+import View.ExitoView;
+import View.MainMenuView;
 
 @SuppressWarnings("unused")
 public class ExitoController {
