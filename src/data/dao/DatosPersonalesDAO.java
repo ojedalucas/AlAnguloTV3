@@ -17,4 +17,5 @@ public interface DatosPersonalesDAO {
 	
 	public DatosPersonales buscarPorID(int id) throws SQLException;
 
+	public int obtenerIdPorDNI(int dni) throws SQLException;
 }

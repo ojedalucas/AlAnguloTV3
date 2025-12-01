@@ -28,6 +28,26 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 		return existe;
 	}
 
+	public int obtenerIdPorDNI(int dni) throws SQLException {
+		String sql = "SELECT ID FROM DATOS_PERSONALES WHERE DNI = ?;";
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+
+		pstmt.setInt(1, dni);
+		ResultSet rs = pstmt.executeQuery();
+
+		int id = -1; // valor por defecto si no existe
+
+		if (rs.next()) {
+			id = rs.getInt("ID");
+		}
+
+		rs.close();
+		pstmt.close();
+
+		return id;
+	}
+
+
 	@Override
 	public void cargarDatos (DatosPersonales nuevosDatos) throws SQLException {
 	  String sql = "INSERT INTO DATOS_PERSONALES (NOMBRES, APELLIDO, DNI) " +

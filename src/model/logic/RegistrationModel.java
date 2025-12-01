@@ -51,6 +51,9 @@ public class RegistrationModel {
         if (existeEmail(email))
             throw new EmailYaExisteException();
         DatosPersonales datosP = new DatosPersonales(0, nombre, apellido, dni);
+        verificadorDatos.cargarDatos(datosP);
+        datosP.setId(verificadorDatos.obtenerIdPorDNI(dni));
+        System.out.println(datosP.getId());
         Usuario usuario= new Usuario(username, contrasenia, email, 0, datosP);
         verificadorUsuario.cargarUsuario(usuario);
         return usuario;

@@ -14,7 +14,9 @@ public class ConnectionManager {
             }
 
             // Ruta relativa al archivo
-            connection= DriverManager.getConnection("jdbc:sqlite:Database\\plataforma.db");
+            File dbFile = new File("Database/plataforma.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
+            // connection= DriverManager.getConnection("jdbc:sqlite:Database\\plataforma.db");
 
         } catch (SQLException e) {
             e.printStackTrace();

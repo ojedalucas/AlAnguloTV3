@@ -131,22 +131,66 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
     }
 
 	public Usuario iniciarSesion(String email, String contrasenia) throws SQLException {
-		String sql= "SELECT * FROM USUARIO INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES=DATOS_PERSONALES.ID WHERE EMAIL=? AND CONTRASENIA=?";
+		//String sql= "SELECT * FROM USUARIO INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES=DATOS_PERSONALES.ID WHERE EMAIL=? AND CONTRASENIA=?";
+		String sql = "SELECT " +
+                 "USUARIO.ID AS UID, USUARIO.NOMBRE_USUARIO, USUARIO.CONTRASENIA, USUARIO.EMAIL, " +
+                 "DATOS_PERSONALES.ID AS DID, DATOS_PERSONALES.NOMBRES, DATOS_PERSONALES.APELLIDO, DATOS_PERSONALES.DNI " +
+                 "FROM USUARIO " +
+                 "INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES = DATOS_PERSONALES.ID " +
+                 "WHERE EMAIL = ? AND CONTRASENIA = ?";
 		
 		PreparedStatement pstmt;
     	pstmt = connection.prepareStatement(sql); 
   		pstmt.setString(1,email);
 		pstmt.setString(2,contrasenia);
+		System.out.println("---- LOGIN DEBUG ----");
+		System.out.println("Email recibido: [" + email + "]");
+		System.out.println("Password recibida: [" + contrasenia + "]");
         ResultSet rs=pstmt.executeQuery();
 
         if (!rs.next()) {
+			System.out.println("NO SE ENCONTRO EL USUARIO EN LA BASE.");
+    
+			// VERIFICAR SI EXISTE EL EMAIL
+			PreparedStatement checkEmail = connection.prepareStatement(
+				"SELECT EMAIL, CONTRASENIA FROM USUARIO WHERE EMAIL = ?"
+			);
+			checkEmail.setString(1, email);
+			ResultSet r2 = checkEmail.executeQuery();
+			
+			if (r2.next()) {
+				System.out.println("Email encontrado en BD: [" + r2.getString("EMAIL") + "]");
+				System.out.println("Contraseña en BD: [" + r2.getString("CONTRASENIA") + "]");
+				System.out.println("Comparando contra: [" + contrasenia + "]");
+			} else {
+				System.out.println("Email NO existe en la tabla.");
+			}
+
+			r2.close();
+			checkEmail.close();
+			PreparedStatement checkJoin = connection.prepareStatement(
+				"SELECT * FROM USUARIO WHERE EMAIL=? AND CONTRASENIA=?"
+			);
+			checkJoin.setString(1, email);
+			checkJoin.setString(2, contrasenia);
+
+			ResultSet r3 = checkJoin.executeQuery();
+
+			if (r3.next()) {
+				System.out.println("El usuario EXISTE en USUARIO sin JOIN.");
+				System.out.println("ID_DATOS_PERSONALES = " + r3.getInt("ID_DATOS_PERSONALES"));
+			} else {
+				System.out.println("Ni siquiera está en USUARIO (esto sería raro).");
+			}
+			r3.close();
+			checkJoin.close();
 			rs.close();
 			pstmt.close();
 			return null;
 		} else {
-			  int id=rs.getInt("ID");
+			  int id=rs.getInt("UID");
               String nombreUsuario= rs.getString("NOMBRE_USUARIO");
-              int id_datos = rs.getInt("ID_DATOS_PERSONALES");
+              int id_datos = rs.getInt("DID");
               String nombre=rs.getString("NOMBRES");
               String apellido = rs.getString("APELLIDO");
               int dni = rs.getInt("DNI");
