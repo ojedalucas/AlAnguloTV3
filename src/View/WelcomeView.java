@@ -14,7 +14,7 @@ public class WelcomeView extends Frame {
     private Label lblError;
     
     // Ajuste de ruta para paquete View (con barra al inicio)
-    private String imgFileName = "/util/image/WelcomeViewIPrincipalImage.jpg"; 
+    private String imgFileName = "/util/image/WelcomeViewImage.jpg"; 
 
     public WelcomeView() {
         super("Plataforma de Streaming");

@@ -166,10 +166,6 @@ public class MainMenuView extends Panel {
         add(panelCentral, BorderLayout.CENTER);
     }
 
-    public ArrayList<Button> getListaBotonesCalificar() {
-        return listaBotonesCalificar;
-    }
-
     public void actualizarListaPeliculas(Object[][] datosPeliculas) {
         panelContenedorFilas.removeAll();
         listaBotonesCalificar.clear();
@@ -274,6 +270,9 @@ public class MainMenuView extends Panel {
     public Button getBtnBuscar() { return btnBuscar; }
     public Button getBtnCerrarSesion() { return btnCerrarSesion; }
     public TextField getTxtBuscador() { return txtBuscador; }
+    public ArrayList<Button> getListaBotonesCalificar() {
+        return listaBotonesCalificar;
+    }
 
     public static void main(String[] args) {
         MainMenuView v = new MainMenuView();
