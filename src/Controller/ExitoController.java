@@ -1,9 +1,9 @@
 package Controller;
 
 import Model.Logic.ExitoModel;
-import Model.Logic.MainMenuModel;
+import Model.Logic.PrincipalModel;
 import View.ExitoView;
-import View.MainMenuView;
+import View.PrincipalView;
 
 @SuppressWarnings("unused")
 public class ExitoController {
@@ -17,10 +17,10 @@ public class ExitoController {
     }
 
     private void logicaContinuar(){
-        MainMenuView mainV = new MainMenuView();
-        MainMenuModel mainM = new MainMenuModel();
-        new MainMenuController(mainV, mainM);
-        mainV.setVisible(true);
+        PrincipalView principalV = new PrincipalView();
+        PrincipalModel principalM = new PrincipalModel();
+        new PrincipalController(principalV, principalM);
+        principalV.setVisible(true);
         this.ventana.dispose();
     }
 }

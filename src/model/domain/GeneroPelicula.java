@@ -63,4 +63,32 @@ public enum GeneroPelicula {
                 }
         }
     }
+
+ 
+    @Override
+public String toString() {
+    switch(this) {
+        case ACCION: return "Acción";
+        case AVENTURA: return "Aventura";
+        case COMEDIA: return "Comedia";
+        case DRAMA: return "Drama";
+        case CIENCIA_FICCION: return "Ciencia Ficción";
+        case TERROR: return "Terror";
+        case SUSPENSO: return "Suspenso";
+        case DOCUMENTAL: return "Documental";
+        case ROMANCE: return "Romance";
+        case ANIMACION: return "Animación";
+        case MUSICAL: return "Musical";
+        case FANTASIA: return "Fantasía";
+        case MISTERIO: return "Misterio";
+        case WESTERN: return "Western";
+        case BIOGRAFICA: return "Biográfica";
+        case CRIMEN: return "Crimen";
+        case FAMILIAR: return "Familiar";
+        case BELICA: return "Bélica";
+        case HISTORIA: return "Historia";
+        case OTROS: return "Otros";
+        default: return this.name();
+    }
+}
 }

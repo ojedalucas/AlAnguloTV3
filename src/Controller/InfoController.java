@@ -1,9 +1,10 @@
 package Controller;
 
 import Model.Logic.InfoModel;
-import Model.Logic.MainMenuModel;
+import Model.Logic.PrincipalModel;
 import View.InfoView;
 import View.MainMenuView;
+import View.PrincipalView;
 
 @SuppressWarnings("unused")
 public class InfoController {
@@ -22,10 +23,10 @@ public class InfoController {
     }
 
     private void logicaContinuar(){
-        MainMenuView mainV = new MainMenuView();
-        MainMenuModel mainM = new MainMenuModel();
-        new MainMenuController(mainV, mainM);
-        mainV.setVisible(true);
+        PrincipalView principalV = new PrincipalView();
+        PrincipalModel principalM = new PrincipalModel();
+        new PrincipalController(principalV, principalM);
+        principalV.setVisible(true);
         this.ventana.dispose();
     }
 }

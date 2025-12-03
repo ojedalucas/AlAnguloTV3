@@ -3,12 +3,12 @@ package Controller;
 
 import java.sql.SQLException;
 
-import Model.Logic.LoadingModel;
+import Model.Logic.PrincipalModel;
 import Model.Logic.RegistrationModel;
 import Model.Logic.WelcomeModel;
 import Util.UserSession;
 import Util.Exceptions.*;
-import View.LoadingView;
+import View.PrincipalView;
 import View.RegistrationView;
 import View.WelcomeView;
 
@@ -29,10 +29,10 @@ public class WelcomeController {
 
         try {
             UserSession.iniciarSesion(modelo.iniciarSesion(email, contrasenia));
-            LoadingView loadV = new LoadingView();
-            LoadingModel loadM = new LoadingModel();
-            new LoadingController(loadV, loadM);
-            loadV.setVisible(true);
+            PrincipalView principalV = new PrincipalView();
+            PrincipalModel principalM = new PrincipalModel();
+            new PrincipalController(principalV, principalM);
+            principalV.setVisible(true);
             this.ventana.dispose();
         } catch (CamposVaciosException | FormatoEmailException | LoginIncorrectoException e) {
             ventana.showErrorMessage(e.getMessage());

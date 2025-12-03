@@ -16,6 +16,7 @@ public class ConnectionManager {
             // Ruta relativa al archivo
             File dbFile = new File("Database/plataforma.db");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
+            connection.setAutoCommit(true);
             // connection= DriverManager.getConnection("jdbc:sqlite:Database\\plataforma.db");
 
         } catch (SQLException e) {

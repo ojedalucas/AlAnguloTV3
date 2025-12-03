@@ -1,11 +1,9 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-public class MainMenuView extends Frame {
+public class MainMenuView extends Panel {
 
     // Componentes Generales
     private Label lblTituloPrincipal;
@@ -36,8 +34,6 @@ public class MainMenuView extends Frame {
     private final Font fontBtn = new Font("Arial", Font.BOLD, 14);
 
     public MainMenuView() {
-        super("Plataforma de Streaming - Bienvenida");
-        
         setSize(1024, 768);
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -52,20 +48,13 @@ public class MainMenuView extends Frame {
         inicializarComponentes();
         construirLayoutSuperior();
         construirLayoutCentral();
-        
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                dispose();
-                System.exit(0);
-            }
-        });
     }
 
     private void inicializarComponentes() {
         lblTituloPrincipal = new Label("Bienvenido a la Plataforma de Streaming");
         lblTituloPrincipal.setFont(fontTitle);
 
-        lblSubtitulo = new Label("Seguro viste alguna de estas películas, haznos saber qué te pareció dejando una reseña.");
+        lblSubtitulo = new Label("Seguro viste alguna de estas películas, haznos saber qué te parecieron dejando una reseña.");
         lblSubtitulo.setFont(fontSubtitle);
         lblSubtitulo.setForeground(Color.DARK_GRAY);
 
@@ -301,25 +290,4 @@ public class MainMenuView extends Frame {
         
         v.actualizarListaPeliculas(data);
     }
-
-    // En tu clase Controller:
-
-    // // 1. Mandas los datos a la vista
-    // view.actualizarListaPeliculas(datosDelModelo);
-
-    // // 2. Pides la lista de botones que se acaban de crear
-    // ArrayList<Button> botones = view.getListaBotonesCalificar();
-
-    // // 3. Iteras y les das funcionalidad
-    // for (Button btn : botones) {
-    //     btn.addActionListener(new ActionListener() {
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             // Gracias al setActionCommand en la vista, sabemos qué película es
-    //             String tituloPelicula = e.getActionCommand();
-    //             System.out.println("Abriendo review para: " + tituloPelicula);
-                
-    //             // Aqui tu logica para abrir la nueva ventana...
-    //         }
-    //     });
 }

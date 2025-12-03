@@ -77,6 +77,8 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 		    
 		    listaPersonas.add(datos);
 		}
+		rs.close();
+		stmt.close();
 		return listaPersonas;
 	}
 	
@@ -112,6 +114,8 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 		    datos = new DatosPersonales(id, nombre, apellido, dni);
 			}
 		}
+		rs.close();
+		stmt.close();
 		return datos;
 	}
 }

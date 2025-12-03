@@ -1,33 +1,20 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.URL;
 
-public class LoadingView extends Frame {
+public class LoadingView extends Panel {
 
     // Ruta de la imagen
     private String imgFileName = "util/image/LoadingViewPrincipalImage.jpg"; 
 
     public LoadingView() {
         // 1. Configuración básica
-        super("Plataforma de Streaming - Bienvenida");
-        setSize(800, 600);
         setBackground(Color.WHITE);
-        setLocationRelativeTo(null);
         
         // Layout principal
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
-        // --- Lógica para cerrar ---
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
 
         // --- 1. Título ---
         Label welcomeTitle = new Label("Bienvenido a la Plataforma");

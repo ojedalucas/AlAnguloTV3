@@ -105,7 +105,7 @@ public class Pelicula {
         this.ratingPromedio = ratingPromedio;
     }
 
-public void setAnio (int anio) {
+    public void setAnio (int anio) {
         this.anio = anio;
     }
 

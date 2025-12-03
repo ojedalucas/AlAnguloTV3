@@ -56,6 +56,8 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		    
 		    listaPeliculas.add(datos);
 		}
+		rs.close();
+		stmt.close();
 		return listaPeliculas;
 	}
 
@@ -96,9 +98,17 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		      pelicula = new Pelicula(id, genero, titulo, resumen, director, duracion, ratingPromedio, anio, poster);
             }
         }
+		rs.close();
+		stmt.close();
         return pelicula;
     }
 
+	public void eliminarTodas() throws SQLException {
+		Statement stmt = connection.createStatement();
+		stmt.executeUpdate("DELETE FROM PELICULA");
+		stmt.executeUpdate("DELETE FROM sqlite_sequence WHERE name='PELICULA'");
+		stmt.close();
+	}
 }
 
 

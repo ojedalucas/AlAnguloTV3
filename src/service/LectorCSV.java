@@ -1,8 +1,9 @@
 package service;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 // Imports necesarios
@@ -10,17 +11,17 @@ import Model.Domain.Pelicula;
 import Model.Domain.GeneroPelicula;
 
 public class LectorCSV {
-
-    private static final String RUTA_ARCHIVO = "src/CSV/movies_database.csv";
-
- 
     // --- MÉTODO DE LECTURA (Sin cambios) ---
-    public static ArrayList<Pelicula> leerPeliculas() {
+    public static ArrayList<Pelicula> leerPeliculas(String rutaArchivo) {
         ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
         String linea = "";
         String separador = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"; 
-
-        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_ARCHIVO))) {
+        InputStream is = LectorCSV.class.getResourceAsStream(rutaArchivo);
+        if (is == null) {
+            System.err.println("❌ No se encontró el archivo CSV en el classpath: " + rutaArchivo);
+            return listaPeliculas; // devolvemos vacío para evitar errores
+        }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             br.readLine(); 
 
             while ((linea = br.readLine()) != null) {
@@ -69,7 +70,7 @@ public class LectorCSV {
                     listaPeliculas.add(p);
 
                 } catch (Exception eLine) {
-                    continue;
+                    System.err.println("Error procesando línea: " + linea);
                 }
             }
         } catch (IOException e) {
