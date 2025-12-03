@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainMenuView extends Panel {
@@ -139,7 +140,6 @@ public class MainMenuView extends Panel {
         }
 
         // Cuerpo Scrolleable
-        // Solo scroll vertical (el horizontal se desactiva si el contenido entra)
         scrollPaneTabla = new ScrollPane(ScrollPane.SCROLLBARS_AS_NEEDED);
         panelContenedorFilas = new Panel();
         panelContenedorFilas.setLayout(new GridBagLayout());
@@ -176,28 +176,31 @@ public class MainMenuView extends Panel {
 
         GridBagConstraints gbcRow = new GridBagConstraints();
         gbcRow.gridx = 0; 
-        gbcRow.weightx = 0.0; // Importante: No forzar expansión extra
-        gbcRow.fill = GridBagConstraints.NONE; // Que respete el tamaño del panel
-        gbcRow.anchor = GridBagConstraints.NORTHWEST; // Pegado a la izquierda
+        gbcRow.weightx = 0.0; 
+        gbcRow.fill = GridBagConstraints.NONE; 
+        gbcRow.anchor = GridBagConstraints.NORTHWEST; 
         
         int filaIndex = 0;
 
         for (Object[] datos : datosPeliculas) {
             Panel rowPanel = new Panel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             rowPanel.setBackground(Color.WHITE);
-            // Forzamos el tamaño exacto del panel de la fila
             rowPanel.setPreferredSize(new Dimension(totalTableWidth, 60));
             
-            String titulo = (String) datos[0];
-            String genero = (String) datos[1];
-            String resumen = (String) datos[2];
-            boolean activo = (Boolean) datos[3];
+            // --- CAMBIO: Extracción de datos con URL ---
+            // Se asume que datos[0] es la URL de la imagen
+            String urlPoster = (String) datos[0]; 
+            String titulo = (String) datos[1];
+            String genero = (String) datos[2];
+            String resumen = (String) datos[3];
+            boolean activo = (Boolean) datos[4];
 
             // Celdas de datos
-            agregarCelda(rowPanel, new Panel(), COL_WIDTHS[0], true); 
-            agregarCelda(rowPanel, new Label(titulo), COL_WIDTHS[1], false);
-            agregarCelda(rowPanel, new Label(genero), COL_WIDTHS[2], false);
-            agregarCelda(rowPanel, new Label(resumen), COL_WIDTHS[3], false);
+            // Pasamos la URL al método de la celda
+            agregarCelda(rowPanel, null, COL_WIDTHS[0], true, urlPoster); 
+            agregarCelda(rowPanel, new Label(titulo), COL_WIDTHS[1], false, null);
+            agregarCelda(rowPanel, new Label(genero), COL_WIDTHS[2], false, null);
+            agregarCelda(rowPanel, new Label(resumen), COL_WIDTHS[3], false, null);
 
             // Botón
             Panel pnlBoton = new Panel(new FlowLayout(FlowLayout.CENTER));
@@ -208,7 +211,7 @@ public class MainMenuView extends Panel {
             btnAccion.setFont(new Font("Arial", Font.BOLD, 12));
             
             if (activo) {
-                btnAccion.setBackground(new Color(30, 144, 255)); // Brand Blue
+                btnAccion.setBackground(new Color(30, 144, 255)); 
                 btnAccion.setForeground(Color.WHITE);
                 btnAccion.setActionCommand(titulo); 
                 btnAccion.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -223,8 +226,6 @@ public class MainMenuView extends Panel {
 
             listaBotonesCalificar.add(btnAccion);
 
-            // CORRECCIÓN PRINCIPAL:
-            // El separador ahora mide EXACTAMENTE lo mismo que la tabla
             Panel separador = new Panel();
             separador.setBackground(new Color(230,230,230));
             separador.setPreferredSize(new Dimension(totalTableWidth, 1));
@@ -246,22 +247,52 @@ public class MainMenuView extends Panel {
         scrollPaneTabla.validate();
     }
 
-    private void agregarCelda(Panel row, Component comp, int ancho, boolean esPoster) {
+    // --- CAMBIO: Firma del método actualizada para recibir la URL ---
+    private void agregarCelda(Panel row, Component comp, int ancho, boolean esPoster, String urlPoster) {
         if(esPoster) {
             Panel p = new Panel(new FlowLayout(FlowLayout.CENTER));
             p.setPreferredSize(new Dimension(ancho, 60));
-            Panel box = new Panel(); 
-            box.setBackground(new Color(220, 220, 220)); 
-            box.setPreferredSize(new Dimension(40, 50));
-            p.add(box);
+            
+            // --- CAMBIO: Uso de PosterPanel personalizado ---
+            PosterPanel poster = new PosterPanel(urlPoster);
+            p.add(poster);
+            
             row.add(p);
         } else {
             if(comp instanceof Label) {
+                ((Label)comp).setAlignment(Label.LEFT);
                 ((Label)comp).setAlignment(Label.LEFT);
                 comp.setFont(fontRowText);
             }
             comp.setPreferredSize(new Dimension(ancho, 60));
             row.add(comp);
+        }
+    }
+    
+    // --- NUEVA CLASE INTERNA: Para manejar la imagen ---
+    class PosterPanel extends Panel {
+        private Image image;
+
+        public PosterPanel(String urlStr) {
+            this.setBackground(new Color(220, 220, 220)); // Fondo de carga
+            this.setPreferredSize(new Dimension(40, 50)); // Dimensiones exactas requeridas
+            if (urlStr != null && !urlStr.isEmpty()) {
+                try {
+                    // Carga básica de AWT desde URL
+                    image = Toolkit.getDefaultToolkit().createImage(new URL(urlStr));
+                } catch (Exception e) {
+                    System.err.println("Error cargando imagen: " + urlStr);
+                }
+            }
+        }
+
+        @Override
+        public void paint(Graphics g) {
+            super.paint(g); // Pinta el fondo gris primero
+            if (image != null) {
+                // Dibujamos la imagen escalada para llenar el panel (40x50)
+                g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+            }
         }
     }
     
@@ -275,18 +306,45 @@ public class MainMenuView extends Panel {
     }
 
     public static void main(String[] args) {
-        MainMenuView v = new MainMenuView();
-        v.setVisible(true);
-        v.setNombreUsuario("Juan Pérez");
+        // 1. Crear la Ventana (Frame) que contendrá al Panel
+        Frame ventana = new Frame("Plataforma de Streaming");
+        
+        // 2. Instanciar tu Vista (el Panel)
+        MainMenuView vista = new MainMenuView();
+        
+        // 3. Agregar el Panel a la Ventana
+        ventana.add(vista);
+        
+        // 4. Configurar la Ventana
+        ventana.setSize(1024, 768);
+        
+        // Centrar la ventana en la pantalla
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        ventana.setLocation(dim.width/2 - 1024/2, dim.height/2 - 768/2);
+
+        // 5. IMPORTANTE: Evento para cerrar la ventana (en AWT es obligatorio manual)
+        ventana.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        // 6. Hacer visible la ventana
+        ventana.setVisible(true);
+        
+        // Configurar datos de ejemplo
+        vista.setNombreUsuario("Juan Pérez");
         
         Object[][] data = {
-            {"Titanic", "Drama", "Un barco gigante se hunde...", true},
-            {"Avatar", "Sci-Fi", "Aliens azules en Pandora...", true},
-            {"Shrek 2", "Comedia", "Viaje a muy muy lejano...", true},
-            {"Docu X", "Docu", "No disponible", false},
-            {"Matrix", "Accion", "Hacker descubre la verdad...", true},
+            {"https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg", "Spider-Man", "Acción", "Peter Parker es picado...", true},
+            {"https://image.tmdb.org/t/p/original/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", "Shawshank", "Drama", "Dos hombres encarcelados...", true},
+            {"BAD_LINK", "Shrek 2", "Comedia", "Viaje a muy muy lejano...", true},
+            {"", "Docu X", "Docu", "No disponible", false},
+            {"https://image.tmdb.org/t/p/original/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg", "Matrix", "Accion", "Hacker descubre la verdad...", true},
         };
         
-        v.actualizarListaPeliculas(data);
+        // Cargar los datos en la vista
+        vista.actualizarListaPeliculas(data);
     }
 }
