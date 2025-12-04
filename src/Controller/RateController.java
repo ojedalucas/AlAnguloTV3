@@ -14,8 +14,13 @@ public class RateController {
     public RateController(RateView ventana, RateModel modelo){
         this.ventana = ventana;
         this.modelo = modelo;
-        this.ventana.setTitleText(modelo.getPelicula().getTitulo());
+        this.ventana.setTitleText(recortarTitulo(modelo.getPelicula().getTitulo(), 40));
         this.ventana.addGuardarListener(e -> logicaGuardar());
+    }
+
+    private static String recortarTitulo(String titulo, int maxChars) {
+        if (titulo == null) return "";
+        return titulo.length() <= maxChars ? titulo : titulo.substring(0, maxChars - 3) + "...";
     }
 
     private void logicaGuardar(){

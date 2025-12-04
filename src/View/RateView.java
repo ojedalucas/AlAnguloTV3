@@ -33,7 +33,7 @@ public class RateView extends Frame {
 
         // --- 1. Título ---
         titleLabel = new Label("Título de la Película");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
         gbc.gridx = 0; 
         gbc.gridy = 0; 
         gbc.gridwidth = GridBagConstraints.REMAINDER;
