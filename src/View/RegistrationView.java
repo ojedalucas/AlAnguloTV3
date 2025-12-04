@@ -17,6 +17,9 @@ public class RegistrationView extends Frame {
     private TextField txtPass;
     private Button btnRegistrar;
     
+    // NUEVO: Botón Volver
+    private Button btnVolver;
+    
     // Etiqueta de error
     private Label lblError;
 
@@ -38,28 +41,54 @@ public class RegistrationView extends Frame {
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font inputFont = new Font("Arial", Font.PLAIN, 16);
 
-        // --- 0. TÍTULO PRINCIPAL ---
+        // --- NUEVO: BOTÓN VOLVER (Fila 0) ---
+        // --- BOTÓN VOLVER (Corrección para que no salga un cuadrado) ---
+        // Usamos el símbolo "<" que es universal y seguro
+        btnVolver = new Button("<"); 
+        
+        // Usamos "Dialog" y tamaño 24 para que el "<" parezca una flecha robusta
+        btnVolver.setFont(new Font("Dialog", Font.BOLD, 24)); 
+        
+        // Mismo color azul
+        btnVolver.setBackground(new Color(30, 144, 255)); 
+        btnVolver.setForeground(Color.WHITE);
+        
+        // Ajustamos el tamaño para que sea cuadrado
+        btnVolver.setPreferredSize(new Dimension(50, 40));
+
+        gbc.gridx = 0;
+        gbc.gridy = 0; 
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.NORTHWEST; 
+        gbc.insets = new Insets(10, 10, 0, 0); 
+        add(btnVolver, gbc);
+
+        // --- 0. TÍTULO PRINCIPAL (Movido a Fila 1) ---
         Label mainTitle = new Label("Registro de Usuario");
         mainTitle.setFont(titleFont);
         mainTitle.setAlignment(Label.CENTER);
         
         gbc.gridx = 0; 
-        gbc.gridy = 0;
+        gbc.gridy = 1; // Antes era 0
         gbc.gridwidth = 2; 
-        gbc.insets = new Insets(20, 20, 30, 20); 
+        gbc.insets = new Insets(10, 20, 30, 20); // Ajusté un poco el margen superior
         gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Asegurar que se centre bien
         add(mainTitle, gbc);
 
         // --- CONFIGURACIÓN COMÚN PARA EL FORMULARIO ---
         gbc.gridwidth = 1; 
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER; // Reset anchor
         
         // Insets para los campos: (Arriba, Izq, Abajo, Der)
         Insets labelInsets = new Insets(10, 40, 10, 10); 
         Insets inputInsets = new Insets(10, 0, 10, 40);
 
-        // --- FILA 1: Nombres ---
-        gbc.gridy = 1;
+        // --- FILA 2: Nombres (Antes era 1) ---
+        gbc.gridy = 2;
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.insets = labelInsets;
@@ -75,8 +104,8 @@ public class RegistrationView extends Frame {
         txtNombre.setPreferredSize(new Dimension(200, 30));
         add(txtNombre, gbc);
 
-        // --- FILA 2: Apellidos ---
-        gbc.gridy = 2;
+        // --- FILA 3: Apellidos (Antes era 2) ---
+        gbc.gridy = 3;
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.insets = labelInsets;
@@ -92,8 +121,8 @@ public class RegistrationView extends Frame {
         txtApellido.setPreferredSize(new Dimension(200, 30));
         add(txtApellido, gbc);
 
-        // --- FILA 3: DNI ---
-        gbc.gridy = 3;
+        // --- FILA 4: DNI (Antes era 3) ---
+        gbc.gridy = 4;
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.insets = labelInsets;
@@ -109,8 +138,8 @@ public class RegistrationView extends Frame {
         txtDNI.setPreferredSize(new Dimension(200, 30));
         add(txtDNI, gbc);
 
-        // --- NUEVO: FILA 4: Nombre de Usuario ---
-        gbc.gridy = 4; // Insertamos en la fila 4
+        // --- FILA 5: Nombre de Usuario (Antes era 4) ---
+        gbc.gridy = 5; 
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.insets = labelInsets;
@@ -126,8 +155,8 @@ public class RegistrationView extends Frame {
         txtUsername.setPreferredSize(new Dimension(200, 30));
         add(txtUsername, gbc);
 
-        // --- FILA 5: E-mail (Movido de 4 a 5) ---
-        gbc.gridy = 5;
+        // --- FILA 6: E-mail (Antes era 5) ---
+        gbc.gridy = 6;
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.insets = labelInsets;
@@ -143,8 +172,8 @@ public class RegistrationView extends Frame {
         txtEmail.setPreferredSize(new Dimension(200, 30));
         add(txtEmail, gbc);
 
-        // --- FILA 6: Password (Movido de 5 a 6) ---
-        gbc.gridy = 6;
+        // --- FILA 7: Password (Antes era 6) ---
+        gbc.gridy = 7;
         gbc.gridx = 0;
         gbc.weightx = 0.0;
         gbc.insets = labelInsets;
@@ -161,28 +190,28 @@ public class RegistrationView extends Frame {
         txtPass.setPreferredSize(new Dimension(200, 30));
         add(txtPass, gbc);
 
-        // --- FILA 7: Label de Error (Movido de 6 a 7) ---
+        // --- FILA 8: Label de Error (Antes era 7) ---
         lblError = new Label(""); 
         lblError.setForeground(Color.RED);
         lblError.setFont(new Font("Arial", Font.BOLD, 12));
         lblError.setAlignment(Label.CENTER);
         lblError.setVisible(false); 
         
-        gbc.gridy = 7; 
+        gbc.gridy = 8; 
         gbc.gridx = 0;
         gbc.gridwidth = 2; 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 30, 5, 30); 
         add(lblError, gbc);
 
-        // --- FILA 8: Botón Registrar (Movido de 7 a 8) ---
+        // --- FILA 9: Botón Registrar (Antes era 8) ---
         btnRegistrar = new Button("Registrar");
         btnRegistrar.setFont(new Font("Arial", Font.BOLD, 16));
         btnRegistrar.setBackground(new Color(30, 144, 255)); 
         btnRegistrar.setForeground(Color.WHITE);
         btnRegistrar.setPreferredSize(new Dimension(160, 40)); 
 
-        gbc.gridy = 8; 
+        gbc.gridy = 9; 
         gbc.gridx = 0;
         gbc.gridwidth = 2; 
         gbc.fill = GridBagConstraints.NONE;
@@ -190,6 +219,10 @@ public class RegistrationView extends Frame {
         gbc.insets = new Insets(20, 0, 20, 0); 
         
         add(btnRegistrar, gbc);
+
+        gbc.gridy = 10; // Fila siguiente
+        gbc.weighty = 1.0; // Esto hace que este espacio vacío ocupe todo el sobrante vertical
+        add(new Label(""), gbc);
 
         // 3. Lógica para cerrar la ventana
         addWindowListener(new WindowAdapter() {
@@ -201,7 +234,6 @@ public class RegistrationView extends Frame {
 
     // Métodos públicos para acceder y manipular campos y botón
     
-    // ACTUALIZADO: Ahora devuelve el texto del campo txtUsername
     public String getUsername() { 
         return txtUsername.getText(); 
     } 
@@ -216,7 +248,6 @@ public class RegistrationView extends Frame {
         txtNombre.setText("");
         txtApellido.setText("");
         txtDNI.setText("");
-        // ACTUALIZADO: Limpiamos también el usuario
         txtUsername.setText("");
         txtEmail.setText("");
         txtPass.setText("");
@@ -232,6 +263,11 @@ public class RegistrationView extends Frame {
 
     public void addRegisterListener(ActionListener listener){
         btnRegistrar.addActionListener(listener);
+    }
+    
+    // NUEVO: Método para el botón volver
+    public void addBackListener(ActionListener listener){
+        btnVolver.addActionListener(listener);
     }
 
     public static void main(String[] args) {
