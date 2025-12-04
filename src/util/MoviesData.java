@@ -16,6 +16,10 @@ public class MoviesData {
         return infoPeliculas;
     }
 
+    public static Pelicula getPeliculaPos(int i){
+        return infoPeliculas.get(i);
+    }
+
     public static Pelicula getPeliculaId(int id){
         for(Pelicula p: infoPeliculas){
             if (p.getId() == id){

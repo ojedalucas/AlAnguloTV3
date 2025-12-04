@@ -28,6 +28,13 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		pstmt.setString(8, p.getPoster());
 
 		pstmt.executeUpdate();
+
+		ResultSet rs = pstmt.getGeneratedKeys();
+    	if (rs.next()) {
+        	int idGenerado = rs.getInt(1);
+        	p.setId(idGenerado);
+    	}
+		rs.close();
 		pstmt.close();
 	}
 	
@@ -109,6 +116,14 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		stmt.executeUpdate("DELETE FROM sqlite_sequence WHERE name='PELICULA'");
 		stmt.close();
 	}
+
+	public boolean baseVacia() throws SQLException {
+    String sql = "SELECT 1 FROM PELICULA LIMIT 1";
+    try (PreparedStatement pstmt = connection.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+        return !rs.next();
+    }
+}
 }
 
 

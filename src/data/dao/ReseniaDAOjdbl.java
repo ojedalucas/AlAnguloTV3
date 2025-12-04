@@ -122,13 +122,16 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 		return existe;
 	}
 
-	public void eliminarResenia(Resenia r) throws SQLException{
+	public void eliminarResenia(int id) throws SQLException{
         PreparedStatement pstmt;
    
 		String sql = "DELETE FROM RESENIA WHERE ID=?;";
 		pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1,r.getId());
+		pstmt.setInt(1,id);
 		pstmt.executeUpdate();   
+		sql = "DELETE FROM sqlite_sequence WHERE name='RESENIA'";
+		pstmt = connection.prepareStatement(sql);
+		pstmt.executeUpdate();
 	    pstmt.close();   			
     }
 	
@@ -145,5 +148,15 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 	    pstmt.close();   	
 		
     }
+	public boolean existeResenia(int idUsuario, int idPelicula) throws SQLException{
+		String sql = "SELECT 1 FROM RESENIA WHERE ID_USUARIO=? AND ID_PELICULA=? LIMIT 1";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setInt(1, idUsuario);
+			pstmt.setInt(2, idPelicula);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				return rs.next();
+			}
+		}
+	}
 }
 

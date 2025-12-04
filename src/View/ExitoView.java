@@ -67,10 +67,6 @@ public class ExitoView extends Frame {
         add(continuar, gbc);
     }
 
-    // Métodos públicos
-    public Button getContinuarButton() {
-        return continuar;
-    }
     public void addContinuarListener(ActionListener listener){
         continuar.addActionListener(listener);
     }

@@ -128,14 +128,11 @@ public class RateView extends Frame {
         if (titleLabel != null) titleLabel.setText(title);
     }
 
-    // NUEVO MÉTODO: Para mostrar el mensaje de error
     public void showErrorMessage(String mensaje) {
         lblError.setText(mensaje);
         lblError.revalidate(); 
     }
-
     public int getRating() { return rating; }
-    public Button getGuardarButton() { return guardar; }
     public void addGuardarListener(ActionListener listener){
         guardar.addActionListener(listener);
     }

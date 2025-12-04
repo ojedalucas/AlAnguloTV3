@@ -13,16 +13,7 @@ import Model.Domain.Pelicula;
 public class ConsultaPeliculasOMDb {
 
     // Recuerda poner tu API KEY real aquí para que funcione
-    private static final String API_KEY = "TU_API_KEY";
-
-    public static void main(String[] args) {
-        String titulo = "Jurassic Park"; 
-        Pelicula resultado = consultarPelicula(titulo);
-        
-        // Imprimimos para probar (puedes borrar esto luego)
-        System.out.println("Resumen: " + resultado.getResumen());
-        System.out.println("Año: " + resultado.getAnio());
-    }
+    private static final String API_KEY = "470d833f";
 
     public static Pelicula consultarPelicula(String titulo) {
         try {
@@ -82,16 +73,18 @@ public class ConsultaPeliculasOMDb {
             } else {
                 // CASO 2: LA API RESPONDE PERO CON ERROR (Ej: "Movie not found" o "Invalid API Key")
                 Pelicula pError = new Pelicula();
+                pError.setTitulo(titulo);
                 pError.setAnio(0);
                 // Obtenemos el mensaje exacto que dio la web (ej: "Movie not found!")
                 String mensajeError = json.has("Error") ? json.getString("Error") : "Error desconocido en la respuesta API";
-                pError.setResumen(mensajeError);
+                pError.setResumen("Error: " + mensajeError);
                 return pError;
             }
 
         } catch (Exception e) {
             // CASO 3: ERROR DE CONEXIÓN O EXCEPCIÓN DE JAVA
             Pelicula pError = new Pelicula();
+            pError.setTitulo(titulo);
             pError.setAnio(0);
             pError.setResumen("Error al acceder a la web: " + e.getMessage());
             return pError;

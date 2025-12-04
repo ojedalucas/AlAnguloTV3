@@ -16,6 +16,7 @@ public class RegistrationController {
         this.ventana = ventana;
         this.modelo = modelo;
         this.ventana.addRegisterListener(e -> logicaRegistro());
+        this.ventana.addBackListener(e -> logicaVolver());
     }
     private void logicaRegistro(){
         String username = ventana.getUsername();
@@ -40,5 +41,12 @@ public class RegistrationController {
         } catch (NumberFormatException exN) {
             ventana.showErrorMessage("El DNI debe contener solo números.");
         }
+    }
+    private void logicaVolver(){
+        WelcomeView welV = new WelcomeView();
+        WelcomeModel welM = new WelcomeModel();
+        new WelcomeController(welV, welM);
+        welV.setVisible(true);
+        this.ventana.dispose();
     }
 }

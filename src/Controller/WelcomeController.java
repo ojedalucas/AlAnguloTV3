@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import Model.Logic.PrincipalModel;
 import Model.Logic.RegistrationModel;
 import Model.Logic.WelcomeModel;
-import Util.UserSession;
+import Util.SesionActual;
 import Util.Exceptions.*;
 import View.PrincipalView;
 import View.RegistrationView;
@@ -28,9 +28,9 @@ public class WelcomeController {
         String contrasenia = this.ventana.getPassword();
 
         try {
-            UserSession.iniciarSesion(modelo.iniciarSesion(email, contrasenia));
+            SesionActual.iniciarSesion(modelo.iniciarSesion(email, contrasenia));
             PrincipalView principalV = new PrincipalView();
-            PrincipalModel principalM = new PrincipalModel();
+            PrincipalModel principalM = new PrincipalModel(true);
             new PrincipalController(principalV, principalM);
             principalV.setVisible(true);
             this.ventana.dispose();

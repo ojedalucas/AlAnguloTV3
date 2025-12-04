@@ -1,6 +1,8 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -194,6 +196,7 @@ public class MainMenuView extends Panel {
             String genero = (String) datos[2];
             String resumen = (String) datos[3];
             boolean activo = (Boolean) datos[4];
+            int id = (Integer) datos[5];
 
             // Celdas de datos
             // Pasamos la URL al método de la celda
@@ -213,7 +216,7 @@ public class MainMenuView extends Panel {
             if (activo) {
                 btnAccion.setBackground(new Color(30, 144, 255)); 
                 btnAccion.setForeground(Color.WHITE);
-                btnAccion.setActionCommand(titulo); 
+                btnAccion.setActionCommand(String.valueOf(id)); 
                 btnAccion.setCursor(new Cursor(Cursor.HAND_CURSOR));
             } else {
                 btnAccion.setBackground(Color.LIGHT_GRAY);
@@ -279,7 +282,9 @@ public class MainMenuView extends Panel {
             if (urlStr != null && !urlStr.isEmpty()) {
                 try {
                     // Carga básica de AWT desde URL
-                    image = Toolkit.getDefaultToolkit().createImage(new URL(urlStr));
+                    URI uri = new URI(urlStr);
+                    URL url = uri.toURL(); // Esto ya no está deprecated
+                    image = Toolkit.getDefaultToolkit().createImage(url);
                 } catch (Exception e) {
                     System.err.println("Error cargando imagen: " + urlStr);
                 }
@@ -300,51 +305,16 @@ public class MainMenuView extends Panel {
     public void setNombreUsuario(String nombre) { lblNombreUsuario.setText(nombre); validate(); }
     public Button getBtnBuscar() { return btnBuscar; }
     public Button getBtnCerrarSesion() { return btnCerrarSesion; }
-    public TextField getTxtBuscador() { return txtBuscador; }
+    public void addBuscarListener(ActionListener listener){
+        btnBuscar.addActionListener(listener);
+    }
+    public void addCerrarSesionListener(ActionListener listener){
+        btnCerrarSesion.addActionListener(listener);
+    }
+    public String getTxtBuscador() { 
+        return txtBuscador.getText(); }
     public ArrayList<Button> getListaBotonesCalificar() {
         return listaBotonesCalificar;
     }
 
-    public static void main(String[] args) {
-        // 1. Crear la Ventana (Frame) que contendrá al Panel
-        Frame ventana = new Frame("Plataforma de Streaming");
-        
-        // 2. Instanciar tu Vista (el Panel)
-        MainMenuView vista = new MainMenuView();
-        
-        // 3. Agregar el Panel a la Ventana
-        ventana.add(vista);
-        
-        // 4. Configurar la Ventana
-        ventana.setSize(1024, 768);
-        
-        // Centrar la ventana en la pantalla
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        ventana.setLocation(dim.width/2 - 1024/2, dim.height/2 - 768/2);
-
-        // 5. IMPORTANTE: Evento para cerrar la ventana (en AWT es obligatorio manual)
-        ventana.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        // 6. Hacer visible la ventana
-        ventana.setVisible(true);
-        
-        // Configurar datos de ejemplo
-        vista.setNombreUsuario("Juan Pérez");
-        
-        Object[][] data = {
-            {"https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg", "Spider-Man", "Acción", "Peter Parker es picado...", true},
-            {"https://image.tmdb.org/t/p/original/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", "Shawshank", "Drama", "Dos hombres encarcelados...", true},
-            {"BAD_LINK", "Shrek 2", "Comedia", "Viaje a muy muy lejano...", true},
-            {"", "Docu X", "Docu", "No disponible", false},
-            {"https://image.tmdb.org/t/p/original/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg", "Matrix", "Accion", "Hacker descubre la verdad...", true},
-        };
-        
-        // Cargar los datos en la vista
-        vista.actualizarListaPeliculas(data);
-    }
 }

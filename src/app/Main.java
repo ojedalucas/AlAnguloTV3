@@ -20,7 +20,7 @@ public class Main {
         ventana.setVisible(true);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-            ConnectionManager.apagar();
+                ConnectionManager.apagar();
             } catch (SQLException ex) {
             ex.printStackTrace();
             }

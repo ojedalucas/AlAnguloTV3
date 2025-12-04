@@ -28,7 +28,7 @@ public class RegistrationView extends Frame {
         super("Plataforma de Streaming - Registro");
         setResizable(false); 
         // Aumenté un poco más la altura para que entre el nuevo campo cómodamente
-        setSize(600, 750); 
+        setSize(600, 650); 
         setBackground(Color.WHITE);
         setLocationRelativeTo(null);
 

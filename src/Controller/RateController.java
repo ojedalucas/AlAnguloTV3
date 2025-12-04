@@ -1,15 +1,12 @@
 package Controller;
 
 import View.ExitoView;
+import View.PrincipalView;
 import View.RateView;
-
 import java.sql.SQLException;
-
-import Model.Logic.ExitoModel;
-import Model.Logic.RateModel;
+import Model.Logic.*;
 import Util.Exceptions.CamposVaciosException;
 
-@SuppressWarnings("unused")
 public class RateController {
     private RateView ventana;
     private RateModel modelo;
@@ -17,26 +14,34 @@ public class RateController {
     public RateController(RateView ventana, RateModel modelo){
         this.ventana = ventana;
         this.modelo = modelo;
+        this.ventana.setTitleText(modelo.getPelicula().getTitulo());
         this.ventana.addGuardarListener(e -> logicaGuardar());
     }
 
     private void logicaGuardar(){
         int rating = ventana.getRating();
         String comentario = ventana.getComentario();
-        boolean exito = true;
         try {
             modelo.agregarResenia(rating, comentario);
             ExitoView exitoV = new ExitoView();
-            ExitoModel exitoM = new ExitoModel();
-            new ExitoController(exitoV, exitoM);
             exitoV.setVisible(true);
-            this.ventana.dispose();
+            exitoV.addContinuarListener(e -> logicaContinuar(exitoV));
+
         } catch (CamposVaciosException e){
             ventana.showErrorMessage(e.getMessage());
         } catch (SQLException ex) {
             ex.printStackTrace();
+            ventana.showErrorMessage("Error en base de datos.");
         }
+    }
 
+    private void logicaContinuar(ExitoView exitoV){
+        PrincipalView principalV = new PrincipalView();
+        PrincipalModel principalM = new PrincipalModel(false);
+        new PrincipalController(principalV, principalM);
+        principalV.setVisible(true);
+        exitoV.dispose();
+        this.ventana.dispose();
     }
     
 }

@@ -3,10 +3,8 @@ package Controller;
 import Model.Logic.InfoModel;
 import Model.Logic.PrincipalModel;
 import View.InfoView;
-import View.MainMenuView;
 import View.PrincipalView;
 
-@SuppressWarnings("unused")
 public class InfoController {
     private InfoView ventana;
     private InfoModel modelo;
@@ -15,16 +13,14 @@ public class InfoController {
         this.ventana = ventana;
         this.modelo = modelo;
         this.ventana.addContinuarListener(e-> logicaContinuar());
-        /*
-        this.ventana.setTitleText(modelo.getTitle());
-        this.ventana.setYearText(modelo.getYear());
-        this.ventana.setResumenText(modelo.getResumen());
-        */
+        this.ventana.setTitleText(this.modelo.getPelicula().getTitulo());
+        this.ventana.setYearText(String.valueOf(this.modelo.getPelicula().getAnio()));
+        this.ventana.setResumenText(this.modelo.getPelicula().getResumen());
     }
 
     private void logicaContinuar(){
         PrincipalView principalV = new PrincipalView();
-        PrincipalModel principalM = new PrincipalModel();
+        PrincipalModel principalM = new PrincipalModel(false);
         new PrincipalController(principalV, principalM);
         principalV.setVisible(true);
         this.ventana.dispose();

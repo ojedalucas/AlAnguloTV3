@@ -17,9 +17,9 @@ public interface ReseniaDAO {
 
 	public boolean validarResenia(int ID) throws SQLException;
 		
-	public void eliminarResenia(Resenia r) throws SQLException;
+	public void eliminarResenia(int id) throws SQLException;
 
 	void aprobarResenia(int iD) throws SQLException;
 
-
+	public boolean existeResenia(int idUsuario, int idPelicula) throws SQLException;
 }
