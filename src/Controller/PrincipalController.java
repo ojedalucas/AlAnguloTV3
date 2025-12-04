@@ -3,7 +3,6 @@ package controller;
 import java.awt.Button;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import model.domain.Pelicula;
 import model.logic.*;
 import service.ConsultaPeliculasOMDb;
@@ -49,13 +48,13 @@ public class PrincipalController {
         loader.start();
     }
 
-    public static String recortarTexto(String texto, int maxChars) {
+    private static String recortarTexto(String texto, int maxChars) {
         if (texto == null) return "";
         if (texto.length() <= maxChars) return texto;
         return texto.substring(0, maxChars - 3) + "..."; // agrega "..." al final
     }
 
-    public void mostrarPeliculas() throws SQLException {
+    private void mostrarPeliculas() throws SQLException {
         int numFilas = Math.min(10, SesionActual.getPeliculasActuales().size());
         Object[][] data = new Object[numFilas][6];
         for (int i = 0; i < numFilas; i++) {
@@ -71,7 +70,7 @@ public class PrincipalController {
     }
 
 
-    public void logicaCalificar(int i){
+    private void logicaCalificar(int i){
         RateView rateV = new RateView();
         RateModel rateM = new RateModel(SesionActual.getPeliculaPos(i));
         new RateController(rateV, rateM);
@@ -79,7 +78,7 @@ public class PrincipalController {
         this.ventana.dispose();
     }
 
-    public void logicaCerrarSesion(){
+    private void logicaCerrarSesion(){
         SesionActual.cerrarSesion();
         WelcomeView welV = new WelcomeView();
         WelcomeModel welM = new WelcomeModel();
@@ -88,7 +87,7 @@ public class PrincipalController {
         this.ventana.dispose();
     }
 
-    public void logicaBuscar(){
+    private void logicaBuscar(){
         Pelicula p = ConsultaPeliculasOMDb.consultarPelicula(panelPrincipal.getTxtBuscador());
         InfoView infoV = new InfoView();
         InfoModel infoM = new InfoModel(p);

@@ -2,7 +2,6 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
 import model.domain.Pelicula;
 
 public class MoviesData {

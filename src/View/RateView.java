@@ -11,13 +11,11 @@ public class RateView extends Frame {
     private TextArea cajaComentario;
     private Button guardar;
     private Label titleLabel;
-    
-    // NUEVO: Etiqueta de error
     private Label lblError;
 
     public RateView(){
         super("Plataforma de Streaming - Calificar Película");
-        setSize(700, 600); // Aumenté un poco la altura para que entre el error
+        setSize(700, 600);
         setBackground(Color.WHITE);
         setLocationRelativeTo(null);
 
@@ -78,7 +76,7 @@ public class RateView extends Frame {
         gbc.gridy = 4;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(0, 30, 10, 30); // Reduje el margen inferior
+        gbc.insets = new Insets(0, 30, 10, 30);
         add(cajaComentario, gbc);
 
         // --- NUEVO: 4. Label de Error ---
@@ -86,22 +84,22 @@ public class RateView extends Frame {
         lblError.setForeground(Color.RED);
         lblError.setFont(new Font("Arial", Font.BOLD, 12));
         lblError.setAlignment(Label.CENTER);
-        lblError.setVisible(false); // Oculto por defecto
+        lblError.setVisible(false);
         
-        gbc.gridy = 5; // Posición entre el comentario y el botón
-        gbc.weighty = 0.0; // Resetear peso vertical
+        gbc.gridy = 5;
+        gbc.weighty = 0.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 30, 5, 30); 
         add(lblError, gbc);
 
-        // --- 5. Botón Guardar (Movido a fila 6) ---
+        // --- 5. Botón Guardar ---
         guardar = new Button("Guardar");
         guardar.setBackground(new Color(30, 144, 255));
         guardar.setForeground(Color.WHITE);
         guardar.setFont(new Font("Arial", Font.BOLD, 16));
         guardar.setPreferredSize(new Dimension(160, 40));
 
-        gbc.gridy = 6; // CAMBIO: Fila 6
+        gbc.gridy = 6;
         gbc.weighty = 0.0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -112,8 +110,6 @@ public class RateView extends Frame {
     private void setRating(int value) {
         rating = value; 
         updateStars(); 
-        // Opcional: Ocultar error si el usuario selecciona estrellas
-        // lblError.setVisible(false); 
     }
 
     private void updateStars() {
@@ -137,12 +133,6 @@ public class RateView extends Frame {
         guardar.addActionListener(listener);
     }
     public String getComentario() { return cajaComentario.getText(); }
-
-    public static void main(String[] args) {
-        RateView view = new RateView();
-        view.setVisible(true);
-        view.showErrorMessage("Debes seleccionar al menos una estrella.");
-    }
 
     // --- CLASE INTERNA PARA DIBUJAR LA ESTRELLA ---
     class StarPanel extends Panel {

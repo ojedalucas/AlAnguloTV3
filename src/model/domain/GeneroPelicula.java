@@ -16,10 +16,10 @@ public enum GeneroPelicula {
     MISTERIO,
     WESTERN,
     BIOGRAFICA,
-    CRIMEN,     // Agregado
-    FAMILIAR,   // Agregado
-    BELICA,     // Agregado
-    HISTORIA,   // Agregado
+    CRIMEN,     
+    FAMILIAR,   
+    BELICA,     
+    HISTORIA,   
     OTROS;
 
     // Método estático para convertir el String en Inglés del CSV al Enum en Español
@@ -51,7 +51,6 @@ public enum GeneroPelicula {
             case "WAR":             return BELICA;
             case "CRIME":           return CRIMEN;
             case "FAMILY":          return FAMILIAR;
-            // A veces Biográfica viene como "Biography" o no existe y es Drama/Historia
             case "BIOGRAPHY":       return BIOGRAFICA;
             
             default:
@@ -64,7 +63,6 @@ public enum GeneroPelicula {
         }
     }
 
- 
     @Override
 public String toString() {
     switch(this) {

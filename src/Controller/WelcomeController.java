@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.sql.SQLException;
 import model.logic.PrincipalModel;
 import model.logic.RegistrationModel;
@@ -49,5 +48,4 @@ public class WelcomeController {
         regV.setVisible(true);
         this.ventana.dispose();
     }
-
 }

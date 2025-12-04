@@ -8,11 +8,9 @@ import java.util.ArrayList;
 
 public class MainMenuView extends Panel {
 
-    // Componentes Generales
     private Label lblTituloPrincipal;
     private Label lblSubtitulo;
     private Label lblNombreUsuario;
-    
     private TextField txtBuscador;
     private Button btnBuscar;
     private Button btnCerrarSesion;
@@ -22,12 +20,9 @@ public class MainMenuView extends Panel {
     private ScrollPane scrollPaneTabla;
     private Panel panelCabeceraTabla;
 
-    // --- LISTA DE BOTONES PARA EL CONTROLADOR ---
     private ArrayList<Button> listaBotonesCalificar;
-
     private final int[] COL_WIDTHS = {60, 200, 120, 380, 90};
 
-    // Colores y Fuentes Estandarizadas
     private final Color brandBlue = new Color(30, 144, 255);
     private final Color bgHeader = new Color(240, 240, 240);
     private final Font fontTitle = new Font("Arial", Font.BOLD, 28);
@@ -40,14 +35,10 @@ public class MainMenuView extends Panel {
         setSize(1024, 768);
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
-        
-        // Centrar ventana
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-
         // Inicializamos la lista vacía
         listaBotonesCalificar = new ArrayList<>();
-
         inicializarComponentes();
         construirLayoutSuperior();
         construirLayoutCentral();
@@ -188,9 +179,6 @@ public class MainMenuView extends Panel {
             Panel rowPanel = new Panel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             rowPanel.setBackground(Color.WHITE);
             rowPanel.setPreferredSize(new Dimension(totalTableWidth, 60));
-            
-            // --- CAMBIO: Extracción de datos con URL ---
-            // Se asume que datos[0] es la URL de la imagen
             String urlPoster = (String) datos[0]; 
             String titulo = (String) datos[1];
             String genero = (String) datos[2];
@@ -250,13 +238,10 @@ public class MainMenuView extends Panel {
         scrollPaneTabla.validate();
     }
 
-    // --- CAMBIO: Firma del método actualizada para recibir la URL ---
     private void agregarCelda(Panel row, Component comp, int ancho, boolean esPoster, String urlPoster) {
         if(esPoster) {
             Panel p = new Panel(new FlowLayout(FlowLayout.CENTER));
             p.setPreferredSize(new Dimension(ancho, 60));
-            
-            // --- CAMBIO: Uso de PosterPanel personalizado ---
             PosterPanel poster = new PosterPanel(urlPoster);
             p.add(poster);
             
@@ -272,18 +257,17 @@ public class MainMenuView extends Panel {
         }
     }
     
-    // --- NUEVA CLASE INTERNA: Para manejar la imagen ---
+    // --- CLASE INTERNA: Para manejar la imagen ---
     class PosterPanel extends Panel {
         private Image image;
 
         public PosterPanel(String urlStr) {
-            this.setBackground(new Color(220, 220, 220)); // Fondo de carga
-            this.setPreferredSize(new Dimension(40, 50)); // Dimensiones exactas requeridas
+            this.setBackground(new Color(220, 220, 220));
+            this.setPreferredSize(new Dimension(40, 50));
             if (urlStr != null && !urlStr.isEmpty()) {
                 try {
-                    // Carga básica de AWT desde URL
                     URI uri = new URI(urlStr);
-                    URL url = uri.toURL(); // Esto ya no está deprecated
+                    URL url = uri.toURL();
                     image = Toolkit.getDefaultToolkit().createImage(url);
                 } catch (Exception e) {
                     System.err.println("Error cargando imagen: " + urlStr);
@@ -293,15 +277,13 @@ public class MainMenuView extends Panel {
 
         @Override
         public void paint(Graphics g) {
-            super.paint(g); // Pinta el fondo gris primero
+            super.paint(g);
             if (image != null) {
-                // Dibujamos la imagen escalada para llenar el panel (40x50)
                 g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
             }
         }
     }
     
-    // Setters
     public void setNombreUsuario(String nombre) { lblNombreUsuario.setText(nombre); validate(); }
     public Button getBtnBuscar() { return btnBuscar; }
     public Button getBtnCerrarSesion() { return btnCerrarSesion; }

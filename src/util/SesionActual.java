@@ -1,7 +1,6 @@
 package util;
 
 import java.util.ArrayList;
-
 import model.domain.Pelicula;
 import model.domain.Usuario;
 

@@ -1,7 +1,6 @@
 package model.logic;
 
 import java.sql.SQLException;
-
 import data.dao.UsuarioDAO;
 import data.dao.UsuarioDAOjdbl;
 import model.domain.Usuario;

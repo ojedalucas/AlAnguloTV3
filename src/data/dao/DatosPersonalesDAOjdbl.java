@@ -2,7 +2,6 @@ package data.dao;
 
 import java.sql.*;
 import java.util.*;
-
 import data.ConnectionManager;
 import model.domain.DatosPersonales;
 
@@ -28,6 +27,7 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 		return existe;
 	}
 
+	@Override
 	public int obtenerIdPorDNI(int dni) throws SQLException {
 		String sql = "SELECT ID FROM DATOS_PERSONALES WHERE DNI = ?;";
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -46,7 +46,6 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 
 		return id;
 	}
-
 
 	@Override
 	public void cargarDatos (DatosPersonales nuevosDatos) throws SQLException {
@@ -82,7 +81,6 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 		return listaPersonas;
 	}
 	
-	//retorna true si existe la persona ya
 	@Override
 	public boolean validarPersona(int id) throws SQLException{
 		String sql= "SELECT COUNT(*) FROM DATOS_PERSONALES WHERE ID=?;";
@@ -100,6 +98,7 @@ public class DatosPersonalesDAOjdbl implements DatosPersonalesDAO{
 		return existe;
 	}
 	
+	@Override
 	public DatosPersonales buscarPorID(int id) throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM DATOS_PERSONALES");

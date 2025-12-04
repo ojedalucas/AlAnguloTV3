@@ -2,7 +2,6 @@ package data.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import data.ConnectionManager;
 import model.domain.DatosPersonales;
 import model.domain.Usuario;
@@ -29,7 +28,7 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
 		pstmt.close();
     }
 	
-	//retorno los datos completos del usuario, si el nombre de usuario no existe retorna null;
+	@Override
 	public Usuario buscarPorNombreUsuario(String user) throws SQLException {
 		Statement stmt = connection.createStatement();		    
 		ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIO INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES=DATOS_PERSONALES.ID");
@@ -53,8 +52,7 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
 		return usuario;
 	}
 
-	
-	//retorna true si existe
+	@Override
 	public boolean verificarNomUsuario(String u) throws SQLException{
 		String sql= "SELECT COUNT(*) FROM USUARIO WHERE NOMBRE_USUARIO=?;";
 		PreparedStatement pstmt;
@@ -68,7 +66,8 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
         pstmt.close();
 		return existe;
 	}
-	//retorna true si existe
+	
+	@Override
 	public boolean verificarMail(String m) throws SQLException{
 		String sql= "SELECT COUNT(*) FROM USUARIO WHERE EMAIL=?;";
 		PreparedStatement pstmt;
@@ -83,7 +82,7 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
 		return existe;
 	}
 	
-	//retorna una lista de los usuarios
+	@Override
 	public ArrayList<Usuario> listarUsuarios() throws SQLException {
 		Statement stmt = connection.createStatement();
 		ArrayList<Usuario> listaUsuarios= new ArrayList<Usuario>();
@@ -106,6 +105,7 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
 		return listaUsuarios;
 	}
 
+	@Override
 	public Usuario buscarPorID(int ID) throws SQLException {
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIO INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES=DATOS_PERSONALES.ID");
@@ -130,8 +130,8 @@ public class UsuarioDAOjdbl implements UsuarioDAO{
         return usuario;
     }
 
+	@Override
 	public Usuario iniciarSesion(String email, String contrasenia) throws SQLException {
-		//String sql= "SELECT * FROM USUARIO INNER JOIN DATOS_PERSONALES ON USUARIO.ID_DATOS_PERSONALES=DATOS_PERSONALES.ID WHERE EMAIL=? AND CONTRASENIA=?";
 		String sql = "SELECT " +
                  "USUARIO.ID AS UID, USUARIO.NOMBRE_USUARIO, USUARIO.CONTRASENIA, USUARIO.EMAIL, " +
                  "DATOS_PERSONALES.ID AS DID, DATOS_PERSONALES.NOMBRES, DATOS_PERSONALES.APELLIDO, DATOS_PERSONALES.DNI " +

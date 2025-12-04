@@ -1,7 +1,6 @@
 package util.comparator;
 
 import java.util.Comparator;
-
 import model.domain.Pelicula;
 
 public class ComparatorDuracion implements Comparator<Pelicula> {

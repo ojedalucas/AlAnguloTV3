@@ -13,14 +13,13 @@ public class DatosPersonales {
         this.apellido = "N/A";
         this.dni = 0; 
     }
+
     public DatosPersonales(int id, String nombre, String apellido, int dni) { 
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
     }
-
-
 
     public int getId() {
         return id;

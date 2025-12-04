@@ -4,15 +4,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
 import org.json.JSONObject;
-
 import model.domain.GeneroPelicula;
 import model.domain.Pelicula;
 
 public class ConsultaPeliculasOMDb {
-
-    // Recuerda poner tu API KEY real aquí para que funcione
     private static final String API_KEY = "470d833f";
 
     public static Pelicula consultarPelicula(String titulo) {
@@ -31,7 +27,7 @@ public class ConsultaPeliculasOMDb {
             // CASO 1: ÉXITO (Response = True)
             if (json.has("Response") && json.getString("Response").equals("True")) {
                 
-                String runtimeStr = json.getString("Runtime"); // Ej: "127 min"
+                String runtimeStr = json.getString("Runtime");
                 double duracion = 0;
                 if (!runtimeStr.equals("N/A")) { 
                     String duracionStr = runtimeStr.replace(" min", ""); 

@@ -10,9 +10,8 @@ public class ConnectionManager {
             // Carpeta dentro del proyecto
             File folder = new File("database");
             if (!folder.exists()) {
-                folder.mkdirs(); // crea la carpeta si no existe
+                folder.mkdirs(); // Crea la carpeta si no existe
             }
-
             // Ruta relativa al archivo
             File dbFile = new File("database/plataforma.db");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
@@ -21,7 +20,6 @@ public class ConnectionManager {
             e.printStackTrace();
             System.out.println("Error al conectar a la base de datos.");
         }
-
 		crearTablas();
 	}
 	

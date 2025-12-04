@@ -5,19 +5,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
 import model.domain.GeneroPelicula;
 import model.domain.Pelicula;
 
 public class LectorCSV {
-    // --- MÉTODO DE LECTURA (Sin cambios) ---
+
     public static ArrayList<Pelicula> leerPeliculas(String rutaArchivo) {
         ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
         String linea = "";
         String separador = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"; 
         InputStream is = LectorCSV.class.getResourceAsStream(rutaArchivo);
         if (is == null) {
-            System.err.println("❌ No se encontró el archivo CSV en el classpath: " + rutaArchivo);
+            System.err.println("No se encontró el archivo CSV en el classpath: " + rutaArchivo);
             return listaPeliculas; // devolvemos vacío para evitar errores
         }
         try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
@@ -73,7 +72,7 @@ public class LectorCSV {
                 }
             }
         } catch (IOException e) {
-            System.out.println("❌ Error de lectura: " + e.getMessage());
+            System.out.println("Error de lectura: " + e.getMessage());
         }
         return listaPeliculas;
     }

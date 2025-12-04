@@ -4,7 +4,6 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
 import data.ConnectionManager;
 import model.domain.Resenia;
 
@@ -33,7 +32,7 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 		pstmt.close();
     }
 
-	
+	@Override
 	public Resenia descargarResenia(int ID) throws SQLException {
 		Statement stmt = connection.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM RESENIA");
@@ -106,7 +105,6 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 		return listaResenias;
 	}
 	
-	//retorna true si existe
 	@Override
 	public boolean validarResenia(int ID) throws SQLException {
 		String sql= "SELECT COUNT(*) FROM RESENIA WHERE ID=?;";
@@ -122,6 +120,7 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 		return existe;
 	}
 
+	@Override
 	public void eliminarResenia(int id) throws SQLException{
         PreparedStatement pstmt;
    
@@ -135,7 +134,6 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 	    pstmt.close();   			
     }
 	
-	//dado un id, cambiar el estado de aprobado a true
 	@Override
 	public void aprobarResenia(int ID) throws SQLException{
         PreparedStatement pstmt;
@@ -148,6 +146,8 @@ public class ReseniaDAOjdbl implements ReseniaDAO {
 	    pstmt.close();   	
 		
     }
+
+	@Override
 	public boolean existeResenia(int idUsuario, int idPelicula) throws SQLException{
 		String sql = "SELECT 1 FROM RESENIA WHERE ID_USUARIO=? AND ID_PELICULA=? LIMIT 1";
 		try (PreparedStatement pstmt = connection.prepareStatement(sql)) {

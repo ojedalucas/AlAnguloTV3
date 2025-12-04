@@ -7,10 +7,8 @@ public class PrincipalView extends Frame {
 
     private Panel mainPanel;
     private CardLayout layout;
-
     private LoadingView loadingView;
     private MainMenuView mainMenuView;
-
     public final String CARD_LOADING = "loading";
     public final String CARD_MAIN = "main";
 

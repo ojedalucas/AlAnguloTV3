@@ -3,7 +3,6 @@ package model.logic;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
-
 import data.dao.*;
 import model.domain.Pelicula;
 import service.LectorCSV;
@@ -11,6 +10,7 @@ import util.MoviesData;
 import util.SesionActual;
 
 public class PrincipalModel {
+    
     private PeliculaDAO dbPelicula;
     private ReseniaDAO dbResenia;
     private boolean recargarLista;

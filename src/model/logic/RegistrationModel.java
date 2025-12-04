@@ -1,7 +1,6 @@
 package model.logic;
 
 import java.sql.SQLException;
-
 import data.dao.*;
 import model.domain.*;
 import util.exceptions.*;
@@ -14,7 +13,6 @@ public class RegistrationModel {
         verificadorDatos= new DatosPersonalesDAOjdbl ();
         verificadorUsuario= new UsuarioDAOjdbl ();
     }
-
 
     public boolean existeDNI (int dni) throws SQLException{
         boolean existe= verificadorDatos.existeDNI(dni);

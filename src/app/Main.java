@@ -1,6 +1,6 @@
 package app;
-import java.sql.SQLException;
 
+import java.sql.SQLException;
 import controller.WelcomeController;
 import data.ConnectionManager;
 import model.logic.WelcomeModel;

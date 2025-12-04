@@ -6,24 +6,21 @@ import java.net.URL;
 
 public class WelcomeView extends Frame {
     
-    // Campos reutilizables
     private TextField txtEmail;
     private TextField txtPass;
     private Button btnLogin;
     private Button btnRegister;
     private Label lblError;
-    
-    // Ajuste de ruta para paquete View (con barra al inicio)
     private String imgFileName = "/util/images/WelcomeViewImage.jpg"; 
 
     public WelcomeView() {
         super("Plataforma de Streaming");
-        setSize(900, 550); // Un poco más ancha para que la imagen luzca mejor
-        setLayout(new GridLayout(1, 2)); // Dividir pantalla en 2 columnas
+        setSize(900, 550);
+        setLayout(new GridLayout(1, 2));
         setBackground(Color.WHITE); 
         setLocationRelativeTo(null);
 
-        // --- COLUMNA 1: IMAGEN (IZQUIERDA) ---
+        // --- COLUMNA 1: IMAGEN (IZQUIERDA) --- 
         ImagePlaceholder imagePanel = new ImagePlaceholder();
         add(imagePanel);
 
@@ -33,14 +30,13 @@ public class WelcomeView extends Frame {
         formPanel.setBackground(Color.WHITE);
         
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 30, 10, 30); // Márgenes laterales cómodos
+        gbc.insets = new Insets(10, 30, 10, 30);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Fuentes Estandarizadas
         Font titleFont = new Font("Arial", Font.BOLD, 32);
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font inputFont = new Font("Arial", Font.PLAIN, 16);
-        //Font btnFont = new Font("Arial", Font.BOLD, 14);
 
         // 1. Título Principal
         Label titleLabel = new Label("Iniciar Sesión");
@@ -48,23 +44,23 @@ public class WelcomeView extends Frame {
         titleLabel.setAlignment(Label.CENTER);
         
         gbc.gridx = 0; gbc.gridy = 0;
-        gbc.gridwidth = 2; // Ocupa todo el ancho
-        gbc.insets = new Insets(0, 20, 30, 20); // Margen inferior grande
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 20, 30, 20);
         formPanel.add(titleLabel, gbc);
 
         // 2. Email
-        gbc.gridwidth = 1; // Volver a 1 columna
-        gbc.insets = new Insets(5, 30, 5, 30); // Reset margins
+        gbc.gridwidth = 1;
+        gbc.insets = new Insets(5, 30, 5, 30);
         
         Label lblEmail = new Label("E-mail:");
         lblEmail.setFont(labelFont);
         gbc.gridy = 1; gbc.gridx = 0;
-        gbc.gridwidth = 2; // Label ocupa todo el ancho para estar arriba del input
+        gbc.gridwidth = 2;
         formPanel.add(lblEmail, gbc);
 
         txtEmail = new TextField(25);
         txtEmail.setFont(inputFont);
-        txtEmail.setPreferredSize(new Dimension(300, 30)); // Altura moderna
+        txtEmail.setPreferredSize(new Dimension(300, 30));
         gbc.gridy = 2; gbc.gridx = 0;
         formPanel.add(txtEmail, gbc);
 
@@ -72,7 +68,7 @@ public class WelcomeView extends Frame {
         Label lblPass = new Label("Contraseña:");
         lblPass.setFont(labelFont);
         gbc.gridy = 3; gbc.gridx = 0;
-        gbc.insets = new Insets(15, 30, 5, 30); // Un poco más de aire arriba
+        gbc.insets = new Insets(15, 30, 5, 30);
         formPanel.add(lblPass, gbc);
 
         txtPass = new TextField(25);
@@ -95,13 +91,13 @@ public class WelcomeView extends Frame {
 
         // 5. Botón Ingresar
         btnLogin = new Button("Ingresar");
-        btnLogin.setBackground(new Color(30, 144, 255)); // Azul Brand
+        btnLogin.setBackground(new Color(30, 144, 255));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFont(new Font("Arial", Font.BOLD, 16));
-        btnLogin.setPreferredSize(new Dimension(160, 40)); // Tamaño Estandarizado
+        btnLogin.setPreferredSize(new Dimension(160, 40));
         
         gbc.gridy = 6; gbc.gridx = 0;
-        gbc.fill = GridBagConstraints.NONE; // No estirar botón
+        gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 0, 30, 0); 
         formPanel.add(btnLogin, gbc);
@@ -116,10 +112,10 @@ public class WelcomeView extends Frame {
         lblNoUser.setForeground(Color.DARK_GRAY);
         
         btnRegister = new Button("Crear Cuenta");
-        btnRegister.setBackground(new Color(240, 240, 240)); // Gris claro para botón secundario
+        btnRegister.setBackground(new Color(240, 240, 240));
         btnRegister.setForeground(Color.BLACK);
         btnRegister.setFont(new Font("Arial", Font.BOLD, 14));
-        btnRegister.setPreferredSize(new Dimension(140, 35)); // Un poco más chico que el principal
+        btnRegister.setPreferredSize(new Dimension(140, 35));
 
         GridBagConstraints gbcReg = new GridBagConstraints();
         gbcReg.gridx = 0; gbcReg.gridy = 0;
@@ -133,7 +129,6 @@ public class WelcomeView extends Frame {
         gbc.insets = new Insets(10, 0, 0, 0);
         formPanel.add(registerPanel, gbc);
 
-        // Agregar panel derecho a la ventana
         add(formPanel);
 
         // Listener cerrar
@@ -149,7 +144,6 @@ public class WelcomeView extends Frame {
         private Image img;
 
         public ImagePlaceholder() {
-            // Usamos getClass().getResource con la ruta corregida
             URL imgURL = getClass().getResource(imgFileName);
 
             if (imgURL != null) {
@@ -178,7 +172,6 @@ public class WelcomeView extends Frame {
 
             if (imgWidth <= 0 || imgHeight <= 0) return;
 
-            // Aspect Fill
             double scaleX = (double) canvasWidth / imgWidth;
             double scaleY = (double) canvasHeight / imgHeight;
             double scale = Math.max(scaleX, scaleY);
@@ -195,7 +188,6 @@ public class WelcomeView extends Frame {
         }
     }
 
-    // Métodos públicos
     public String getEmail() { return txtEmail.getText(); }
     public String getPassword() { return txtPass.getText(); }
     public void clearFields() {
@@ -213,10 +205,5 @@ public class WelcomeView extends Frame {
     public void showErrorMessage(String mensaje) {
         lblError.setText(mensaje);
         lblError.revalidate(); 
-    }
-
-    public static void main(String[] args) {
-        WelcomeView view = new WelcomeView();
-        view.setVisible(true);
     }
 }

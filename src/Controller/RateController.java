@@ -5,7 +5,6 @@ import util.exceptions.CamposVaciosException;
 import view.ExitoView;
 import view.PrincipalView;
 import view.RateView;
-
 import java.sql.SQLException;
 
 public class RateController {
@@ -44,5 +43,4 @@ public class RateController {
         exitoV.dispose();
         this.ventana.dispose();
     }
-    
 }

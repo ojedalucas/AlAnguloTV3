@@ -10,7 +10,7 @@ public class Pelicula {
     private double duracion;
     private float ratingPromedio;
     private int anio;
-    private String poster; // URL o ruta del poster
+    private String poster;
 
     public Pelicula() {
         this.id = 0;
@@ -36,9 +36,6 @@ public class Pelicula {
         this.poster = poster;
     }
 
-    // 8. Métodos Getters y Setters para todas las variables
-    
-    // Getters
     public int getId() {
         return id;
     }
@@ -75,8 +72,6 @@ public class Pelicula {
         return poster;
     }
 
-
-    // Setters
     public void setId(int id) {
         this.id = id;
     }
@@ -113,8 +108,6 @@ public class Pelicula {
         this.poster = poster;
     }
 
-
-    //Método toString para facilitar la impresión del objeto
     @Override
     public String toString() {
         return "Pelicula =" + titulo + ", Género=" + genero + 

@@ -2,7 +2,6 @@ package data.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import data.ConnectionManager;
 import model.domain.GeneroPelicula;
 import model.domain.Pelicula;
@@ -13,6 +12,8 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 	public PeliculaDAOjdbl() {
 		connection= ConnectionManager.getConnection();
 	}
+
+	@Override
 	public void cargarPelicula(Pelicula p) throws SQLException {
 		String sql = "INSERT INTO PELICULA (GENERO, TITULO, RESUMEN, DIRECTOR, DURACION, RATINGPROMEDIO, ANIO, POSTER) " +
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -37,9 +38,6 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		rs.close();
 		pstmt.close();
 	}
-	
-	//todos los listar deben devolver la tabla completa(ordenada) con id, nombre, etc. 
-	//para ordenar usa el comparator, anda a chequear que carajo es eso (lo pidieron en calse)
 	
 	@Override
 	public ArrayList<Pelicula> listarPeliculas() throws SQLException {
@@ -68,7 +66,6 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		return listaPeliculas;
 	}
 
-	//devuleva si una pelicula existe, pasandole un ID como parametro. si existe retorna true, si no false
 	@Override
 	public boolean validarPelicula(int id) throws SQLException{
 			String sql= "SELECT COUNT(*) FROM PELICULA WHERE ID=?;";
@@ -84,6 +81,7 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 			return existe;
 	}
 	
+	@Override
 	public Pelicula buscarPorID(int ID) throws SQLException {
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM PELICULA");
@@ -110,6 +108,7 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
         return pelicula;
     }
 
+	@Override
 	public void eliminarTodas() throws SQLException {
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate("DELETE FROM PELICULA");
@@ -117,13 +116,14 @@ public class PeliculaDAOjdbl implements PeliculaDAO {
 		stmt.close();
 	}
 
+	@Override
 	public boolean baseVacia() throws SQLException {
-    String sql = "SELECT 1 FROM PELICULA LIMIT 1";
-    try (PreparedStatement pstmt = connection.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-        return !rs.next();
-    }
-}
+		String sql = "SELECT 1 FROM PELICULA LIMIT 1";
+		try (PreparedStatement pstmt = connection.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery()) {
+			return !rs.next();
+		}
+	}
 }
 
 
