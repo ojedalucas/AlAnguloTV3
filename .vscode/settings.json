@@ -1,7 +1,10 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "src"
+    ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "c:\\Users\\PC\\Desktop\\Facu\\Entregable3\\AlAnguloTV3\\lib\\json-20240303.jar",
+        "c:\\Users\\PC\\Desktop\\Facu\\Entregable3\\AlAnguloTV3\\lib\\sqlite-jdbc-3.50.3.0.jar"
     ]
 }
