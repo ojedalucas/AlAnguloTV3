@@ -1,9 +1,9 @@
-package Controller;
+package controller;
 
-import Model.Logic.InfoModel;
-import Model.Logic.PrincipalModel;
-import View.InfoView;
-import View.PrincipalView;
+import model.logic.InfoModel;
+import model.logic.PrincipalModel;
+import view.InfoView;
+import view.PrincipalView;
 
 public class InfoController {
     private InfoView ventana;

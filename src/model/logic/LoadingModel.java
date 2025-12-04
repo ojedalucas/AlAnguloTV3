@@ -1,4 +1,4 @@
-package Model.Logic;
+package model.logic;
 
 public class LoadingModel {
     public LoadingModel(){

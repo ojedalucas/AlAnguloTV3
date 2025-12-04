@@ -1,4 +1,4 @@
-package Util.Exceptions;
+package util.exceptions;
 
 public class FormatoDniException extends Exception{
     public FormatoDniException(){

@@ -1,4 +1,4 @@
-package Model.Domain;
+package model.domain;
 
 public enum GeneroPelicula {
     ACCION,

@@ -6,9 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-// Imports necesarios
-import Model.Domain.Pelicula;
-import Model.Domain.GeneroPelicula;
+import model.domain.GeneroPelicula;
+import model.domain.Pelicula;
 
 public class LectorCSV {
     // --- MÉTODO DE LECTURA (Sin cambios) ---

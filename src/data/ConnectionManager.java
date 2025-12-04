@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 import java.io.File;
 import java.sql.*;
@@ -8,17 +8,15 @@ public class ConnectionManager {
 	public static void iniciar() throws SQLException {
 		try {
             // Carpeta dentro del proyecto
-            File folder = new File("Database");
+            File folder = new File("database");
             if (!folder.exists()) {
                 folder.mkdirs(); // crea la carpeta si no existe
             }
 
             // Ruta relativa al archivo
-            File dbFile = new File("Database/plataforma.db");
+            File dbFile = new File("database/plataforma.db");
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
             connection.setAutoCommit(true);
-            // connection= DriverManager.getConnection("jdbc:sqlite:Database\\plataforma.db");
-
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error al conectar a la base de datos.");

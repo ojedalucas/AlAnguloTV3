@@ -1,11 +1,12 @@
-package Controller;
+package controller;
 
-import View.ExitoView;
-import View.PrincipalView;
-import View.RateView;
+import model.logic.*;
+import util.exceptions.CamposVaciosException;
+import view.ExitoView;
+import view.PrincipalView;
+import view.RateView;
+
 import java.sql.SQLException;
-import Model.Logic.*;
-import Util.Exceptions.CamposVaciosException;
 
 public class RateController {
     private RateView ventana;

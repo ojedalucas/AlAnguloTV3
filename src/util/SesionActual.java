@@ -1,8 +1,9 @@
-package Util;
+package util;
 
 import java.util.ArrayList;
-import Model.Domain.Pelicula;
-import Model.Domain.Usuario;
+
+import model.domain.Pelicula;
+import model.domain.Usuario;
 
 public class SesionActual {
     private static Usuario usuarioActual;

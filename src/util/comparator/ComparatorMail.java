@@ -1,8 +1,8 @@
-package Util.Comparator;
+package util.comparator;
 
 import java.util.Comparator;
 
-import Model.Domain.Usuario;
+import model.domain.Usuario;
 
 public class ComparatorMail implements Comparator<Usuario> {
 		

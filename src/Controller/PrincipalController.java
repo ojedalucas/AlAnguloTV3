@@ -1,13 +1,14 @@
-package Controller;
+package controller;
 
 import java.awt.Button;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import Util.SesionActual;
-import View.*;
+
+import model.domain.Pelicula;
+import model.logic.*;
 import service.ConsultaPeliculasOMDb;
-import Model.Domain.Pelicula;
-import Model.Logic.*;
+import util.SesionActual;
+import view.*;
 
 public class PrincipalController {
     private PrincipalView ventana;

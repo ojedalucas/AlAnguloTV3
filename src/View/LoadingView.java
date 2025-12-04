@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class LoadingView extends Panel {
 
-    private String imgFileName = "Util/Image/LoadingViewGif.gif"; 
+    private String imgFileName = "util/images/LoadingViewGif.gif"; 
 
     public LoadingView() {
         // 1. Configuración básica

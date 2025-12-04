@@ -7,8 +7,8 @@ import java.net.http.HttpResponse;
 
 import org.json.JSONObject;
 
-import Model.Domain.GeneroPelicula;
-import Model.Domain.Pelicula;
+import model.domain.GeneroPelicula;
+import model.domain.Pelicula;
 
 public class ConsultaPeliculasOMDb {
 

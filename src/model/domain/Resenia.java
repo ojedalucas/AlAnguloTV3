@@ -1,4 +1,4 @@
-package Model.Domain;
+package model.domain;
 import java.time.LocalDateTime;
 
 public class Resenia {

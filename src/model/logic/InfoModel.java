@@ -1,6 +1,6 @@
-package Model.Logic;
+package model.logic;
 
-import Model.Domain.Pelicula;
+import model.domain.Pelicula;
 
 public class InfoModel {
     private Pelicula pelicula;

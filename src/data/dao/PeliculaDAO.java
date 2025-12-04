@@ -1,9 +1,9 @@
-package Data.Dao;
+package data.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Model.Domain.Pelicula;
+import model.domain.Pelicula;
 
 public interface PeliculaDAO {
 	public void cargarPelicula(Pelicula p) throws SQLException;

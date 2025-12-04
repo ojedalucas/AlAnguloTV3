@@ -1,8 +1,8 @@
-package Util.Comparator;
+package util.comparator;
 
 import java.util.Comparator;
 
-import Model.Domain.Pelicula;
+import model.domain.Pelicula;
 
 public class ComparatorTitulo implements Comparator<Pelicula> {
 		

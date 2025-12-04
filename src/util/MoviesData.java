@@ -1,9 +1,9 @@
-package Util;
+package util;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import Model.Domain.Pelicula;
+import model.domain.Pelicula;
 
 public class MoviesData {
     private static ArrayList<Pelicula> infoPeliculas;

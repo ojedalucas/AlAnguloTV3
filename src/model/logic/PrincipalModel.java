@@ -1,14 +1,14 @@
-package Model.Logic;
+package model.logic;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Data.Dao.*;
-import Util.MoviesData;
-import Util.SesionActual;
+import data.dao.*;
+import model.domain.Pelicula;
 import service.LectorCSV;
-import Model.Domain.Pelicula;
+import util.MoviesData;
+import util.SesionActual;
 
 public class PrincipalModel {
     private PeliculaDAO dbPelicula;
@@ -23,7 +23,7 @@ public class PrincipalModel {
 
     public void cargarPeliculas() throws SQLException {
         dbPelicula.eliminarTodas();
-        MoviesData.cargarPeliculasMemoria(LectorCSV.leerPeliculas("/csv/movies_database.csv"));
+        MoviesData.cargarPeliculasMemoria(LectorCSV.leerPeliculas("/util/csv/movies_database.csv"));
         MoviesData.ordenarPorRatingDescendente();
         for (Pelicula p: MoviesData.getInfoPeliculas()){
             dbPelicula.cargarPelicula(p);
