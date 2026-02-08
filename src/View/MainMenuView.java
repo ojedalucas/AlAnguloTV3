@@ -6,6 +6,9 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class MainMenuView extends Panel {
 
     private Label lblTituloPrincipal;
@@ -21,6 +24,7 @@ public class MainMenuView extends Panel {
     private Panel panelCabeceraTabla;
 
     private ArrayList<Button> listaBotonesCalificar;
+    private ArrayList<Button> listaBotonesCabecera;
     private final int[] COL_WIDTHS = {60, 200, 120, 380, 90};
 
     private final Color brandBlue = new Color(30, 144, 255);
@@ -39,6 +43,7 @@ public class MainMenuView extends Panel {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         // Inicializamos la lista vacía
         listaBotonesCalificar = new ArrayList<>();
+        listaBotonesCabecera = new ArrayList<>();
         inicializarComponentes();
         construirLayoutSuperior();
         construirLayoutCentral();
@@ -123,12 +128,15 @@ public class MainMenuView extends Panel {
         panelCabeceraTabla.setBackground(bgHeader);
         
         String[] titulos = {"Póster", "Título", "Género", "Resumen", "Acción"};
-        for(int i=0; i<titulos.length; i++) {
+        for(int i = 0; i < titulos.length; i++) {
             Panel celda = new Panel(new BorderLayout());
             celda.setPreferredSize(new Dimension(COL_WIDTHS[i], 45));
-            Label l = new Label(titulos[i], Label.CENTER);
-            l.setFont(fontHeaderTable);
-            celda.add(l, BorderLayout.CENTER);
+            Button btnCabecera = new Button(titulos[i]);
+            btnCabecera.setFont(fontHeaderTable);
+            btnCabecera.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnCabecera.setActionCommand("ORDENAR_" + titulos[i].toUpperCase());
+            listaBotonesCabecera.add(btnCabecera);
+            celda.add(btnCabecera, BorderLayout.CENTER); 
             panelCabeceraTabla.add(celda);
         }
 
@@ -297,6 +305,37 @@ public class MainMenuView extends Panel {
         return txtBuscador.getText(); }
     public ArrayList<Button> getListaBotonesCalificar() {
         return listaBotonesCalificar;
+    }
+    public ArrayList<Button> getListaBotonesCabecera() {
+        return listaBotonesCabecera;
+    }
+
+    public static void main(String[] args) {
+        
+        Frame frame = new Frame("App de Streaming - Test");
+        MainMenuView vista = new MainMenuView();
+
+        // Datos Dummy
+        Object[][] datos = {
+            {"", "Batman", "Accion", "El caballero de la noche", true, 1},
+            {"", "Shrek", "Comedia", "Un ogro verde", true, 2},
+            {"", "Titanic", "Drama", "Un barco se hunde", false, 3}
+        };
+
+        vista.actualizarListaPeliculas(datos);
+
+        // Probar botones de cabecera
+        for(Button b : vista.getListaBotonesCabecera()) {
+            b.addActionListener(e -> System.out.println("Click en cabecera: " + e.getActionCommand()));
+        }
+
+        frame.add(vista);
+        frame.pack();
+        frame.setSize(1024, 768);
+        frame.setVisible(true);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) { System.exit(0); }
+        });
     }
 
 }
