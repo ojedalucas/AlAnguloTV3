@@ -6,9 +6,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 public class MainMenuView extends Panel {
 
     private Label lblTituloPrincipal;
@@ -302,40 +299,13 @@ public class MainMenuView extends Panel {
         btnCerrarSesion.addActionListener(listener);
     }
     public String getTxtBuscador() { 
-        return txtBuscador.getText(); }
+        return txtBuscador.getText(); 
+    }
     public ArrayList<Button> getListaBotonesCalificar() {
         return listaBotonesCalificar;
     }
     public ArrayList<Button> getListaBotonesCabecera() {
         return listaBotonesCabecera;
-    }
-
-    public static void main(String[] args) {
-        
-        Frame frame = new Frame("App de Streaming - Test");
-        MainMenuView vista = new MainMenuView();
-
-        // Datos Dummy
-        Object[][] datos = {
-            {"", "Batman", "Accion", "El caballero de la noche", true, 1},
-            {"", "Shrek", "Comedia", "Un ogro verde", true, 2},
-            {"", "Titanic", "Drama", "Un barco se hunde", false, 3}
-        };
-
-        vista.actualizarListaPeliculas(datos);
-
-        // Probar botones de cabecera
-        for(Button b : vista.getListaBotonesCabecera()) {
-            b.addActionListener(e -> System.out.println("Click en cabecera: " + e.getActionCommand()));
-        }
-
-        frame.add(vista);
-        frame.pack();
-        frame.setSize(1024, 768);
-        frame.setVisible(true);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) { System.exit(0); }
-        });
     }
 
 }
