@@ -5,6 +5,9 @@ import util.exceptions.CamposVaciosException;
 import view.ExitoView;
 import view.PrincipalView;
 import view.RateView;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class RateController {
@@ -15,7 +18,12 @@ public class RateController {
         this.ventana = ventana;
         this.modelo = modelo;
         this.ventana.setTitleText(recortarTitulo(modelo.getPelicula().getTitulo(), 40));
-        this.ventana.addGuardarListener(e -> logicaGuardar());
+        this.ventana.addGuardarListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                logicaGuardar();
+            }
+        });
     }
 
     private static String recortarTitulo(String titulo, int maxChars) {
@@ -30,8 +38,12 @@ public class RateController {
             modelo.agregarResenia(rating, comentario);
             ExitoView exitoV = new ExitoView();
             exitoV.setVisible(true);
-            exitoV.addContinuarListener(e -> logicaContinuar(exitoV));
-
+            exitoV.addContinuarListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                logicaContinuar(exitoV);
+            }
+        });
         } catch (CamposVaciosException e){
             ventana.showErrorMessage(e.getMessage());
         } catch (SQLException ex) {

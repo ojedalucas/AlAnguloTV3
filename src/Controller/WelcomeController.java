@@ -9,7 +9,7 @@ import util.exceptions.*;
 import view.PrincipalView;
 import view.RegistrationView;
 import view.WelcomeView;
-
+import java.awt.event.*;
 public class WelcomeController {
     private WelcomeView ventana;
     private WelcomeModel modelo;
@@ -17,8 +17,18 @@ public class WelcomeController {
     public WelcomeController(WelcomeView ventana, WelcomeModel modelo){
         this.ventana = ventana;
         this.modelo = modelo;
-        this.ventana.addLoginListener(e -> logicaIngreso());
-        this.ventana.addRegisterListener(e -> logicaRegistro());
+        this.ventana.addLoginListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                logicaIngreso();
+            }
+        });
+        this.ventana.addRegisterListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                logicaRegistro();
+            }
+        });
     }
 
     private void logicaIngreso(){   

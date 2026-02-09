@@ -1,49 +1,92 @@
 package controller;
 
 import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import model.domain.Pelicula;
 import model.logic.*;
 import service.ConsultaPeliculasOMDb;
 import util.SesionActual;
+import util.comparator.ComparatorGenero;
+import util.comparator.ComparatorTitulo;
 import view.*;
 
 public class PrincipalController {
     private PrincipalView ventana;
     private PrincipalModel modelo;
     private MainMenuView panelPrincipal;
+    private ArrayList<Button> botones;
+    private boolean tituloAscendente = true;
+    private boolean generoAscendente = true;
 
     public PrincipalController(PrincipalView ventana, PrincipalModel modelo){
         this.ventana = ventana;
         this.modelo = modelo;
         this.panelPrincipal = this.ventana.getMainMenuView();
         panelPrincipal.setNombreUsuario(SesionActual.getUsuarioActual().getNombreUsuario());
-        panelPrincipal.addCerrarSesionListener(e -> logicaCerrarSesion());
-        panelPrincipal.addBuscarListener(e -> logicaBuscar());
-        ventana.mostrarPantallaDeCarga();
-        Thread loader = new Thread(() -> {
-            try{
-                if (SesionActual.getPrimerVisita()){
-                    modelo.cargarPeliculas();
-                }
-            } catch (Exception e){
-                e.printStackTrace();
+        panelPrincipal.addCerrarSesionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logicaCerrarSesion();
             }
-            java.awt.EventQueue.invokeLater(() -> {
+        });
+        panelPrincipal.addBuscarListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logicaBuscar();
+            }
+        });
+        botones = panelPrincipal.getListaBotonesCabecera();
+        botones.get(1).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
                 try {
-                    ventana.mostrarContenidoPrincipal();
-                    modelo.seleccionarPeliculas();
-                    mostrarPeliculas();
-                    ArrayList<Button> botones = panelPrincipal.getListaBotonesCalificar();
-                    for (int i=0; i< botones.size(); i++){
-                        final int index = i;
-                        botones.get(i).addActionListener(e -> logicaCalificar(index));
+                    logicaOrdenarTitulo();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        botones.get(2).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                logicaOrdenarGenero();
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        ventana.mostrarPantallaDeCarga();
+        Thread loader = new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try{
+                    if (SesionActual.getPrimerVisita()){
+                        modelo.cargarPeliculas();
                     }
-                } catch (Exception e) {
+                } catch (Exception e){
                     e.printStackTrace();
-                 }
-            });
+                }
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run(){
+                        try {
+                            ventana.mostrarContenidoPrincipal();
+                            modelo.seleccionarPeliculas();
+                            mostrarPeliculas();
+                            botonesCalificar();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
         });
         loader.start();
     }
@@ -67,8 +110,25 @@ public class PrincipalController {
             data[i][5] = p.getId();
         }
         panelPrincipal.actualizarListaPeliculas(data);
+        botonesCalificar();
     }
 
+    private void botonesCalificar(){
+        ArrayList<Button> botones = panelPrincipal.getListaBotonesCalificar();
+        for (int i=0; i< botones.size(); i++){
+            Button boton = botones.get(i);
+            for (ActionListener al : boton.getActionListeners()) {
+                boton.removeActionListener(al);
+            }
+            final int index = i;
+            botones.get(i).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    logicaCalificar(index);
+                }
+            });
+        }
+    }
 
     private void logicaCalificar(int i){
         RateView rateV = new RateView();
@@ -94,6 +154,22 @@ public class PrincipalController {
         new InfoController(infoV, infoM);
         infoV.setVisible(true);
         ventana.dispose();
+    }
+
+    private void logicaOrdenarTitulo() throws SQLException {
+        Collections.sort(SesionActual.getPeliculasActuales(), new ComparatorTitulo());
+        if (!tituloAscendente)
+            Collections.reverse(SesionActual.getPeliculasActuales());
+        tituloAscendente = !tituloAscendente;
+        mostrarPeliculas();
+    }
+
+    private void logicaOrdenarGenero() throws SQLException {
+        Collections.sort(SesionActual.getPeliculasActuales(), new ComparatorGenero());
+        if (!generoAscendente)
+            Collections.reverse(SesionActual.getPeliculasActuales());
+        generoAscendente = !generoAscendente;
+        mostrarPeliculas();
     }
 
 }

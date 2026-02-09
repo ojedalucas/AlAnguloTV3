@@ -18,11 +18,14 @@ public class Main {
         WelcomeModel modelo = new WelcomeModel();
         new WelcomeController(ventana, modelo);
         ventana.setVisible(true);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                ConnectionManager.apagar();
-            } catch (SQLException ex) {
-            ex.printStackTrace();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try {
+                    ConnectionManager.apagar();
+                } catch (SQLException ex) {
+                ex.printStackTrace();
+                }
             }
         }));
     }

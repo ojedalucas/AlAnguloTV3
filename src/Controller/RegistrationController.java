@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import model.logic.RegistrationModel;
@@ -15,8 +17,18 @@ public class RegistrationController {
     public RegistrationController(RegistrationView ventana, RegistrationModel modelo){
         this.ventana = ventana;
         this.modelo = modelo;
-        this.ventana.addRegisterListener(e -> logicaRegistro());
-        this.ventana.addBackListener(e -> logicaVolver());
+        this.ventana.addRegisterListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                logicaRegistro();
+            }
+        });
+        this.ventana.addBackListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                logicaVolver();
+            }
+        });
     }
     private void logicaRegistro(){
         String username = ventana.getUsername();
